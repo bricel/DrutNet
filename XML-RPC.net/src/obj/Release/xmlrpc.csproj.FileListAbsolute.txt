@@ -1,0 +1,3 @@
+D:\Documents\SVNRepo\Gizra\XML-RPC.net\bin\CookComputing.XmlRpcV2.dll
+D:\Documents\SVNRepo\Gizra\XML-RPC.net\src\obj\Release\ResolveAssemblyReference.cache
+D:\Documents\SVNRepo\Gizra\XML-RPC.net\src\obj\Release\CookComputing.XmlRpcV2.dll

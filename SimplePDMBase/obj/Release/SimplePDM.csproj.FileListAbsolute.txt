@@ -1,0 +1,16 @@
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\bin\Release\SimplePDM.dll
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\bin\Release\SimplePDM.pdb
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Release\ResolveAssemblyReference.cache
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Release\SimplePDM.dll
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Release\SimplePDM.pdb
+D:\Documnets\SVNRepo\Gizra\SimplePDMBase\bin\Release\SimplePDM.dll.config
+D:\Documnets\SVNRepo\Gizra\SimplePDMBase\bin\Release\SimplePDM.dll
+D:\Documnets\SVNRepo\Gizra\SimplePDMBase\bin\Release\SimplePDM.pdb
+D:\Documnets\SVNRepo\Gizra\SimplePDMBase\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\Documnets\SVNRepo\Gizra\SimplePDMBase\obj\Release\ResolveAssemblyReference.cache
+D:\Documnets\SVNRepo\Gizra\SimplePDMBase\obj\Release\SimplePDM.dll
+D:\Documnets\SVNRepo\Gizra\SimplePDMBase\obj\Release\SimplePDM.pdb
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\bin\Release\SimplePDM.dll.config
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Release\SimplePDM.BaseForm.resources
+D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Release\SimplePDM.csproj.GenerateResource.Cache
