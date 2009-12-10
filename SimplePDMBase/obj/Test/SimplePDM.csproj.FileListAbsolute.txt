@@ -1,7 +1,0 @@
-D:\Documents\SVNRepo\Gizra\SimplePDMBase\bin\Test\SimplePDM.dll.config
-D:\Documents\SVNRepo\Gizra\SimplePDMBase\bin\Test\SimplePDM.dll
-D:\Documents\SVNRepo\Gizra\SimplePDMBase\bin\Test\ICSharpCode.SharpZipLib.dll
-D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Test\ResolveAssemblyReference.cache
-D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Test\SimplePDM.BaseForm.resources
-D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Test\SimplePDM.csproj.GenerateResource.Cache
-D:\Documents\SVNRepo\Gizra\SimplePDMBase\obj\Test\SimplePDM.dll
