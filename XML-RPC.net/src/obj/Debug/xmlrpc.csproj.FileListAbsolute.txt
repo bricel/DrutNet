@@ -1,5 +1,0 @@
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\src\obj\Debug\ResolveAssemblyReference.cache
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\bin\CookComputing.XmlRpcV2.dll
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\bin\CookComputing.XmlRpcV2.pdb
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\src\obj\Debug\CookComputing.XmlRpcV2.dll
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\src\obj\Debug\CookComputing.XmlRpcV2.pdb

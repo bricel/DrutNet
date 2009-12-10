@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SimplePDM.Properties {
+namespace DrutNet.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

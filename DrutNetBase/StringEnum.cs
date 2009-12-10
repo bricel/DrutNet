@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Reflection;
 
-namespace SimplePDM
+namespace DrutNet
 {
     //class to handle string attribute to enum.
     #region Class StringEnum
@@ -277,7 +277,6 @@ namespace SimplePDM
     }
 
     #endregion
-
     #region Class StringValueAttribute
 
     /// <summary>

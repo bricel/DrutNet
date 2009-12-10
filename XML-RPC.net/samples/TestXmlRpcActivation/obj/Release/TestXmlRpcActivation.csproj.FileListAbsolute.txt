@@ -1,6 +1,0 @@
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\samples\TestXmlRpcActivation\bin\Release\TestXmlRpcActivation.exe
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\samples\TestXmlRpcActivation\bin\Release\TestXmlRpcActivation.pdb
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\samples\TestXmlRpcActivation\bin\Release\CookComputing.XmlRpcV2.dll
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\samples\TestXmlRpcActivation\obj\Release\ResolveAssemblyReference.cache
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\samples\TestXmlRpcActivation\obj\Release\TestXmlRpcActivation.exe
-D:\Documents\SVNRepo\Gizra\XML-RPC.net\samples\TestXmlRpcActivation\obj\Release\TestXmlRpcActivation.pdb

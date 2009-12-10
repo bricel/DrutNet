@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DrutNet.DrupalCurl" Collapsed="true">
+    <Position X="8.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QiAACAEAAIQAAAgAgjAAAFIABEIUAAAAAFAQAAAIQMA=</HashCode>
+      <FileName>DrutNetAPI\DrutNetCurl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNet.DrupalServices" Collapsed="true">
+    <Position X="3.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAAFIABAAKAAAA1hEAAoABAoQAAAAAAAQAAIAAAE=</HashCode>
+      <FileName>DrutNetAPI\DrutNetServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNet.OrganicGroup" Collapsed="true">
+    <Position X="2.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAJBCAAIAAgAEgAAIAAAQCCgABAAAAAAAABAAMAAI=</HashCode>
+      <FileName>DrutNetAPI\GroupsTaxonomy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNet.SimplePDMRole" Collapsed="true">
+    <Position X="4.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>DrutNetAPI\DrutNetConnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNet.SimplePDMUser" Collapsed="true">
+    <Position X="0.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAAIgAQAAAAgAAAAAACAAQABAAAACAIAEIEAAAAAgA=</HashCode>
+      <FileName>DrutNetAPI\DrutNetConnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNet.SimplePDMConnection" Collapsed="true">
+    <Position X="6" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEAAAAAAAAIARAAAAIAAAAAAAACAgIQAAAAACA=</HashCode>
+      <FileName>DrutNetAPI\DrutNetConnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNet.DrutNETBase" Collapsed="true">
+    <Position X="6.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AANgAQAiAAAEQAAABAABAAUAwCSCIADJMAFAAAAREAA=</HashCode>
+      <FileName>DrutNetBase\DrutnetBaseClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

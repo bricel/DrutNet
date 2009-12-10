@@ -5,9 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using SimplePDM;
+using DrutNet;
 
-namespace SimplePDM
+namespace DrutNet
 {
     public partial class BaseForm : Form
     {
