@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DrutNET;
+using CookComputing.XmlRpc;
 namespace DrutNETSample
 {
     public partial class Form1 : Form
@@ -15,12 +16,16 @@ namespace DrutNETSample
         public Form1()
         {
             InitializeComponent();
+            LoginForm loginDialog = new LoginForm(false);
+            loginDialog.ShowDialog();
+            XmlRpcStruct node100 = loginDialog.User.ServicesCon.NodeGet(2000);  
+
         }
         /// <summary>
         /// Fill a listView with the groups tags
         /// </summary>
         /// <param name="listViewTags"></param>
-        public void LoadVocabInListView(ListView listViewTags, Enums.ContentType contentType,List<TaxonomyVocabulary> VocabularyLists )
+        public void LoadVocabInListView(ListView listViewTags, string contentType,List<TaxonomyVocabulary> VocabularyLists )
         {
             listViewTags.Items.Clear();
             listViewTags.Groups.Clear();
@@ -31,7 +36,7 @@ namespace DrutNETSample
 
                 foreach (TaxonomyVocabulary tagList in VocabularyLists)
                 {
-                    if ((tagList.Terms.Count > 0) && (tagList.HasContentType(contentType)))
+                    if ((tagList.Terms.Count > 0))// && (tagList.HasContentType(contentType)))
                     {
                         string displayName = tagList.Name;
                         if (tagList.Required)

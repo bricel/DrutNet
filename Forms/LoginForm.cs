@@ -15,47 +15,18 @@ namespace DrutNET
         User _user;
         bool closing = false;
         bool _confirmExit;
-        string _httpPackageLink="";
+       
         delegate void writeLogCallback(string text, string mSender, Enums.MessageType mType,bool verbose);
-        public LoginForm(bool confirmExit, User user, bool showIcon, string httpPackageLink)
-            : this(confirmExit, showIcon, httpPackageLink)
-        {
-            _user = user;
-        }
         /// <summary>
-        /// 
+        /// Login to Drupal dialog
         /// </summary>
-        /// <param name="confirmExit"></param>
-        /// <param name="httpPackageLink">upgrade link</param>
-        public LoginForm(bool confirmExit, string httpPackageLink)
-            : this(confirmExit, false, httpPackageLink)
+        /// <param name="confirmExit">Display a confirm dialog before exiting</param>
+        public LoginForm(bool confirmExit)
         {
-        }
-        /// <summary>
-        /// Open the login form, and check for updates online
-        /// </summary>
-        /// <param name="confirmExit"></param>
-        /// <param name="loadUserVocabs"></param>
-        /// <param name="showIcon"></param>
-        /// <param name="httpPackageLink"></param>
-        public LoginForm(bool confirmExit, bool showIcon, string httpPackageLink)
-        {
+            InitializeComponent();
+            DrutNET.DrutNETBase.OnUpdateLog += new DrutNET.DrutNETBase.UpdateLog(writeMessage);
+            this._confirmExit = confirmExit;
 
-               _httpPackageLink = httpPackageLink;
-                InitializeComponent();
-                DrutNET.DrutNETBase.OnUpdateLog += new DrutNET.DrutNETBase.UpdateLog(writeMessage);
-                this._confirmExit = confirmExit;
-                if (showIcon)
-                {
-                    this.ShowInTaskbar = true;
-                    this.StartPosition = FormStartPosition.CenterScreen;
-                }
-                else
-                {
-                    this.ShowInTaskbar = false;
-                    this.StartPosition = FormStartPosition.CenterParent;
-                }
-               
         }
         private void writeMessage(string text, string mSender, Enums.MessageType mType, bool verbose)
         {
@@ -115,16 +86,8 @@ namespace DrutNET
                 bool loginRes = false;
                 this.Cursor = Cursors.WaitCursor;
                 writeMessage("Connecting...\n", "Login Form", Enums.MessageType.Error,false);
-                if (_user == null) //first try to login
-                {
-                    //TODO: add server UTL box to form
-                    _user = new User("");
-                    loginRes = _user.Login(UserName, Password);//login with new user
-                }
-                else //second try or more or login as differnent user
-                {
-                    loginRes = _user.Login(UserName, Password);//login with new user
-                }
+                _user = new User(textBoxURL.Text);
+                loginRes = _user.Login(UserName, Password);//login with new user
                 if (loginRes)
                 {
                     if (!_user.LoadUser())

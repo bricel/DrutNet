@@ -60,7 +60,7 @@ namespace DrutNET
         bool _multiple = false;
         bool _freeTags = false;
         List<TaxonomyTerm> _terms = new List<TaxonomyTerm>();
-        private List<Enums.ContentType> _contentTypes = new List<Enums.ContentType>();
+       // private List<string> _contentTypes = new List<string>();
         Services _servicesCon;
         public TaxonomyVocabulary(XmlRpcStruct vocLib,Services servicesCon)
         {
@@ -75,15 +75,17 @@ namespace DrutNET
             if (vocLib["tags"].ToString() == "1")
                 _freeTags = true;
             // Find what content type is valid for this vocab.
-            foreach (Enums.ContentType ct in Enum.GetValues(typeof(Enums.ContentType)))
+          /*  foreach (string ct in Enum.GetValues(typeof(Enums.ContentType)))
             {
                 try
                 {
                     if (((vocLib["nodes"] as XmlRpcStruct))[StringEnum.StrVal(ct)] != null)
                         _contentTypes.Add(ct);
+
+                        
                 }
                 catch { }
-            }
+            }*/
             //save terms
             XmlRpcStruct[] terms = servicesCon.TaxonomyGetTree(_vid);
             foreach (XmlRpcStruct term in terms)
@@ -110,13 +112,13 @@ namespace DrutNET
         /// <summary>
         /// Return true if the vocabulaty is defined for the given content type
         /// </summary>
-        public bool HasContentType(Enums.ContentType contentType)
+     /*   public bool HasContentType(Enums.ContentType contentType)
         {
             if (contentType == Enums.ContentType.Undefined)
                 return true;
             else
                 return _contentTypes.Contains(contentType);
-        }
+        }*/
         public TaxonomyTerm FindTerm(int tid)
         {
             return _terms.Find(delegate(TaxonomyTerm t) { return t.TID == tid; });
