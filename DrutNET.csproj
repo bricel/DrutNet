@@ -57,76 +57,55 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="DrutNetAPI\API.cd" />
-    <None Include="DrutNetAPI\app.config" />
-    <None Include="DrutNetBase\app.config" />
-    <None Include="DrutNetBase\Properties\Settings.settings" />
+    <None Include="app.config" />
+    <None Include="Class\API.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrutNetAPI\DrutNetCCK.cs" />
-    <Compile Include="DrutNetAPI\DrutNetConnection.cs" />
-    <Compile Include="DrutNetAPI\DrutNetCurl.cs" />
-    <Compile Include="DrutNetAPI\DrutNetField.cs" />
-    <Compile Include="DrutNetAPI\DrutNetServices.cs" />
-    <Compile Include="DrutNetAPI\DrutNetTaskContent.cs" />
-    <Compile Include="DrutNetAPI\Forms\AboutBox1.cs">
+    <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DrutNetAPI\Forms\AboutBox1.Designer.cs">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DrutNetAPI\Forms\LoadDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DrutNetAPI\Forms\LoadDialog.Designer.cs">
-      <DependentUpon>LoadDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DrutNetAPI\Forms\LoginForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DrutNetAPI\Forms\LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DrutNetAPI\Forms\SaveDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DrutNetAPI\Forms\SaveDialog.Designer.cs">
-      <DependentUpon>SaveDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DrutNetAPI\GroupsTaxonomy.cs" />
-    <Compile Include="DrutNetAPI\Properties\AssemblyInfo.cs" />
-    <Compile Include="DrutNetAPI\Properties\Resources.Designer.cs" />
-    <Compile Include="DrutNetAPI\Settings.cs" />
-    <Compile Include="DrutNetAPI\ThumbnailCreator.cs" />
-    <Compile Include="DrutNetBase\BaseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DrutNetBase\BaseForm.Designer.cs">
+    <Compile Include="Forms\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DrutNetBase\DrutnetBaseClass.cs" />
-    <Compile Include="DrutNetBase\Enums.cs" />
-    <Compile Include="DrutNetBase\Properties\AssemblyInfo.cs" />
-    <Compile Include="DrutNetBase\Properties\Settings.Designer.cs" />
-    <Compile Include="DrutNetBase\StringEnum.cs" />
+    <Compile Include="Class\DrutnetBase.cs" />
+    <Compile Include="Class\Enums.cs" />
+    <Compile Include="Class\StringEnum.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Class\IConnection.cs" />
+    <Compile Include="Class\Curl.cs" />
+    <Compile Include="Class\Field.cs" />
+    <Compile Include="Class\OrganicGroup.cs" />
+    <Compile Include="Class\Services.cs" />
+    <Compile Include="Forms\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Class\Taxonomy.cs" />
+    <Compile Include="Class\User.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DrutNetAPI\Forms\AboutBox1.resx">
-      <DependentUpon>AboutBox1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DrutNetAPI\Forms\LoadDialog.resx">
-      <DependentUpon>LoadDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DrutNetAPI\Forms\LoginForm.resx">
+    <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DrutNetAPI\Forms\SaveDialog.resx">
-      <DependentUpon>SaveDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DrutNetAPI\Properties\Resources.resx" />
-    <EmbeddedResource Include="DrutNetBase\BaseForm.resx">
+    <EmbeddedResource Include="Forms\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Class\Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

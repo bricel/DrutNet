@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DrutNet.Properties {
+namespace DrutNET.Properties {
     using System;
     
     

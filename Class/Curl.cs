@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using LibCurl = SeasideResearch.LibCurlNet;
 using System.IO;
 
-namespace DrutNet
+namespace DrutNET
 {
     /// <summary>
     /// enable to connect to drupal using cURL -- Single Tone --
@@ -121,7 +121,7 @@ namespace DrutNet
                 fileDownload.Write(buf, 0, size * nmemb);
             return size * nmemb;
         }
-        public CURLFORMcode AddFormField(MultiPartForm mf, object fieldName, object Value)
+        public LibCurl.CURLFORMcode AddFormField(LibCurl.MultiPartForm mf, object fieldName, object Value)
         {
 
             LibCurl.CURLFORMcode res = mf.AddSection(LibCurl.CURLformoption.CURLFORM_COPYNAME, fieldName,
@@ -131,14 +131,14 @@ namespace DrutNet
                 sendLogEvent("Can't add Curl field: " + res.ToString(), "Curl", Enums.MessageType.Error);
             return res;
         }
-        public bool AddFormFile(MultiPartForm mf, string fileName, Enums.HTMLField field)
+        public bool AddFormFile(LibCurl.MultiPartForm mf, string fileName, Enums.HTMLField field)
         {
             return AddFormFile(mf, fileName, StringEnum.StrVal(field));
         }
         /// <summary>
         /// add information to upload a file, also perform check of file size and file existing
         /// </summary>
-        public bool AddFormFile(MultiPartForm mf,  string fileName,string field)
+        public bool AddFormFile(LibCurl.MultiPartForm mf, string fileName, string field)
         {
             if (fileName != "")
             {
@@ -173,7 +173,7 @@ namespace DrutNet
         {
             sendLogEvent(msg,"Curl",Enums.MessageType.Error);
         }
-        public Easy EasyCurl
+        public LibCurl.Easy EasyCurl
         {
             get { return easy; }
         }
@@ -257,12 +257,12 @@ namespace DrutNet
             return _isloggedIn;
         }
 
-        bool ReLogin()
+        public bool ReLogin()
         {
            return Login(_username, _password);
         }
 
-        bool Logout()
+        public bool Logout()
         {
             try
             {
@@ -280,16 +280,23 @@ namespace DrutNet
             }
         }
         string _username;
-        string Username
+        public string Username
         {
             get { return _username; }
         }
         bool _isloggedIn = false;
-        bool IsloggedIn
+        public bool IsLoggedIn
         {
             get { return _isloggedIn; }  
         }
 
+        public string ServerURL
+        {
+            get { return _serverURL; }
+        }
+
         #endregion
+
+       
     }
 }

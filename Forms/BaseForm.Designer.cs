@@ -1,4 +1,4 @@
-﻿namespace DrutNet
+﻿namespace DrutNET
 {
     partial class BaseForm 
     {

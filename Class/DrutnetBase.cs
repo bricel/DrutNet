@@ -5,12 +5,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
-using DrutNet;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace DrutNet
+namespace DrutNET
 {
     /// <summary>
     /// Base Class with general functions
@@ -19,24 +18,15 @@ namespace DrutNet
     {
         //Log Event -----------------------------------------
         public delegate void UpdateLog(string str, string mSender, Enums.MessageType mType,bool verbose);
-        public delegate void SubTaskDoneDel(object task, Enums.SubTaskName subTask);
         public delegate void CurlDataProgressDel(object info);
         //Statics
         static public event UpdateLog OnUpdateLog;
-        static public event SubTaskDoneDel OnSubTaskDone;
         static public event CurlDataProgressDel OnCurlDataProgress;
 
         #region general methods
         static public void OpenWebPage(string url)
         {
             System.Diagnostics.Process.Start(url);
-        }
-        static public void SubTaskDone(object task, Enums.SubTaskName subTask)
-        {
-            if (OnSubTaskDone != null)
-            {
-                OnSubTaskDone(task, subTask);
-            }
         }
         static public void CurlDataProgress(object info)
         {
@@ -494,7 +484,7 @@ namespace DrutNet
 
         #endregion
 
-        #region version Check
+        #region file download
         /// <summary>
         /// Download a public file from a URL
         /// </summary>

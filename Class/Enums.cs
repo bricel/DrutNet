@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Win32;
 using System.IO;
 
-namespace DrutNet
+namespace DrutNET
 {
     static public class Enums
     {

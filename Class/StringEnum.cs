@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Reflection;
 
-namespace DrutNet
+namespace DrutNET
 {
     //class to handle string attribute to enum.
     #region Class StringEnum

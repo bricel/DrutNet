@@ -5,10 +5,10 @@ using System.Text;
 using CookComputing.XmlRpc;
 using System.Security.Cryptography;
 using System.Net;
-using DrutNet;
+using DrutNET;
 
 
-namespace DrutNet
+namespace DrutNET
 {
     // Since we don't want an error to pop up if the returned Drupal user object 
     // contains a field which does not map to a field or struct has we need to 
@@ -411,8 +411,7 @@ namespace DrutNet
         {
            return Login(_username, _password);
         }
-        string _username;
-        string _password;
+       
         public string Username
         {
             get { return _username; }
@@ -423,10 +422,15 @@ namespace DrutNet
         {
              get { return this._isLoggedIn; }
         }
+
+        string _username;
+        string _password;
         public bool Login(string user, string password)
         {
             try
             {
+                _username = user;
+                _password = password;
                 drupalServiceSystem = XmlRpcProxyGen.Create<IServiceSystem>();
                 drupalServiceSystem.Url = _serverURL + "services/xmlrpc" ;
                 Drupal cnct = drupalServiceSystem.Connect();
@@ -468,6 +472,16 @@ namespace DrutNet
             }
         }
 
+        public string ServerURL
+        {
+            get { return _serverURL; }
+        }
+
+     /*   public Services ServicesCon
+        {
+            get { return this; }
+        }
+        */
         #endregion
     }
     

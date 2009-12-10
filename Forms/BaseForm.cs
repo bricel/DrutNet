@@ -5,14 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using DrutNet;
+using DrutNET;
 
-namespace DrutNet
+namespace DrutNET
 {
     public partial class BaseForm : Form
     {
-         public  Properties.Settings _settings;
-         public Properties.Settings Settings
+         internal Properties.Settings _settings;
+         internal Properties.Settings Settings
          {
              get { return _settings; }
              //set { _settings = value; }
@@ -33,17 +33,6 @@ namespace DrutNet
                 _settings.Password = "";
 
             _settings.SavePass = savePass;
-            _settings.Save();
-        }
-        
-        protected void SaveOpenSaveOptions(bool promptOverWrite,
-            bool openContInBrowser, bool useContTitle, bool useNodeD)
-        {
-            //save last dir
-            _settings.PromptOverWrite = promptOverWrite;
-            _settings.OpenContInBrowser = openContInBrowser;
-            _settings.UseContTitle = useContTitle;
-            _settings.UseNodeD = useNodeD;
             _settings.Save();
         }
     }

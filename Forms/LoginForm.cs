@@ -5,12 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using DrutNet;
+using DrutNET;
 using System.Threading;
 
-namespace DrutNet
+namespace DrutNET
 {
-    public partial class LoginForm : DrutNet.BaseForm
+    public partial class LoginForm : DrutNET.BaseForm
     {
         User _user;
         bool closing = false;
@@ -43,7 +43,7 @@ namespace DrutNet
 
                _httpPackageLink = httpPackageLink;
                 InitializeComponent();
-                DrutNet.DrutNETBase.OnUpdateLog += new DrutNet.DrutNETBase.UpdateLog(writeMessage);
+                DrutNET.DrutNETBase.OnUpdateLog += new DrutNET.DrutNETBase.UpdateLog(writeMessage);
                 this._confirmExit = confirmExit;
                 if (showIcon)
                 {
@@ -111,12 +111,14 @@ namespace DrutNet
             txbMessage.Text = "";
             try
             {
+                
                 bool loginRes = false;
                 this.Cursor = Cursors.WaitCursor;
                 writeMessage("Connecting...\n", "Login Form", Enums.MessageType.Error,false);
                 if (_user == null) //first try to login
                 {
-                    _user = new User();
+                    //TODO: add server UTL box to form
+                    _user = new User("");
                     loginRes = _user.Login(UserName, Password);//login with new user
                 }
                 else //second try or more or login as differnent user
