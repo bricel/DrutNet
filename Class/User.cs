@@ -52,7 +52,7 @@ namespace DrutNET
             _serversURL = serverURL;
         }
         /// <summary>
-        /// load a none logged in user info
+        /// load a none logged in user ID info
         /// </summary>
         public User(int userID, Services serviceCon)
         {

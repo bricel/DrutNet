@@ -16,9 +16,17 @@ namespace DrutNETSample
         public Form1()
         {
             InitializeComponent();
-            LoginForm loginDialog = new LoginForm(false);
-            loginDialog.ShowDialog();
-            XmlRpcStruct node100 = loginDialog.User.ServicesCon.NodeGet(2000);  
+            Services serviceCon = new Services("http://drupalsite.com");
+            try
+            {
+                servicesCon.Login("username", "password");
+            }
+            catch (Exception ex)
+            {
+                txbMessage.Text += ex.Message + "\n";
+            }
+            XmlRpcStruct node100 = serviceCon.NodeGet(2000);
+
 
         }
         /// <summary>

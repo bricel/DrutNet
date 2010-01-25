@@ -46,6 +46,7 @@ namespace DrutNET
         {
             // Save settings in settings file
             txbMessage.Text = "";
+            
             txbUserName.Text = Settings.Username;
             txbPassword.Text = Settings.Password;
             checkBoxSavePass.Checked = Settings.SavePass;
