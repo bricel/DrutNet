@@ -16,18 +16,19 @@ namespace DrutNETSample
         public Form1()
         {
             InitializeComponent();
-            Services serviceCon = new Services("http://drupalsite.com");
+            Services serviceCon = new Services("http://localhost/drupal-drutnet/");
             try
             {
-                servicesCon.Login("username", "password");
+                serviceCon.Login("admin", "1234");
             }
             catch (Exception ex)
             {
-                txbMessage.Text += ex.Message + "\n";
+                textBox_message.Text += ex.Message + "\n";
             }
-            XmlRpcStruct node100 = serviceCon.NodeGet(2000);
+            // First node to load
+            XmlRpcStruct node1 = serviceCon.NodeGet(1);
 
-
+            richTextBox1.Text = node1["body"].ToString();
         }
         /// <summary>
         /// Fill a listView with the groups tags

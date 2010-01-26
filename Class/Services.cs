@@ -88,6 +88,7 @@ namespace DrutNET
         public Services(string serverURL)
         {
             _serverURL = serverURL;
+
         }
        
         private void errorMessage(string msg)
@@ -141,7 +142,7 @@ namespace DrutNET
                 //get node example
                 object ob = new object();//= new object();//dummy object to send
                // ob[0] = "";
-                return drupalServiceSystem.NodeGet(sessionID, nid, ob);
+               return drupalServiceSystem.NodeGet(sessionID, nid, ob);
             }
             catch (XmlRpcFaultException ex)
             {
