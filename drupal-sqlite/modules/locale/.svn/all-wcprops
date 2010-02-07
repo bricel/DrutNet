@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/locale
+END
+locale.module
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/locale/locale.module
+END
+locale.install
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/locale/locale.install
+END
+locale.css
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/locale/locale.css
+END
+locale.info
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/locale/locale.info
+END

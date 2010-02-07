@@ -1,0 +1,5 @@
+# Protect files and directories from prying eyes.
+# Update this RegEx with the extension you choose for the SQLite database file.
+<FilesMatch "\.s3db$">
+	Order allow,deny
+</FilesMatch>

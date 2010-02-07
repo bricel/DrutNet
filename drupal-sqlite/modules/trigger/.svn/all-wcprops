@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/trigger
+END
+trigger.admin.inc
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/trigger/trigger.admin.inc
+END
+trigger.module
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/drupal-sqlite/!svn/ver/29/trunk/modules/trigger/trigger.module
+END
+trigger.install
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/trigger/trigger.install
+END
+trigger.info
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/trigger/trigger.info
+END

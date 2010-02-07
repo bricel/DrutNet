@@ -1,0 +1,3 @@
+<FilesMatch "\.s3db$">
+  Order allow,deny
+</FilesMatch>

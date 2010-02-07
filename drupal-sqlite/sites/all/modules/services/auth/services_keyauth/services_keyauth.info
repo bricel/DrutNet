@@ -1,0 +1,12 @@
+; $Id: services_keyauth.info,v 1.1.2.1 2009/05/18 00:19:40 marcingy Exp $
+name = Key Authentication
+description = Provides key authentication for the services module
+package = Services - authentication
+dependencies[] = services
+core = 6.x
+; Information added by drupal.org packaging script on 2010-01-26
+version = "6.x-2.0-beta1"
+core = "6.x"
+project = "services"
+datestamp = "1264482610"
+

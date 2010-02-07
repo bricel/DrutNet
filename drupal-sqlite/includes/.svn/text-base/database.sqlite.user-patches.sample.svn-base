@@ -1,0 +1,33 @@
+<?php
+/**
+ * ======================================================================
+ * This file is a sample to help writing your custom query rewrite rules.
+ * Rename the file to "database.sqlite.user-patches.inc"
+ * and your rules will be applied AFTER the core ones.
+ * 
+ * $query is a String parameter that contains
+ * the SQL query ready to be executed.
+ * ======================================================================
+ */
+function _sqlite_user_rewrite_query(&$query)
+{
+
+  /**
+   * ------------------------------------------
+   * First rule: only a sample, remove it!
+   * ------------------------------------------
+   */
+  if (stripos($query, 'SELECT ') === 0){
+    $query = 'THIS_IS_ONLY_A_SAMPLE_REMOVE_ME_AND_ADD_YOUR_RULES ' . $query;
+  }
+  
+  /**
+   * ------------------------------------------
+   * Second rule: only a sample, remove it!
+   * ------------------------------------------
+   */
+  if(variable_get('my_variable', 0)) {
+    // ... rewrite logic here ...
+  }
+  
+}

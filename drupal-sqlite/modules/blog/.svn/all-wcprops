@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/blog
+END
+blog.module
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/blog/blog.module
+END
+blog.pages.inc
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/drupal-sqlite/!svn/ver/45/trunk/modules/blog/blog.pages.inc
+END
+blog.info
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/blog/blog.info
+END
