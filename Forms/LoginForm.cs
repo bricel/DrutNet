@@ -87,7 +87,9 @@ namespace DrutNET
                 bool loginRes = false;
                 this.Cursor = Cursors.WaitCursor;
                 writeMessage("Connecting...\n", "Login Form", Enums.MessageType.Error,false);
-                _user = new User(textBoxURL.Text);
+                ServicesSettings setttings = new ServicesSettings();
+                setttings.DrupalURL = textBoxURL.Text;
+                _user = new User(setttings);
                 loginRes = _user.Login(UserName, Password);//login with new user
                 if (loginRes)
                 {

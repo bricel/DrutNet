@@ -12,23 +12,29 @@ namespace DrutNETSample
 {
     public partial class Form1 : Form
     {
-
+        XmlRpcStruct _node;
+        Services _serviceCon; 
         public Form1()
         {
             InitializeComponent();
-            Services serviceCon = new Services("http://localhost/drupal-drutnet/");
-            try
-            {
-                serviceCon.Login("admin", "1234");
-            }
-            catch (Exception ex)
-            {
-                textBox_message.Text += ex.Message + "\n";
-            }
-            // First node to load
-            XmlRpcStruct node1 = serviceCon.NodeGet(1);
-
-            richTextBox1.Text = node1["body"].ToString();
+            // This handle all message throw by the system.
+            DrutNETBase.OnUpdateLog += new DrutNETBase.UpdateLog(DrutNETBase_OnUpdateLog);
+            
+            // Create a settings object to define connection settings.
+            ServicesSettings settings = new ServicesSettings();
+            settings.DrupalURL = "http://localhost/drupal-sqlite/";
+            settings.CleanURL = false;
+            settings.UseSessionID = false;
+            // Create a connection object
+            _serviceCon = new Services(settings);
+            
+            // Login to drupal
+            _serviceCon.Login("admin", "1234");
+        }
+        void DrutNETBase_OnUpdateLog(string str, string mSender, Enums.MessageType mType, bool verbose)
+        {
+            // Write log messages on error window.
+            textBox_message.Text +=mType.ToString() + " - " + mSender + ": " + str + "\n";
         }
         /// <summary>
         /// Fill a listView with the groups tags
@@ -141,6 +147,26 @@ namespace DrutNETSample
                     (e.Item.Tag as TaxonomyTerm).IsSelected = false;
                 }
             }
+        }
+
+        private void button_load_Click(object sender, EventArgs e)
+        {
+            // Node to load
+            _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
+            if (_node!=null)
+                 richTextBox1.Text = _node["body"].ToString();
+        }
+
+        private void button_save_Click(object sender, EventArgs e)
+        {
+            if (_node != null)
+            {
+                //update node
+                _node["body"] = richTextBox1.Text;
+                _serviceCon.NodeSave(_node);
+            }
+            else
+                DrutNETBase.sendLogEvent("No node was loaded, load a node first", "My Sample", Enums.MessageType.Error);
         }
     }
 }

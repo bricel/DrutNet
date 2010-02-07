@@ -41,15 +41,17 @@ namespace DrutNET
         }
         int _uid;
         Services _servicesCon;
-        string _serversURL;
+        ServicesSettings _settings;
+        //string _serversURL;
         /// <summary>
         /// Not loading any user, just init class
         /// </summary>
         /// <param name="serviceCon"></param>
-        public User(string serverURL)
+        public User(ServicesSettings settings)
         {
-            _servicesCon = new Services(serverURL);
-            _serversURL = serverURL;
+            _servicesCon = new Services(settings);
+            _settings = settings;
+           // _serversURL = serverURL;
         }
         /// <summary>
         /// load a none logged in user ID info
@@ -186,7 +188,7 @@ namespace DrutNET
 
         public string ServerURL
         {
-            get { return _serversURL; }
+            get { return _settings.DrupalURL; }
         }
 
         public Services ServicesCon
