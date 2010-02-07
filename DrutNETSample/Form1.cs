@@ -24,7 +24,7 @@ namespace DrutNETSample
             ServicesSettings settings = new ServicesSettings();
             settings.DrupalURL = "http://localhost/drupal-sqlite/";
             settings.CleanURL = false;
-            settings.UseSessionID = false;
+            settings.UseSessionID = true;
             // Create a connection object
             _serviceCon = new Services(settings);
             
