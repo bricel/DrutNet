@@ -1,0 +1,14 @@
+; $Id: comment_service.info,v 1.1.2.1 2009/06/06 22:57:40 marcingy Exp $
+name = Comment Service
+description = Provides a comment service.
+package = Services - services
+dependencies[] = services
+dependencies[] = comment
+core = 6.x
+
+; Information added by drupal.org packaging script on 2010-01-26
+version = "6.x-2.0-beta1"
+core = "6.x"
+project = "services"
+datestamp = "1264482610"
+

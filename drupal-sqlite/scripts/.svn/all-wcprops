@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/scripts
+END
+drupal.sh
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/scripts/drupal.sh
+END
+code-style.pl
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/scripts/code-style.pl
+END
+cron-lynx.sh
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/scripts/cron-lynx.sh
+END
+code-clean.sh
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/scripts/code-clean.sh
+END
+cron-curl.sh
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/scripts/cron-curl.sh
+END

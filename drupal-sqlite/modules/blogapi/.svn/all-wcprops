@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/blogapi
+END
+blogapi.module
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/blogapi/blogapi.module
+END
+blogapi.install
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/blogapi/blogapi.install
+END
+blogapi.info
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/blogapi/blogapi.info
+END

@@ -33,7 +33,7 @@
             this.textBox_message = new System.Windows.Forms.TextBox();
             this.button_load = new System.Windows.Forms.Button();
             this.label_nid = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_nodeID = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -52,6 +52,7 @@
             this.button_save.TabIndex = 1;
             this.button_save.Text = "Save";
             this.button_save.UseVisualStyleBackColor = true;
+            this.button_save.Click += new System.EventHandler(this.button_save_Click);
             // 
             // textBox_message
             // 
@@ -69,6 +70,7 @@
             this.button_load.TabIndex = 1;
             this.button_load.Text = "Load node";
             this.button_load.UseVisualStyleBackColor = true;
+            this.button_load.Click += new System.EventHandler(this.button_load_Click);
             // 
             // label_nid
             // 
@@ -79,19 +81,19 @@
             this.label_nid.TabIndex = 3;
             this.label_nid.Text = "NID";
             // 
-            // textBox2
+            // textBox_nodeID
             // 
-            this.textBox2.Location = new System.Drawing.Point(46, 12);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(83, 20);
-            this.textBox2.TabIndex = 4;
+            this.textBox_nodeID.Location = new System.Drawing.Point(46, 12);
+            this.textBox_nodeID.Name = "textBox_nodeID";
+            this.textBox_nodeID.Size = new System.Drawing.Size(83, 20);
+            this.textBox_nodeID.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(702, 527);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox_nodeID);
             this.Controls.Add(this.label_nid);
             this.Controls.Add(this.textBox_message);
             this.Controls.Add(this.button_load);
@@ -111,7 +113,7 @@
         private System.Windows.Forms.TextBox textBox_message;
         private System.Windows.Forms.Button button_load;
         private System.Windows.Forms.Label label_nid;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_nodeID;
     }
 }
 

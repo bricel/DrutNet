@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/openid
+END
+login-bg.png
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/drupal-sqlite/!svn/ver/45/trunk/modules/openid/login-bg.png
+END
+openid.module
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/openid/openid.module
+END
+openid.install
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/openid/openid.install
+END
+openid.pages.inc
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/drupal-sqlite/!svn/ver/45/trunk/modules/openid/openid.pages.inc
+END
+openid.css
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/drupal-sqlite/!svn/ver/10/trunk/modules/openid/openid.css
+END
+openid.inc
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/openid/openid.inc
+END
+openid.info
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/drupal-sqlite/!svn/ver/52/trunk/modules/openid/openid.info
+END
+xrds.inc
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/openid/xrds.inc
+END
+openid.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/drupal-sqlite/!svn/ver/3/trunk/modules/openid/openid.js
+END

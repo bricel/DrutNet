@@ -1,0 +1,12 @@
+; $Id: services.info,v 1.5.2.2 2008/10/05 00:33:02 marcingy Exp $
+name = Services
+description = Provide an API for creating web services.
+package = Services
+core = 6.x
+php = 5.x 
+; Information added by drupal.org packaging script on 2010-01-26
+version = "6.x-2.0-beta1"
+core = "6.x"
+project = "services"
+datestamp = "1264482610"
+

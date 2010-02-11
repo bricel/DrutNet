@@ -1,0 +1,161 @@
+10
+
+dir
+55
+https://drupal-sqlite.svn.sourceforge.net/svnroot/drupal-sqlite/trunk/modules
+https://drupal-sqlite.svn.sourceforge.net/svnroot/drupal-sqlite
+
+
+
+2009-12-17T10:24:48.815987Z
+52
+nicorac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7ff65de3-f47a-1248-9dc1-12f8b9fb76a2
+
+syslog
+dir
+
+aggregator
+dir
+
+blog
+dir
+
+system
+dir
+
+upload
+dir
+
+php
+dir
+
+statistics
+dir
+
+book
+dir
+
+translation
+dir
+
+locale
+dir
+
+menu
+dir
+
+search
+dir
+
+taxonomy
+dir
+
+openid
+dir
+
+color
+dir
+
+update
+dir
+
+filter
+dir
+
+node
+dir
+
+dblog
+dir
+
+forum
+dir
+
+help
+dir
+
+block
+dir
+
+tracker
+dir
+
+contact
+dir
+
+path
+dir
+
+ping
+dir
+
+profile
+dir
+
+comment
+dir
+
+trigger
+dir
+
+throttle
+dir
+
+poll
+dir
+
+README.txt
+file
+
+
+
+
+2010-02-07T19:55:11.364041Z
+fcdd8c9dcfb9989bf0985aa971a79ed1
+2009-04-30T10:54:19.659485Z
+3
+nicorac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+447
+
+blogapi
+dir
+
+user
+dir
+
