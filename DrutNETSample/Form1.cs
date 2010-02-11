@@ -22,14 +22,17 @@ namespace DrutNETSample
             
             // Create a settings object to define connection settings.
             ServicesSettings settings = new ServicesSettings();
-            settings.DrupalURL = "http://localhost/drupal-sqlite/";
-            settings.CleanURL = false;
+            settings.DrupalURL = "http://localhost/DrutNet/drupal-sqlite/";
+            settings.CleanURL = true;
             settings.UseSessionID = true;
+            settings.UseKeys = true;
+            settings.Key = "03cfd62180a67dcbcb1be9a7f78dc726";
+            settings.DomainName = "localhost";
             // Create a connection object
             _serviceCon = new Services(settings);
             
             // Login to drupal
-            _serviceCon.Login("admin", "1234");
+            _serviceCon.Login("demo", "1234");
         }
         void DrutNETBase_OnUpdateLog(string str, string mSender, Enums.MessageType mType, bool verbose)
         {
@@ -151,16 +154,20 @@ namespace DrutNETSample
 
         private void button_load_Click(object sender, EventArgs e)
         {
+            textBox_message.Text = "";
             // Node to load
             _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
-            if (_node!=null)
-                 richTextBox1.Text = _node["body"].ToString();
+            if (_node != null)
+                richTextBox1.Text = _node["body"].ToString();
         }
 
         private void button_save_Click(object sender, EventArgs e)
         {
+            textBox_message.Text = "";
             if (_node != null)
-            {
+            {   
+                // Reload node to prevent access restriction, by other user
+                _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
                 //update node
                 _node["body"] = richTextBox1.Text;
                 _serviceCon.NodeSave(_node);

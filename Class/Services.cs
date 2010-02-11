@@ -36,6 +36,8 @@ namespace DrutNET
         Drupal Connect();
 
         [XmlRpcMethod("user.login")]
+        DrupalCon Login(ref string hash, string domain_name, ref string timestamp, string nonce, string sessid, string username, string password);
+        [XmlRpcMethod("user.login")]
         DrupalCon Login(string sessid, string username, string password);
         [XmlRpcMethod("user.login")]
         DrupalCon Login( string username, string password);
@@ -45,11 +47,14 @@ namespace DrutNET
         [XmlRpcMethod("user.logout")]
         bool Logout();
 
+
         [XmlRpcMethod("user.get")]
         XmlRpcStruct UserGet(string sessid, int uid);
         [XmlRpcMethod("user.get")]
         XmlRpcStruct UserGet( int uid);
 
+        [XmlRpcMethod("node.get")]
+        XmlRpcStruct NodeGet(ref string hash,string domain_name,ref string timestamp,string nonce, string sessid, int nid, object fields);
         [XmlRpcMethod("node.get")]
         XmlRpcStruct NodeGet(string sessid, int nid, object fields);
         [XmlRpcMethod("node.get")]
@@ -110,6 +115,28 @@ namespace DrutNET
             set { _useSessionID = value; }
         }
 
+        bool _useKeys = false;
+        public bool UseKeys
+        {
+            get { return _useKeys; }
+            set { _useKeys = value; }
+        }
+
+        string _key = "";
+        public string Key 
+        {
+            get { return _key; }
+            set { _key = value; }
+        }
+        string _domainName = "";
+        public string DomainName
+        {
+            get { return _domainName; }
+            set { _domainName = value; }
+        }
+
+
+
     }
     //----------------------------------------------------------------------------------------------------------
     /// <summary>
@@ -140,6 +167,15 @@ namespace DrutNET
         {
             sendLogEvent(msg, "Services", Enums.MessageType.Error);
         }
+        private XmlRpcStruct handleExeption(Exception ex)
+        {
+            if (ex is XmlRpcFaultException)
+            {
+                _errorCode = (ex as XmlRpcFaultException).FaultCode;
+            }
+            errorMessage(ex.Message);
+            return null;
+        }
         
         //<summary>
          //User ID of the logged-in user
@@ -164,11 +200,9 @@ namespace DrutNET
                 else
                     return null;
             }
-            catch (XmlRpcFaultException ex)
+            catch (Exception ex)
             {
-                _errorCode = ex.FaultCode;
-                errorMessage(ex.Message);
-                return null;
+                return handleExeption(ex);
             }
         }
         public XmlRpcStruct[] TaxonomyGetTree(int vid)
@@ -181,10 +215,9 @@ namespace DrutNET
                 else
                     return drupalServiceSystem.TaxonomyGetTree(vid);
             }
-            catch (XmlRpcFaultException ex)
+            catch (Exception ex)
             {
-                _errorCode = ex.FaultCode;
-                errorMessage(ex.Message);
+                handleExeption(ex);
                 return null;
             }
         }
@@ -192,17 +225,29 @@ namespace DrutNET
         {
             try
             {
-                object ob = new object();//dummy object to send
+                // Dummy object to send.
+                object ob = new object();
                 if (_settings.UseSessionID)
-                    return drupalServiceSystem.NodeGet(_sessionID, nid, ob);
+                {
+                    // Use of key together with SID.
+                    if (_settings.UseKeys)
+                    {
+                        string hash = GetHMAC("",_settings.Key);
+                        string timestamp = GetUnixTimestamp();
+                        string nonce = GetNonce(10);
+                        return drupalServiceSystem.NodeGet(ref hash, _settings.DomainName, ref timestamp, nonce, _sessionID, nid,ob);
+
+                    }
+                    else
+                        return drupalServiceSystem.NodeGet(_sessionID, nid, ob);
+
+                }
                 else
                     return drupalServiceSystem.NodeGet(nid, ob);
             }
-            catch (XmlRpcFaultException ex)
+            catch (Exception ex)
             {
-                _errorCode = ex.FaultCode;
-                errorMessage(ex.Message);
-                return null;
+                return handleExeption(ex);
             }
         }
         public XmlRpcStruct NodeGet(int nid, string[] fields)
@@ -215,13 +260,12 @@ namespace DrutNET
                     return drupalServiceSystem.NodeGet(nid, fields);
 
             }
-            catch (XmlRpcFaultException ex)
+            catch (Exception ex)
             {
-                _errorCode = ex.FaultCode;
-                errorMessage(ex.Message);
-                return null;
+                return handleExeption(ex);
             }
         }
+        
         public XmlRpcStruct UserGet(int nid)
         {
             
@@ -234,11 +278,9 @@ namespace DrutNET
                         return drupalServiceSystem.UserGet( nid);
 
                 }
-                catch (XmlRpcFaultException ex)
+                catch (Exception ex)
                 {
-                    errorMessage(ex.Message);
-                    _errorCode = ex.FaultCode;
-                    return null;
+                    return handleExeption(ex);
                 }
         }
         /// <summary>
@@ -258,11 +300,9 @@ namespace DrutNET
 
 
             }
-            catch (XmlRpcFaultException ex)
+            catch (Exception ex)
             {
-                errorMessage(ex.Message);
-                _errorCode = ex.FaultCode;
-                return null;
+                return handleExeption(ex);
             }
         }
         public int NodeSave(XmlRpcStruct node)
@@ -284,10 +324,10 @@ namespace DrutNET
                 //int newnodeID = drupServ.NodeSave(taskNode);
 
                 // XmlRpcStruct fref=drupServ.FileSave(@"c:\test\1234\rani.pds", "cad_file");
-                
+
                 //(node["title"]) =DateTime.Now.ToString();//update log
                 //((node["field_file_upload"] as object[])[0] as XmlRpcStruct)["filepath"] = @"c:\test.PDS";
-                 string res ; 
+                string res;
                 if (_settings.UseSessionID)
                     res = drupalServiceSystem.NodeSave(_sessionID, node);
                 else
@@ -295,10 +335,9 @@ namespace DrutNET
 
                 return Convert.ToInt32(res);
             }
-            catch (XmlRpcFaultException ex)
+            catch (Exception ex)
             {
-                errorMessage(ex.Message);
-                _errorCode = ex.FaultCode;
+                handleExeption(ex);
                 return 0;
             }
         }
@@ -318,17 +357,14 @@ namespace DrutNET
             {
                 XmlRpcStruct o1 = new XmlRpcStruct();
                 if (_settings.UseSessionID)
-
                     return drupalServiceSystem.ViewsGet(_sessionID, viewName, "default", o1, args, 0, limit);
                 else
                     return drupalServiceSystem.ViewsGet(viewName, "default", o1, args, 0, limit);
             }
             catch (Exception ex)
             {
-                errorMessage(ex.Message);
                 _errorCode = 0;
-                if (ex is XmlRpcFaultException)
-                    _errorCode = (ex as XmlRpcFaultException).FaultCode;
+                handleExeption(ex);
                 return null;
             }
         }
@@ -503,17 +539,28 @@ namespace DrutNET
                 if (!_settings.CleanURL)
                      xmlrpcServer =  "?q=services/xmlrpc";
                 else
-                     xmlrpcServer = "services/xmlrpc";
+                    xmlrpcServer = "services/xmlrpc";
 
-                drupalServiceSystem.Url = _settings.DrupalURL + xmlrpcServer;
+                drupalServiceSystem.Url = _settings.DrupalURL + xmlrpcServer +"?XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=126589808359313";
                 Drupal cnct = drupalServiceSystem.Connect();
                 DrupalCon lgn ;
                 // SesionID pref
 
                 if (_settings.UseSessionID)
-                    lgn = drupalServiceSystem.Login(cnct.sessid, user, password);
+                {
+                    if (_settings.UseKeys)
+                    {
+                        string hash = "";// GetHMAC("", _settings.Key);
+                        string timestamp="";// = GetUnixTimestamp();
+                        string nonce = GetNonce(10);
+                        lgn = drupalServiceSystem.Login(ref hash, _settings.DomainName, ref timestamp, nonce, cnct.sessid, user, password);
+                    }
+                    else
+                        lgn = drupalServiceSystem.Login(cnct.sessid, user, password);
+
+                }
                 else
-                    lgn = drupalServiceSystem.Login( user, password);
+                    lgn = drupalServiceSystem.Login(user, password);
                 _sessionID = lgn.sessid;
                 _uID = lgn.user.uid; //returned from login
                 _isLoggedIn = true;
