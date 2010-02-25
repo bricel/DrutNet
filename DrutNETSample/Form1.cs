@@ -24,10 +24,12 @@ namespace DrutNETSample
             ServicesSettings settings = new ServicesSettings();
             settings.DrupalURL = "http://localhost/DrutNet/drupal-sqlite/";
             settings.CleanURL = true;
-            settings.UseSessionID = true;
-            settings.UseKeys = true;
-            settings.Key = "03cfd62180a67dcbcb1be9a7f78dc726";
-            settings.DomainName = "localhost";
+            settings.UseSessionID = false;
+           
+            /*settings.UseKeys = true;//Not Implemented yet
+            //settings.Key = "03cfd62180a67dcbcb1be9a7f78dc726";
+            settings.DomainName = "localhost";*/
+            
             // Create a connection object
             _serviceCon = new Services(settings);
             
@@ -158,7 +160,7 @@ namespace DrutNETSample
             // Node to load
             _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
             if (_node != null)
-                richTextBox1.Text = _node["body"].ToString();
+                richTextBox1.Text = _node["title"].ToString();
         }
 
         private void button_save_Click(object sender, EventArgs e)
@@ -174,6 +176,12 @@ namespace DrutNETSample
             }
             else
                 DrutNETBase.sendLogEvent("No node was loaded, load a node first", "My Sample", Enums.MessageType.Error);
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            webBrowser1.DocumentText = richTextBox1.Text;
+           // webBrowser1.Refresh();
         }
     }
 }

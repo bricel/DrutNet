@@ -34,18 +34,23 @@
             this.button_load = new System.Windows.Forms.Button();
             this.label_nid = new System.Windows.Forms.Label();
             this.textBox_nodeID = new System.Windows.Forms.TextBox();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
             // richTextBox1
             // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.Location = new System.Drawing.Point(12, 41);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(678, 360);
+            this.richTextBox1.Size = new System.Drawing.Size(678, 128);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // button_save
             // 
+            this.button_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_save.Location = new System.Drawing.Point(12, 417);
             this.button_save.Name = "button_save";
             this.button_save.Size = new System.Drawing.Size(75, 23);
@@ -56,6 +61,8 @@
             // 
             // textBox_message
             // 
+            this.textBox_message.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_message.Location = new System.Drawing.Point(12, 446);
             this.textBox_message.Multiline = true;
             this.textBox_message.Name = "textBox_message";
@@ -88,11 +95,23 @@
             this.textBox_nodeID.Size = new System.Drawing.Size(83, 20);
             this.textBox_nodeID.TabIndex = 4;
             // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.webBrowser1.Location = new System.Drawing.Point(17, 176);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(673, 235);
+            this.webBrowser1.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(702, 527);
+            this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.textBox_nodeID);
             this.Controls.Add(this.label_nid);
             this.Controls.Add(this.textBox_message);
@@ -114,6 +133,7 @@
         private System.Windows.Forms.Button button_load;
         private System.Windows.Forms.Label label_nid;
         private System.Windows.Forms.TextBox textBox_nodeID;
+        private System.Windows.Forms.WebBrowser webBrowser1;
     }
 }
 

@@ -119,7 +119,12 @@ namespace DrutNET
         public bool UseKeys
         {
             get { return _useKeys; }
-            set { _useKeys = value; }
+            set 
+            {
+                if (value == true)
+                    throw new Exception("The private key feature is not supported yet");
+                //_useKeys = value; 
+            }
         }
 
         string _key = "";
