@@ -1,5 +1,5 @@
 <?php
-// $Id: menu_service.inc,v 1.1.2.4.2.1 2010/01/23 15:35:34 hugowetterberg Exp $
+// $Id: menu_service.inc,v 1.1.2.4.2.2 2010/02/21 03:13:35 heyrocker Exp $
 /**
  * @file
  * Adds a service type for a menu
@@ -10,8 +10,14 @@
 /**
  * Get the menu from the database.
  *
+ * @param $menu_id
+ *   The named menu links to return. Defaults to 'primary-links'.
+ * @param $fields
+ *   An array of fields to be returned, for use in limiting the
+ *   size of data returned to only that which is necessary.
+ *
  * @return
- *   Array. A list of all children menu items from a given menu item.
+ *   An array of all child menu items from a given menu item.
  */
 function menu_service_get($menu_id = NULL, $fields = array()) {
   if ($menu_id === NULL || trim($menu_id) === '') {
@@ -25,10 +31,14 @@ function menu_service_get($menu_id = NULL, $fields = array()) {
 }
 
 /**
- * Recursively returns menu items
+ * Recursively returns menu items, optionally limited by an array of fields.
  *
- * @param data
- *   Array. The current menu item.
+ * @param $data
+ *   The menu item whose children should be returned
+ * @param $fields
+ *   An array of fields to be returned, for use in limiting the
+ *   size of data returned to only that which is necessary.
+ *
  * @return
  *   Array. All children menu items from a given menu item.
  */

@@ -13,7 +13,8 @@ namespace DrutNETSample
     public partial class Form1 : Form
     {
         XmlRpcStruct _node;
-        Services _serviceCon; 
+        Services _serviceCon;
+        Curl _curlCon;
         public Form1()
         {
             InitializeComponent();
@@ -32,9 +33,13 @@ namespace DrutNETSample
             
             // Create a connection object
             _serviceCon = new Services(settings);
-            
+                       
             // Login to drupal
             _serviceCon.Login("demo", "1234");
+
+            _curlCon = new Curl(settings.DrupalURL);
+            _curlCon.Login("demo","1234");
+
         }
         void DrutNETBase_OnUpdateLog(string str, string mSender, Enums.MessageType mType, bool verbose)
         {
@@ -160,7 +165,7 @@ namespace DrutNETSample
             // Node to load
             _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
             if (_node != null)
-                richTextBox1.Text = _node["title"].ToString();
+                richTextBox1.Text = _node["body"].ToString();
         }
 
         private void button_save_Click(object sender, EventArgs e)
@@ -182,6 +187,18 @@ namespace DrutNETSample
         {
             webBrowser1.DocumentText = richTextBox1.Text;
            // webBrowser1.Refresh();
+        }
+
+        private void button_upload_Click(object sender, EventArgs e)
+        {
+            SeasideResearch.LibCurlNet.MultiPartForm mf = new SeasideResearch.LibCurlNet.MultiPartForm();
+            _curlCon.AddFormFile(mf, textBox1.Text, "");
+        }
+
+        private void button_browse_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            textBox1.Text = openFileDialog1.FileName;
         }
     }
 }

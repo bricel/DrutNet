@@ -24,7 +24,7 @@ namespace DrutNET
         LibCurl.Easy.WriteFunction wf;
         string _serverURL;
         /// <summary>
-        /// Constructor
+        /// Constructor, init curl service.
         /// </summary>
         public Curl(string serverURL)
         {
@@ -64,6 +64,7 @@ namespace DrutNET
                 return LibCurl.CURLcode.CURLE_COULDNT_CONNECT;
             }
         }
+
         public Int32 OnProgress(Object extraData, Double dlTotal,
         Double dlNow, Double ulTotal, Double ulNow)
         {
@@ -230,7 +231,7 @@ namespace DrutNET
                 EasyCurl.GetInfo(LibCurl.CURLINFO.CURLINFO_EFFECTIVE_URL, ref retUrl);
                 if ((retUrl == login_url) && (HttpConnectCode == 200)) //case already loggedin, page is returning 403, and not 200
                 {
-                    errorMessage("Coudn't login to cURL");
+                    errorMessage("Coudn't login to your site with cURL");
                     _isloggedIn = false;
                 }
                 else if (HttpConnectCode == 403)//need to logout before 

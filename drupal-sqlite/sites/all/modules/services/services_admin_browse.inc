@@ -1,5 +1,5 @@
 <?php
-// $Id: services_admin_browse.inc,v 1.5.2.45.2.6 2010/01/26 03:56:51 heyrocker Exp $
+// $Id: services_admin_browse.inc,v 1.5.2.45.2.7 2010/02/27 05:43:16 heyrocker Exp $
 /**
  * @file
  *  Browser thru all services and servers.
@@ -183,7 +183,12 @@ function services_admin_browse_test_submit($form, $form_state) {
   // Allow the authentication module to handle submitted values.
   services_auth_invoke('alter_browse_form_submit', $method, $args);
   $result = services_method_call($method['method'], $args, TRUE);
-  $_services_admin_browse_test_submit_result = '<pre>'. htmlspecialchars(print_r($result, TRUE)) .'</pre>';
+  // if the devel module is installed use kpr for fancy output with types
+  if (function_exists('kpr')) {
+    $_services_admin_browse_test_submit_result = kpr($result, true);
+  } else {
+    $_services_admin_browse_test_submit_result = '<pre>'. htmlspecialchars(print_r($result, TRUE)) .'</pre>';
+  }
 }
 
 function services_admin_browse_test_unserialize_args($values, $formats) {

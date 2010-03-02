@@ -4,9 +4,9 @@ description = Provides system services.
 package = Services - services
 dependencies[] = services
 core = 6.x
-; Information added by drupal.org packaging script on 2010-01-26
-version = "6.x-2.0-beta1"
+; Information added by drupal.org packaging script on 2010-03-02
+version = "6.x-2.x-dev"
 core = "6.x"
 project = "services"
-datestamp = "1264482610"
+datestamp = "1267488864"
 

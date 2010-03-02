@@ -1,5 +1,5 @@
 <?php
-// $Id: node_service.inc,v 1.1.2.11.2.6 2010/01/26 03:56:51 heyrocker Exp $
+// $Id: node_service.inc,v 1.1.2.11.2.10 2010/02/20 23:50:05 heyrocker Exp $
 
 /**
  * @file
@@ -23,7 +23,7 @@ function node_service_get($nid, $fields = array()) {
 
   if ($node) {
     // Apply field level content permissions
-    if (module_exists('content_permissions') && variable_get('services_use_content_permissions', FALSE)) {
+    if (module_exists('content') && variable_get('services_use_content_permissions', FALSE)) {
       $content_fields = content_fields(NULL, $node->type);
       foreach ($content_fields as $field_name => $field_info) {
         if (isset($node->$field_name)) {
@@ -143,14 +143,14 @@ function node_service_save($edit) {
     // If the submitted node has no author (for instance if it was
     // created programmatically by hand) then set the currently logged 
     // in user as the author. 
-    if (!$edit->uid) {
+    if (!$edit['uid']) {
       global $user;
-      $edit->uid = $user->uid;
+      $edit['uid'] = $user->uid;
     }
 
     // Setup form_state
     $form_state = array();
-    $form_state['values'] = (array) $edit;
+    $form_state['values'] = $edit;
     $form_state['values']['op'] = t('Save');
 
     $ret = drupal_execute($edit['type'] .'_node_form', $form_state, (object)$edit);
