@@ -1,0 +1,72 @@
+<?php
+// $Id:$
+/**
+ * @file
+ * Upload files via a simple form.
+ */
+
+/**
+ * Implementation of hook_perm().
+ */
+function file_form_perm() {
+  return array('upload files via file form');
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function  file_form_menu() {
+  $items = array();
+  $items['file_form'] = array(
+    'title' => 'File Upload',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('file_form_upload', 1),
+    'access arguments' => array('upload files via file form'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Form builder; Return the file upload form.
+ */
+function file_form_upload() {
+  $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $form['file_upload'] = array(
+    '#type' => 'file',
+    '#title' => t('File name'),
+  );
+
+  $form['file_directory'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Directory'),
+    '#description' => t('Select the directory to save the file. Leave empty if should be saved in default location.'),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Upload file'
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for the file upload form.
+ *
+ * @return
+ *   Export of file object cast as array.
+ */
+function file_form_upload_submit($form, &$form_state) {
+  $dest = file_directory_path();
+  $dest .= !empty($form_state['values']['file_directory']) ? '/'. $form_state['values']['file_directory'] : '';
+
+  // Save new file uploads.
+  if ($file = file_save_upload('file_upload', array(), $dest)) {
+    // Return the file object.
+    return drupal_json($file);
+  }
+}
+
