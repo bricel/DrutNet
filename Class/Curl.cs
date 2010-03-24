@@ -23,13 +23,14 @@ namespace DrutNET
         public int HttpConnectionCode { get { return HttpConnectCode; } }
         LibCurl.Easy.WriteFunction wf;
         string _serverURL;
+       
         /// <summary>
         /// Constructor, init curl service.
         /// </summary>
         public Curl(string serverURL)
         {
             _serverURL = serverURL;
-            LibCurl.Curl.GlobalInit((int)LibCurl.CURLinitFlag.CURL_GLOBAL_ALL);
+            LibCurl.Curl.GlobalInit((int)LibCurl.CURLinitFlag.CURL_GLOBAL_DEFAULT);
             easy = new LibCurl.Easy();
             easy.SetOpt(LibCurl.CURLoption.CURLOPT_TIMEOUT, 300);
             easy.SetOpt(LibCurl.CURLoption.CURLOPT_COOKIEFILE,Enums.COOKIESFILE);
@@ -46,25 +47,6 @@ namespace DrutNET
             
             wf = new LibCurl.Easy.WriteFunction(OnWriteData);
         }
-        
-        public LibCurl.CURLcode DrupCurlPerform()
-        {
-            try
-            {
-                return easy.Perform();
-            }
-            catch (Exception e)
-            {
-                if (e.Data != null)
-                    if ((int)e.Data["Code"] == 1)
-                    {
-                        if (ReLogin())
-                            return easy.Perform();
-                    }
-                return LibCurl.CURLcode.CURLE_COULDNT_CONNECT;
-            }
-        }
-
         public Int32 OnProgress(Object extraData, Double dlTotal,
         Double dlNow, Double ulTotal, Double ulNow)
         {
@@ -101,7 +83,7 @@ namespace DrutNET
                         return false;
                     }
 
-                 return true;
+                    return true;
                 }
                 else
                 {
@@ -115,6 +97,60 @@ namespace DrutNET
                 return false;
             }
         }
+        /// <summary>
+        /// Upload a file to Drupal using the form-file module and CURL 
+        /// </summary>
+        /// <param name="localPath">Local file location</param>
+        /// <returns></returns>
+        public bool UploadFile(string localPath)
+        {
+           return UploadFile(localPath,"");
+        }
+        /// <summary>
+        /// Upload a file to Drupal using the form-file module and CURL 
+        /// </summary>
+        /// <param name="localPath">Local file location</param>
+        /// <param name="serverDirectory">Save to a specific directory in drupal</param>
+        public bool UploadFile(string localPath, string serverDirectory)
+        {
+            LibCurl.MultiPartForm mf = new LibCurl.MultiPartForm();
+            AddFormFile(mf, localPath, "files[file_upload]");
+            // Optional parameter - save to a different directory
+            AddFormFile(mf, serverDirectory, "file_directory");
+            ClearDataIn();//clear html data in return 
+            AddFormField(mf, "op", "Upload file");
+            EasyCurl.SetOpt(LibCurl.CURLoption.CURLOPT_HTTPPOST, mf);
+            LibCurl.CURLcode exec = DrupCurlPerform();
+
+            string tempHttp = "";
+            EasyCurl.GetInfo(LibCurl.CURLINFO.CURLINFO_EFFECTIVE_URL, ref tempHttp);
+            if (((exec != 0)) || (tempHttp == ServerURL + "file-form"))
+            {
+                sendLogEvent("Error uploading file, Curl error no:" + exec, "Curl", Enums.MessageType.Error);
+                return false;
+            }
+            else
+                return true;
+        }
+
+        #region Private Methods
+        private LibCurl.CURLcode DrupCurlPerform()
+        {
+            try
+            {
+                return easy.Perform();
+            }
+            catch (Exception e)
+            {
+                if (e.Data != null)
+                    if ((int)e.Data["Code"] == 1)
+                    {
+                        if (ReLogin())
+                            return easy.Perform();
+                    }
+                return LibCurl.CURLcode.CURLE_COULDNT_CONNECT;
+            }
+        }
         private Int32 OnWriteData(Byte[] buf, Int32 size, Int32 nmemb, Object extraData)
         {
             //Console.Write(System.Text.Encoding.UTF8.GetString(buf));
@@ -122,7 +158,7 @@ namespace DrutNET
                 fileDownload.Write(buf, 0, size * nmemb);
             return size * nmemb;
         }
-        public LibCurl.CURLFORMcode AddFormField(LibCurl.MultiPartForm mf, object fieldName, object Value)
+        private LibCurl.CURLFORMcode AddFormField(LibCurl.MultiPartForm mf, object fieldName, object Value)
         {
 
             LibCurl.CURLFORMcode res = mf.AddSection(LibCurl.CURLformoption.CURLFORM_COPYNAME, fieldName,
@@ -132,14 +168,14 @@ namespace DrutNET
                 sendLogEvent("Can't add Curl field: " + res.ToString(), "Curl", Enums.MessageType.Error);
             return res;
         }
-        public bool AddFormFile(LibCurl.MultiPartForm mf, string fileName, Enums.HTMLField field)
+        private bool AddFormFile(LibCurl.MultiPartForm mf, string fileName, Enums.HTMLField field)
         {
             return AddFormFile(mf, fileName, StringEnum.StrVal(field));
         }
         /// <summary>
         /// add information to upload a file, also perform check of file size and file existing
         /// </summary>
-        public bool AddFormFile(LibCurl.MultiPartForm mf, string fileName, string field)
+        private bool AddFormFile(LibCurl.MultiPartForm mf, string fileName, string field)
         {
             if (fileName != "")
             {
@@ -174,16 +210,16 @@ namespace DrutNET
         {
             sendLogEvent(msg,"Curl",Enums.MessageType.Error);
         }
-        public LibCurl.Easy EasyCurl
+        private LibCurl.Easy EasyCurl
         {
             get { return easy; }
         }
         Regex rxFindHttpCode = new Regex(@"HTTP/1.1 ([^ ]*)");
-        public void ClearDataIn()
+        private void ClearDataIn()
         {
             _htmlDataIn = "";
         }
-        public string HtmlDataIn
+        private string HtmlDataIn
         {
             get { return _htmlDataIn; }
         }
@@ -203,12 +239,12 @@ namespace DrutNET
             if ((infoType == LibCurl.CURLINFOTYPE.CURLINFO_END))
                 EndText += msg;
         }
-        
-        public void CleanupCurl()
+        private void CleanupCurl()
         {
             easy.Cleanup();
             LibCurl.Curl.GlobalCleanup();
         }
+        #endregion
 
         #region IConnection Members
         string _password;

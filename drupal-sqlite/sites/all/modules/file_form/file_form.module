@@ -17,7 +17,7 @@ function file_form_perm() {
  */
 function  file_form_menu() {
   $items = array();
-  $items['file_form'] = array(
+  $items['file-form'] = array(
     'title' => 'File Upload',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('file_form_upload', 1),
@@ -42,7 +42,7 @@ function file_form_upload() {
   $form['file_directory'] = array(
     '#type' => 'textfield',
     '#title' => t('Directory'),
-    '#description' => t('Select the directory to save the file. Leave empty if should be saved in default location.'),
+    '#description' => t('Select the directory to save the file. Leave empty to saved in default location.'),
   );
 
   $form['submit'] = array(

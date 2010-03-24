@@ -191,8 +191,9 @@ namespace DrutNETSample
 
         private void button_upload_Click(object sender, EventArgs e)
         {
-            SeasideResearch.LibCurlNet.MultiPartForm mf = new SeasideResearch.LibCurlNet.MultiPartForm();
-            _curlCon.AddFormFile(mf, textBox1.Text, "");
+            _curlCon.UploadFile(textBox1.Text);
+           
+           
         }
 
         private void button_browse_Click(object sender, EventArgs e)
