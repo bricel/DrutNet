@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using LibCurl = SeasideResearch.LibCurlNet;
 using System.IO;
 
+
 namespace DrutNET
 {
     /// <summary>
@@ -23,6 +24,7 @@ namespace DrutNET
         public int HttpConnectionCode { get { return HttpConnectCode; } }
         LibCurl.Easy.WriteFunction wf;
         string _serverURL;
+        bool _verbose = true;
        
         /// <summary>
         /// Constructor, init curl service.
@@ -79,7 +81,7 @@ namespace DrutNET
                     fileDownload.Close();
                     if ((d == 0) || (this.HttpConnectCode != 200) || (!DrutNETBase.FileExists(savePath)))
                     {
-                        sendLogEvent("Can't download file with Curl: " + exec.ToString(), "Curl", Enums.MessageType.Error);
+                        sendLogEvent("Can't download file with Curl: " + exec.ToString() + "\n", "Curl", Enums.MessageType.Error);
                         return false;
                     }
 
@@ -87,7 +89,7 @@ namespace DrutNET
                 }
                 else
                 {
-                    sendLogEvent("CURL not logged-in", "Curl", Enums.MessageType.Error);
+                    sendLogEvent("CURL not logged-in", "Curl" + "\n", Enums.MessageType.Error);
                     return false;
                 }
             }
@@ -102,7 +104,7 @@ namespace DrutNET
         /// </summary>
         /// <param name="localPath">Local file location</param>
         /// <returns></returns>
-        public bool UploadFile(string localPath)
+        public int UploadFile(string localPath)
         {
            return UploadFile(localPath,"");
         }
@@ -111,28 +113,65 @@ namespace DrutNET
         /// </summary>
         /// <param name="localPath">Local file location</param>
         /// <param name="serverDirectory">Save to a specific directory in drupal</param>
-        public bool UploadFile(string localPath, string serverDirectory)
+        /// <returns> File ID or -1 if failed to upload</returns>
+        public int UploadFile(string localPath, string serverDirectory)
         {
+            // Use file form module
+           
+            string url = ServerURL + "file-form";
+
             LibCurl.MultiPartForm mf = new LibCurl.MultiPartForm();
             AddFormFile(mf, localPath, "files[file_upload]");
             // Optional parameter - save to a different directory
-            AddFormFile(mf, serverDirectory, "file_directory");
-            ClearDataIn();//clear html data in return 
+            AddFormField(mf, serverDirectory, "file_directory");
+            AddFormField(mf, "form_token", getToken(url, "edit-file-form-upload-form-token"));
+            AddFormField(mf, "form_id", "file_form_upload");
             AddFormField(mf, "op", "Upload file");
             EasyCurl.SetOpt(LibCurl.CURLoption.CURLOPT_HTTPPOST, mf);
+            EasyCurl.SetOpt(LibCurl.CURLoption.CURLOPT_URL, url);
+            _htmlDataIn = "";//clear html data in return 
             LibCurl.CURLcode exec = DrupCurlPerform();
+
+            // Check if Json returned a file id
+            int fileID;
+            string ex = @"fid"":.""([^""]*)";
+            Regex rx = new Regex(ex);
+            MatchCollection fields = rx.Matches(_htmlDataIn);
+            if (fields.Count > 0)
+                 fileID = Convert.ToInt32(fields[0].Groups[1].Captures[0].Value);
+            else
+                fileID = -1;
+          
+            //JsonUtility.GenerateIndentedJsonText = false;
 
             string tempHttp = "";
             EasyCurl.GetInfo(LibCurl.CURLINFO.CURLINFO_EFFECTIVE_URL, ref tempHttp);
-            if (((exec != 0)) || (tempHttp == ServerURL + "file-form"))
-            {
-                sendLogEvent("Error uploading file, Curl error no:" + exec, "Curl", Enums.MessageType.Error);
-                return false;
-            }
-            else
-                return true;
-        }
 
+            if (((fileID == -1)))// || (tempHttp == ServerURL + "file-form"))
+            {
+                sendLogEvent("Error uploading file, Curl error no: " + "\n", "Curl", Enums.MessageType.Error);
+            }
+            return fileID;
+        }
+        private string getToken(string url,string formId)
+        {
+            _htmlDataIn = ""; //clear data in string
+            EasyCurl.SetOpt(LibCurl.CURLoption.CURLOPT_URL, url);
+            LibCurl.CURLcode exec = DrupCurlPerform();
+            if (HttpConnectCode != 200)
+            {
+                sendLogEvent("Error access " + HttpConnectCode.ToString() + "\n","Curl", Enums.MessageType.Error);
+                _htmlDataIn = "";
+                return "";
+            }
+            Regex rx = new Regex(formId + @".*value=""([^""]*)");
+            MatchCollection fields = rx.Matches(_htmlDataIn);
+            _htmlDataIn = "";
+            if (fields.Count > 0)
+                return fields[0].Groups[1].Captures[0].Value;
+            else
+                return "";
+        }
         #region Private Methods
         private LibCurl.CURLcode DrupCurlPerform()
         {
@@ -165,7 +204,7 @@ namespace DrutNET
                      LibCurl.CURLformoption.CURLFORM_COPYCONTENTS, Value, LibCurl.CURLformoption.CURLFORM_END);
 
             if (res != LibCurl.CURLFORMcode.CURL_FORMADD_OK)
-                sendLogEvent("Can't add Curl field: " + res.ToString(), "Curl", Enums.MessageType.Error);
+                sendLogEvent("Can't add Curl field: " + res.ToString() + "\n", "Curl", Enums.MessageType.Error);
             return res;
         }
         private bool AddFormFile(LibCurl.MultiPartForm mf, string fileName, Enums.HTMLField field)
@@ -181,13 +220,13 @@ namespace DrutNET
             {
                 if (!DrutNETBase.FileExists(fileName))
                 {
-                    sendLogEvent("Can't find file : " + fileName, "Curl", Enums.MessageType.Error);
+                    sendLogEvent("Can't find file : " + fileName + "\n", "Curl", Enums.MessageType.Error);
                     return false;
                 }
                 else
                     if ((new FileInfo(fileName).Length / 1024) > Enums.MAXFILESIZEKB)
                     {
-                        sendLogEvent(fileName + " size is bigger than limit (" + (Enums.MAXFILESIZEKB / 1024).ToString() + "MB)",
+                        sendLogEvent(fileName + " size is bigger than limit (" + (Enums.MAXFILESIZEKB / 1024).ToString() + "MB)" + "\n",
                             "Curl", Enums.MessageType.Error);
                         return false;
                     }
@@ -197,7 +236,7 @@ namespace DrutNET
                         LibCurl.CURLformoption.CURLFORM_FILE, fileName, LibCurl.CURLformoption.CURLFORM_END);
                         if (res != LibCurl.CURLFORMcode.CURL_FORMADD_OK)
                         {
-                            sendLogEvent("Can't add Curl file: " + res.ToString(),"Curl", Enums.MessageType.Error);
+                            sendLogEvent("Can't add Curl file: " + res.ToString() + "\n", "Curl", Enums.MessageType.Error);
                             return false;
                         }
                         else
@@ -208,7 +247,7 @@ namespace DrutNET
         }
         private void errorMessage(string msg)
         {
-            sendLogEvent(msg,"Curl",Enums.MessageType.Error);
+            sendLogEvent(msg + "\n", "Curl", Enums.MessageType.Error);
         }
         private LibCurl.Easy EasyCurl
         {
@@ -235,9 +274,17 @@ namespace DrutNET
                 HtmlHeaderIn += msg;
             }
             if ((infoType == LibCurl.CURLINFOTYPE.CURLINFO_TEXT))
+            {
                 HtmlText += msg;
+                if (_verbose)
+                    sendLogEvent(msg, "Curl", Enums.MessageType.Info);
+            }
             if ((infoType == LibCurl.CURLINFOTYPE.CURLINFO_END))
+            {
                 EndText += msg;
+                if (_verbose)
+                    sendLogEvent(msg, "Curl", Enums.MessageType.Info);
+            }
         }
         private void CleanupCurl()
         {

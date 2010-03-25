@@ -314,24 +314,6 @@ namespace DrutNET
         {
             try
             {
-                //string filePath = DrupalServices.SERVERURL + ((taskNode["field_dispatch_zip_file"] as object[])[0] as XmlRpcStruct)["filepath"];
-                //drupServ.DownloadFile(filePath, @"c:\test\1234\" + nextTaskNid.ToString() + ".zip");//save zip file locally
-                //Now activaing mtm or other task
-
-                //update task node
-                //System.Windows.Forms.MessageBox.Show(((taskNode["field_dispatch_state"] as object[])[0] as XmlRpcStruct)["value"].ToString());
-                // ((taskNode["field_dispatch_state"] as object[])[0] as XmlRpcStruct)["value"] = "Completed";//Change status to completed
-                //  ((taskNode["field_dispatch_log"] as object[])[0] as XmlRpcStruct)["value"] = "what ever";
-
-                // (taskNode["title"]) = "brice_eee";
-                //example of log update
-                //((taskNode["field_dispatch_log"] as object[])[0] as XmlRpcStruct)["value"] += "yalla beitar" ;//update log
-                //int newnodeID = drupServ.NodeSave(taskNode);
-
-                // XmlRpcStruct fref=drupServ.FileSave(@"c:\test\1234\rani.pds", "cad_file");
-
-                //(node["title"]) =DateTime.Now.ToString();//update log
-                //((node["field_file_upload"] as object[])[0] as XmlRpcStruct)["filepath"] = @"c:\test.PDS";
                 string res;
                 if (_settings.UseSessionID)
                     res = drupalServiceSystem.NodeSave(_sessionID, node);
@@ -376,13 +358,6 @@ namespace DrutNET
         //--------------------------------------------------------------------------------------
         public string ParseFieldArray(Enum arrayfieldName,Enum fieldName, XmlRpcStruct parentStruct)
         {
-            //List<string> temp = new List<string>();
-            //try
-            //{
-            //    foreach (XmlRpcStruct val in (parentStruct[fieldName] as object[]))
-            //        temp.Add(val["value"].ToString());
-            //    return temp.ToArray();
-            //}
             try
             {
                 if ((parentStruct[StringEnum.StrVal(arrayfieldName)] as object[]).Length > 0)
@@ -591,7 +566,10 @@ namespace DrutNET
         {
             try
             {
-                drupalServiceSystem.Logout(_sessionID);
+                if (_settings.UseSessionID)
+                    drupalServiceSystem.Logout(_sessionID);
+                else
+                    drupalServiceSystem.Logout();
                 _isLoggedIn = false;
                 return true;
             }

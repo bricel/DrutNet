@@ -35,16 +35,14 @@ namespace DrutNETSample
             _serviceCon = new Services(settings);
                        
             // Login to drupal
-            _serviceCon.Login("demo", "1234");
-
             _curlCon = new Curl(settings.DrupalURL);
-            _curlCon.Login("demo","1234");
+           
 
         }
         void DrutNETBase_OnUpdateLog(string str, string mSender, Enums.MessageType mType, bool verbose)
         {
             // Write log messages on error window.
-            textBox_message.Text +=mType.ToString() + " - " + mSender + ": " + str + "\n";
+            richTextBox_messages.Text = mType.ToString() + " - " + mSender + ": " + str + richTextBox_messages.Text;
         }
         /// <summary>
         /// Fill a listView with the groups tags
@@ -161,7 +159,7 @@ namespace DrutNETSample
 
         private void button_load_Click(object sender, EventArgs e)
         {
-            textBox_message.Text = "";
+            //richTextBox_messages.Text = "";
             // Node to load
             _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
             if (_node != null)
@@ -170,7 +168,7 @@ namespace DrutNETSample
 
         private void button_save_Click(object sender, EventArgs e)
         {
-            textBox_message.Text = "";
+            //textBox_message.Text = "";
             if (_node != null)
             {   
                 // Reload node to prevent access restriction, by other user
@@ -191,15 +189,35 @@ namespace DrutNETSample
 
         private void button_upload_Click(object sender, EventArgs e)
         {
-            _curlCon.UploadFile(textBox1.Text);
-           
-           
+            int fid;
+            if ((fid = _curlCon.UploadFile(textBox1.Text)) == -1)
+                DrutNETBase_OnUpdateLog("Unable to upload file", "Drutnet Sample", Enums.MessageType.Error, false);
+            else
+                DrutNETBase_OnUpdateLog("File uploaded successfully to FID :" + fid + "\n", "Drutnet Sample", Enums.MessageType.Info, false);
         }
 
         private void button_browse_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
             textBox1.Text = openFileDialog1.FileName;
+        }
+
+        private void button_login_Click(object sender, EventArgs e)
+        {
+            _serviceCon.Login("demo", "1234");
+            _curlCon.Login("demo", "1234");
+
+        }
+
+        private void button_logout_Click(object sender, EventArgs e)
+        {
+            _serviceCon.Logout();
+            _curlCon.Logout();
+        }
+
+        private void richTextBox_messages_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

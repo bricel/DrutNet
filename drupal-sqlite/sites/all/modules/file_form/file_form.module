@@ -24,7 +24,14 @@ function  file_form_menu() {
     'access arguments' => array('upload files via file form'),
     'type' => MENU_CALLBACK,
   );
-
+  /*$items['file-form/json'] = array(
+    'title' => 'File Upload Result',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('file_form_upload_result'),
+    'access arguments' => array('upload files via file form'),
+    'type' => MENU_CALLBACK,
+  );
+*/
   return $items;
 }
 
@@ -53,6 +60,11 @@ function file_form_upload() {
   return $form;
 }
 
+
+/**
+ *
+ */
+
 /**
  * Submit handler for the file upload form.
  *
@@ -62,11 +74,11 @@ function file_form_upload() {
 function file_form_upload_submit($form, &$form_state) {
   $dest = file_directory_path();
   $dest .= !empty($form_state['values']['file_directory']) ? '/'. $form_state['values']['file_directory'] : '';
-
   // Save new file uploads.
   if ($file = file_save_upload('file_upload', array(), $dest)) {
     // Return the file object.
-    return drupal_json($file);
+    print drupal_json($file);
+    exit();
   }
 }
 
