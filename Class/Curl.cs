@@ -51,9 +51,8 @@ namespace DrutNET
         }
         public Int32 OnProgress(Object extraData, Double dlTotal,
         Double dlNow, Double ulTotal, Double ulNow)
-        {
+        { //TODO: replace with struct
             double[] data = { dlNow, dlTotal, ulNow, ulTotal };
-            //SubTaskDone(data, Enums.SubTaskName.DownloadUploadProgress);
             CurlDataProgress(data);
             return 0; // standard return from PROGRESSFUNCTION
         }

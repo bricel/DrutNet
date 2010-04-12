@@ -15,7 +15,7 @@ namespace DrutNET
     /// <summary>
     /// represent a field inside a content, still in development
     /// </summary>
-    class Field
+  /*  class Field
     {
         string _xmlRpcField;
         string _htmlField;
@@ -31,6 +31,6 @@ namespace DrutNET
         public bool Save()
         { return true; }
         
-    }
+    }*/
     
 }

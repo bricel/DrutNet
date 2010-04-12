@@ -34,6 +34,9 @@
             this.textBox_nodeID = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,9 +47,19 @@
             this.button_logout = new System.Windows.Forms.Button();
             this.button_login = new System.Windows.Forms.Button();
             this.richTextBox_messages = new System.Windows.Forms.RichTextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox_fileNode = new System.Windows.Forms.TextBox();
+            this.textBox_userName = new System.Windows.Forms.TextBox();
+            this.textBox_password = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox_url = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.checkBox_sessionID = new System.Windows.Forms.CheckBox();
+            this.checkBox_clean_URL = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox_fieldName = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -95,10 +108,11 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(1, 3);
+            this.tabControl1.Enabled = false;
+            this.tabControl1.Location = new System.Drawing.Point(1, 71);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(777, 431);
+            this.tabControl1.Size = new System.Drawing.Size(671, 361);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
@@ -113,13 +127,50 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(769, 405);
+            this.tabPage1.Size = new System.Drawing.Size(663, 335);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Node load/save";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 189);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Preview";
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.webBrowser1.Location = new System.Drawing.Point(6, 205);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(649, 119);
+            this.webBrowser1.TabIndex = 5;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Location = new System.Drawing.Point(6, 53);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(650, 133);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.progressBar1);
+            this.tabPage2.Controls.Add(this.textBox_fieldName);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.textBox_fileNode);
+            this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.textBox1);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.button_upload);
@@ -127,7 +178,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(758, 299);
+            this.tabPage2.Size = new System.Drawing.Size(663, 335);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File upload";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -138,7 +189,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(67, 38);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(642, 20);
+            this.textBox1.Size = new System.Drawing.Size(536, 20);
             this.textBox1.TabIndex = 2;
             // 
             // label3
@@ -152,7 +203,7 @@
             // 
             // button_upload
             // 
-            this.button_upload.Location = new System.Drawing.Point(11, 74);
+            this.button_upload.Location = new System.Drawing.Point(519, 78);
             this.button_upload.Name = "button_upload";
             this.button_upload.Size = new System.Drawing.Size(126, 23);
             this.button_upload.TabIndex = 0;
@@ -163,7 +214,7 @@
             // button_browse
             // 
             this.button_browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_browse.Location = new System.Drawing.Point(714, 36);
+            this.button_browse.Location = new System.Drawing.Point(608, 36);
             this.button_browse.Name = "button_browse";
             this.button_browse.Size = new System.Drawing.Size(37, 23);
             this.button_browse.TabIndex = 0;
@@ -175,7 +226,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 450);
+            this.label1.Location = new System.Drawing.Point(2, 448);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 7;
@@ -188,7 +239,7 @@
             // button_logout
             // 
             this.button_logout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_logout.Location = new System.Drawing.Point(641, 440);
+            this.button_logout.Location = new System.Drawing.Point(524, 35);
             this.button_logout.Name = "button_logout";
             this.button_logout.Size = new System.Drawing.Size(126, 23);
             this.button_logout.TabIndex = 0;
@@ -199,7 +250,7 @@
             // button_login
             // 
             this.button_login.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_login.Location = new System.Drawing.Point(509, 440);
+            this.button_login.Location = new System.Drawing.Point(524, 6);
             this.button_login.Name = "button_login";
             this.button_login.Size = new System.Drawing.Size(126, 23);
             this.button_login.TabIndex = 0;
@@ -210,57 +261,153 @@
             // richTextBox_messages
             // 
             this.richTextBox_messages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox_messages.Location = new System.Drawing.Point(0, 469);
+            this.richTextBox_messages.Location = new System.Drawing.Point(0, 467);
             this.richTextBox_messages.Name = "richTextBox_messages";
-            this.richTextBox_messages.Size = new System.Drawing.Size(779, 160);
+            this.richTextBox_messages.Size = new System.Drawing.Size(673, 160);
             this.richTextBox_messages.TabIndex = 8;
             this.richTextBox_messages.Text = "";
             this.richTextBox_messages.TextChanged += new System.EventHandler(this.richTextBox_messages_TextChanged);
             // 
-            // richTextBox1
+            // label4
             // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 78);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(83, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Attache to node";
+            // 
+            // textBox_fileNode
+            // 
+            this.textBox_fileNode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(6, 53);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(756, 149);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.textBox_fileNode.Location = new System.Drawing.Point(96, 75);
+            this.textBox_fileNode.Name = "textBox_fileNode";
+            this.textBox_fileNode.Size = new System.Drawing.Size(44, 20);
+            this.textBox_fileNode.TabIndex = 2;
             // 
-            // webBrowser1
+            // textBox_userName
             // 
-            this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.textBox_userName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser1.Location = new System.Drawing.Point(6, 233);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(755, 161);
-            this.webBrowser1.TabIndex = 5;
+            this.textBox_userName.Location = new System.Drawing.Point(77, 6);
+            this.textBox_userName.Name = "textBox_userName";
+            this.textBox_userName.Size = new System.Drawing.Size(88, 20);
+            this.textBox_userName.TabIndex = 2;
             // 
-            // label2
+            // textBox_password
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 217);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Preview";
+            this.textBox_password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_password.Location = new System.Drawing.Point(77, 35);
+            this.textBox_password.Name = "textBox_password";
+            this.textBox_password.PasswordChar = '*';
+            this.textBox_password.Size = new System.Drawing.Size(88, 20);
+            this.textBox_password.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(2, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "User Name";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(2, 35);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Password";
+            // 
+            // textBox_url
+            // 
+            this.textBox_url.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_url.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBox_url.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.AllUrl;
+            this.textBox_url.Location = new System.Drawing.Point(252, 6);
+            this.textBox_url.Name = "textBox_url";
+            this.textBox_url.Size = new System.Drawing.Size(266, 20);
+            this.textBox_url.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(177, 9);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Drupal URL";
+            // 
+            // checkBox_sessionID
+            // 
+            this.checkBox_sessionID.AutoSize = true;
+            this.checkBox_sessionID.Location = new System.Drawing.Point(180, 35);
+            this.checkBox_sessionID.Name = "checkBox_sessionID";
+            this.checkBox_sessionID.Size = new System.Drawing.Size(99, 17);
+            this.checkBox_sessionID.TabIndex = 9;
+            this.checkBox_sessionID.Text = "Use Session ID";
+            this.checkBox_sessionID.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_clean_URL
+            // 
+            this.checkBox_clean_URL.AutoSize = true;
+            this.checkBox_clean_URL.Location = new System.Drawing.Point(298, 34);
+            this.checkBox_clean_URL.Name = "checkBox_clean_URL";
+            this.checkBox_clean_URL.Size = new System.Drawing.Size(105, 17);
+            this.checkBox_clean_URL.TabIndex = 9;
+            this.checkBox_clean_URL.Text = "Use Clean URLs";
+            this.checkBox_clean_URL.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(166, 78);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(84, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "CCK Field Name";
+            // 
+            // textBox_fieldName
+            // 
+            this.textBox_fieldName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_fieldName.Location = new System.Drawing.Point(256, 75);
+            this.textBox_fieldName.Name = "textBox_fieldName";
+            this.textBox_fieldName.Size = new System.Drawing.Size(114, 20);
+            this.textBox_fieldName.TabIndex = 2;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(10, 121);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(635, 23);
+            this.progressBar1.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 629);
+            this.ClientSize = new System.Drawing.Size(673, 627);
+            this.Controls.Add(this.checkBox_clean_URL);
+            this.Controls.Add(this.checkBox_sessionID);
             this.Controls.Add(this.richTextBox_messages);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBox_password);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBox_url);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBox_userName);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button_login);
             this.Controls.Add(this.button_logout);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "DrutNet API sample";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -292,6 +439,19 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TextBox textBox_fileNode;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox_userName;
+        private System.Windows.Forms.TextBox textBox_password;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox_url;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox checkBox_sessionID;
+        private System.Windows.Forms.CheckBox checkBox_clean_URL;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.TextBox textBox_fieldName;
+        private System.Windows.Forms.Label label8;
     }
 }
 

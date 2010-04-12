@@ -77,6 +77,11 @@ namespace DrutNET
         [XmlRpcMethod("file.save")]
         XmlRpcStruct FileSave( string name, string path, int status);
 
+        [XmlRpcMethod("file.get")]
+        XmlRpcStruct FileGet(string sessid, int fid);
+        [XmlRpcMethod("file.get")]
+        XmlRpcStruct FileGet(int fid);
+
 
         [XmlRpcMethod("taxonomy.getTree")]
         XmlRpcStruct[] TaxonomyGetTree(string sessid, int vid);
@@ -174,11 +179,15 @@ namespace DrutNET
         }
         private XmlRpcStruct handleExeption(Exception ex)
         {
+            return handleExeption(ex, "");
+        }
+        private XmlRpcStruct handleExeption(Exception ex,string functionName)
+        {
             if (ex is XmlRpcFaultException)
             {
                 _errorCode = (ex as XmlRpcFaultException).FaultCode;
             }
-            errorMessage(ex.Message);
+            errorMessage(functionName + " - " + ex.Message + "\n");
             return null;
         }
         
@@ -207,7 +216,7 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                return handleExeption(ex);
+                return handleExeption(ex,"OG Get Vocabulary");
             }
         }
         public XmlRpcStruct[] TaxonomyGetTree(int vid)
@@ -222,10 +231,95 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                handleExeption(ex);
+                handleExeption(ex, "Taxonomy Get Tree");
                 return null;
             }
         }
+        /// <summary>
+        /// Get file structure information
+        /// </summary>
+        /// <param name="fid">file id</param>
+        /// <returns>File object structure</returns>
+        public XmlRpcStruct FileGet(int fid)
+        {
+            try
+            {
+                if (_settings.UseSessionID)
+                {
+                    // Use of key together with SID.
+                    if (_settings.UseKeys)
+                    {
+                        /*string hash = GetHMAC("", _settings.Key);
+                        string timestamp = GetUnixTimestamp();
+                        string nonce = GetNonce(10);
+                        return drupalServiceSystem.NodeGet(ref hash, _settings.DomainName, ref timestamp, nonce, _sessionID, nid, ob);
+                        */
+                        throw new NotImplementedException("Private key not implemented yet");
+                        return null;
+                    }
+                    else
+                        return drupalServiceSystem.FileGet(_sessionID, fid);
+
+                }
+                else
+                    return drupalServiceSystem.FileGet(fid);
+            }
+            catch (Exception ex)
+            {
+                return handleExeption(ex, "File Get");
+            }
+        }
+      /// <summary>
+        /// Add an already upload file to cck file field, without saving the node
+      /// </summary>
+      /// <param name="fileFieldName">CCK field name</param>
+      /// <param name="fid">File ID to attach</param>
+      /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
+      /// <param name="node">Node to attach file to (alresdy load with node load)</param>
+        public void AttachFileToNode(string fileFieldName, int fid, int fileIndex, XmlRpcStruct node)
+        {
+            XmlRpcStruct filenode = this.FileGet(fid);
+            if (node[fileFieldName] == null)
+                node[fileFieldName] = new object[1];
+            // Index is not within range of lenght + 1
+            if ((node[fileFieldName] as object[]).Length < fileIndex)
+            {
+                handleExeption(new IndexOutOfRangeException(), "Attach file to Node");
+                return;
+            }
+            else
+                // index is one bigger than existing array, we need to add one object manually
+                if ((node[fileFieldName] as object[]).Length == fileIndex)
+                {
+                    List<object> objectList = new List<object>();
+                    foreach (object ob in (node[fileFieldName] as object[]))
+                        objectList.Add(ob);
+                    objectList.Add(new object());
+                    node[fileFieldName] = objectList.ToArray();
+                    // Add index list required for multiple files.
+                    filenode.Add("list", (fileIndex + 1).ToString());
+                }
+            (node[fileFieldName] as object[])[fileIndex] = filenode;
+        }
+        /// <summary>
+        /// Add an already upload file to cck file field, also saving node
+        /// </summary>
+        /// <param name="fileFieldName">CCK field name</param>
+        /// <param name="fid">File ID to attach</param>
+        /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
+        /// <param name="node">Node ID attach file to</param>
+        public void AttachFileToNode(string fileFieldName, int fid, int fileIndex, int nid)
+        {
+            XmlRpcStruct node = this.NodeGet(nid);
+            AttachFileToNode(fileFieldName, fid, fileIndex, node);
+            this.NodeSave(node);
+        }
+
+        /// <summary>
+        /// Return node structure
+        /// </summary>
+        /// <param name="nid">Node ID</param>
+        /// <returns>Node structure</returns>
         public XmlRpcStruct NodeGet(int nid)
         {
             try
@@ -252,7 +346,7 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                return handleExeption(ex);
+                return handleExeption(ex, "Node Get");
             }
         }
         public XmlRpcStruct NodeGet(int nid, string[] fields)
@@ -267,7 +361,7 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                return handleExeption(ex);
+                return handleExeption(ex, "Node Get");
             }
         }
         
@@ -285,7 +379,7 @@ namespace DrutNET
                 }
                 catch (Exception ex)
                 {
-                    return handleExeption(ex);
+                    return handleExeption(ex, "User Get");
                 }
         }
         /// <summary>
@@ -307,7 +401,7 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                return handleExeption(ex);
+                return handleExeption(ex, "User Get");
             }
         }
         public int NodeSave(XmlRpcStruct node)
@@ -324,7 +418,7 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                handleExeption(ex);
+                handleExeption(ex, "Node Save");
                 return 0;
             }
         }
@@ -351,7 +445,7 @@ namespace DrutNET
             catch (Exception ex)
             {
                 _errorCode = 0;
-                handleExeption(ex);
+                handleExeption(ex, "View Get");
                 return null;
             }
         }
@@ -548,7 +642,9 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                _errorCode = 0;
+                handleExeption(ex, "Login");
+
+                /*_errorCode = 0;
                 if (ex is XmlRpcFaultException)
                 {
                     _errorCode = (ex as XmlRpcFaultException).FaultCode;
@@ -557,7 +653,7 @@ namespace DrutNET
                 {
                     // _errorCode = (ex as XmlRpcServerException).
                 }
-                errorMessage(ex.Message);
+                errorMessage(ex.Message);*/
                 _isLoggedIn = false;
             }
             return _isLoggedIn;
@@ -573,10 +669,11 @@ namespace DrutNET
                 _isLoggedIn = false;
                 return true;
             }
-            catch (XmlRpcFaultException ex)
+            catch (Exception ex)
             {
-                _errorCode = ex.FaultCode;
-                errorMessage(ex.Message);
+                handleExeption(ex, "Logout");
+               /* _errorCode = ex.FaultCode;
+                errorMessage(ex.Message);*/
                 return false;
             }
         }
