@@ -1,53 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="DrutNET.DrupalCurl" Collapsed="true">
-    <Position X="8.75" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QiAACAEAAIQAAAgAgjAAAFIABEIUAAAAAFAQAAAIQMA=</HashCode>
-      <FileName>DrutNetAPI\DrutNetCurl.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DrutNET.DrupalServices" Collapsed="true">
-    <Position X="3.25" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IgAAAAFIABAAKAAAA1hEAAoABAoQAAAAAAAQAAIAAAE=</HashCode>
-      <FileName>DrutNetAPI\DrutNetServices.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DrutNET.OrganicGroup" Collapsed="true">
-    <Position X="2.75" Y="5.25" Width="1.5" />
+    <Position X="6.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAJBCAAIAAgAEgAAIAAAQCCgABAAAAAAAABAAMAAI=</HashCode>
-      <FileName>DrutNetAPI\GroupsTaxonomy.cs</FileName>
+      <HashCode>AAgAIAAAAAAAgAEgAAIAAAQCCgABAAAAAAAAAAAMAAY=</HashCode>
+      <FileName>Class\OrganicGroup.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DrutNET.SimplePDMRole" Collapsed="true">
-    <Position X="4.5" Y="5.25" Width="1.5" />
+  <Class Name="DrutNET.Role" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAEAAA=</HashCode>
-      <FileName>DrutNetAPI\DrutNetConnection.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DrutNET.SimplePDMUser" Collapsed="true">
-    <Position X="0.75" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QEAAIgAQAAAAgAAAAAACAAQABAAAACAIAEIEAAAAAgA=</HashCode>
-      <FileName>DrutNetAPI\DrutNetConnection.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DrutNET.SimplePDMConnection" Collapsed="true">
-    <Position X="6" Y="3" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAEAAAAAAAAIARAAAAIAAAAAAAACAgIQAAAAACA=</HashCode>
-      <FileName>DrutNetAPI\DrutNetConnection.cs</FileName>
+      <FileName>Class\User.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DrutNET.DrutNETBase" Collapsed="true">
     <Position X="6.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AANgAQAiAAAEQAAABAABAAUAwCSCIADJMAFAAAAREAA=</HashCode>
-      <FileName>DrutNetBase\DrutnetBaseClass.cs</FileName>
+      <HashCode>AANgAAAiAAAEQAAABAABAAUAQCSCIADJMAFAAAAREAA=</HashCode>
+      <FileName>Class\DrutnetBase.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="DrutNET.Curl" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QiQAiAEAAIUBAAgAgyAAAFIAAEAEAQACAlISAAAIQMA=</HashCode>
+      <FileName>Class\Curl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DrutNET.ServicesSettings" Collapsed="true">
+    <Position X="1.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAACAAAAAQAAACAIAAIAAAAAAACCAgAAAhQAAA=</HashCode>
+      <FileName>Class\Services.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNET.Services" Collapsed="true">
+    <Position X="4" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgSAACFIABAAKAAAgUBEAAoAAAgQAQACgAISAAMACAE=</HashCode>
+      <FileName>Class\Services.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DrutNET.TaxonomyTerm" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAgAAAAEAIAAAAAAASAIAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Class\Taxonomy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrutNET.TaxonomyVocabulary" Collapsed="true">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAKAAQAAGAAAAAHAACABQAAAAIAAAAAAAAAAAAQgQ=</HashCode>
+      <FileName>Class\Taxonomy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="DrutNET.DrupalUser" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAEAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Class\Services.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DrutNET.Drupal" Collapsed="true">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class\Services.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DrutNET.DrupalCon" Collapsed="true">
+    <Position X="1.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Class\Services.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="DrutNET.IServiceSystem" Collapsed="true">
+    <Position X="3" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IACAAABIAAAACAQAAAAAAIIAAAAQAAAAAAAQAAAAAAE=</HashCode>
+      <FileName>Class\Services.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>

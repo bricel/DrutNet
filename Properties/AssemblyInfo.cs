@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Gizra")]
 [assembly: AssemblyProduct("DrutNET")]
 [assembly: AssemblyCopyright("Copyright ©  2009")]
-[assembly: AssemblyTrademark("Gizra LLC")]
+[assembly: AssemblyTrademark("Gizra Internet Solutions LLC")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
