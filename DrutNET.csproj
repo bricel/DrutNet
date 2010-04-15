@@ -113,4 +113,7 @@
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) $(ProjectDir)\Dlls</PostBuildEvent>
+  </PropertyGroup>
 </Project>
