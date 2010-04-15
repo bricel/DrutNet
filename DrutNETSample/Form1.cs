@@ -20,135 +20,46 @@ namespace DrutNETSample
             InitializeComponent();
             // This handle all message throw by the system.
             DrutNETBase.OnUpdateLog += new DrutNETBase.UpdateLog(DrutNETBase_OnUpdateLog);
-            DrutNETBase.OnCurlDataProgress += new DrutNETBase.CurlDataProgressDel(DrutNETBase_OnCurlDataProgress);
-            textBox_userName.Text = "demo";
+            /*textBox_userName.Text = "admin";
             textBox_password.Text = "1234";
-            textBox_url.Text = "http://localhost/DrutNet/drupal-sqlite/";
+            textBox_url.Text = "http://localhost/drupal-6.16/";*/
             textBox_fieldName.Text = "field_file";
         }
-
-        void DrutNETBase_OnCurlDataProgress(object info)
+        
+        bool _started = false;
+        /// <summary>
+        /// Progress upload of file with CURL 
+        /// </summary>
+        /// <param name="info"></param>
+        void DrutNETBase_OnCurlDataProgress(ProgressDataStruct info)
         {
             
+            if (info.ulTotal > 0)
+            {
+                progressBar1.Maximum = Convert.ToInt32(info.ulTotal);
+                _started = true;
+            }
+            if (_started)
+            {
+                progressBar1.Value = Convert.ToInt32(info.ulNow);
+                if ((info.ulTotal == info.ulNow))
+                {
+                    _started = false;
+                    DrutNETBase.OnCurlDataProgress -= new DrutNETBase.CurlDataProgressDel(DrutNETBase_OnCurlDataProgress);
+                }
+            }
         }
+        /// <summary>
+        /// Log event message handeling
+        /// </summary>
         void DrutNETBase_OnUpdateLog(string str, string mSender, Enums.MessageType mType, bool verbose)
         {
             // Write log messages on error window.
             richTextBox_messages.Text = mType.ToString() + " - " + mSender + ": " + str + richTextBox_messages.Text;
         }
         /// <summary>
-        /// Fill a listView with the groups tags
+        /// Load a node
         /// </summary>
-        /// <param name="listViewTags"></param>
-        public void LoadVocabInListView(ListView listViewTags, string contentType,List<TaxonomyVocabulary> VocabularyLists )
-        {
-            listViewTags.Items.Clear();
-            listViewTags.Groups.Clear();
-            if (VocabularyLists != null)
-            {
-                //add an event to handle multiple/single selection
-                listViewTags.ItemChecked -= new ItemCheckedEventHandler(listViewTags_ItemChecked);
-
-                foreach (TaxonomyVocabulary tagList in VocabularyLists)
-                {
-                    if ((tagList.Terms.Count > 0))// && (tagList.HasContentType(contentType)))
-                    {
-                        string displayName = tagList.Name;
-                        if (tagList.Required)
-                            displayName += " *"; //add a star next to group name when is a required group
-                        ListViewGroup g = listViewTags.Groups.Add(tagList.Name, displayName);
-                        g.Tag = tagList;
-                        foreach (TaxonomyTerm tag in tagList.Terms)
-                        {
-                            ListViewItem lvItem = new ListViewItem(tag.Name, g);
-                            lvItem.Tag = tag;//save the reated object
-                            tag.LvItem = lvItem; //used to auto update the check box when select property changes
-                            listViewTags.Items.Add(lvItem);
-                            lvItem.Checked = tag.IsSelected;
-                        }
-                        if (tagList.FreeTags)
-                        {
-                            addNewFreeTerm(listViewTags, g);
-                            /*  ListViewItem lvItem = new ListViewItem("**Click to add term", g);
-                              lvItem.Tag = "free";
-                              listViewTags.Items.Add(lvItem);*/
-                            // freeTagsLVIs.Add(lvItem);
-                        }
-                    }
-                }
-                listViewTags.ItemChecked += new ItemCheckedEventHandler(listViewTags_ItemChecked);
-                listViewTags.AfterLabelEdit += new LabelEditEventHandler(listViewTags_AfterLabelEdit);
-                listViewTags.Click += new EventHandler(listViewTags_Click);
-
-            }
-        }
-        /// <summary>
-        /// free tag was click - start edit
-        /// </summary>
-        void listViewTags_Click(object sender, EventArgs e)
-        {
-            if ((sender as ListView).FocusedItem.Tag.ToString() == "free")
-            {
-                (sender as ListView).LabelEdit = true;
-                (sender as ListView).FocusedItem.BeginEdit();
-            }
-        }
-        void addNewFreeTerm(ListView lv, ListViewGroup group)
-        {
-            //add new free tag 
-            ListViewItem lvItem = new ListViewItem("**Click to add term", group);
-            lvItem.Tag = "free";
-            lv.Items.Add(lvItem);
-        }
-        void listViewTags_AfterLabelEdit(object sender, LabelEditEventArgs e)
-        {
-            (sender as ListView).LabelEdit = false;
-
-            //add new term to taxonomy
-            //  (sender as ListView).FocusedItem.
-            TaxonomyTerm tempTerm = new TaxonomyTerm(e.Label);
-            tempTerm.LvItem = (sender as ListView).FocusedItem;
-            tempTerm.IsSelected = true;
-            ((sender as ListView).FocusedItem.Group.Tag as TaxonomyVocabulary).Terms.Add(tempTerm);
-            (sender as ListView).FocusedItem.Tag = tempTerm;
-
-            //add new free tag 
-            addNewFreeTerm((sender as ListView), (sender as ListView).FocusedItem.Group);
-
-            /* ListViewItem lvItem = new ListViewItem("**Click to add term", (sender as ListView).FocusedItem.Group);
-             lvItem.Tag = "free";
-              (sender as ListView).Items.Add(lvItem);*/
-        }
-        /// <summary>
-        /// handle single selection property for terms in a groups, and update the property of checked items
-        /// </summary>
-        void listViewTags_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            if (e.Item != null)
-            {
-                if (e.Item.Tag.ToString() == "free")
-                {
-                    return;
-                }
-                else if (e.Item.Checked)
-                {
-                    (e.Item.Tag as TaxonomyTerm).IsSelected = true;
-                    if (!((e.Item.Group.Tag as TaxonomyVocabulary).Multiple))
-                        foreach (ListViewItem lvi in e.Item.Group.Items)//if not multiple select, deselect all others
-                            if ((lvi != e.Item) && (lvi.Index != -1) && (lvi.Tag.ToString() != "free"))
-                            {
-                                //lvi.Checked = false;
-                                (lvi.Tag as TaxonomyTerm).IsSelected = false;
-                            }
-
-                }
-                else //e.Item.Checked == false
-                {
-                    (e.Item.Tag as TaxonomyTerm).IsSelected = false;
-                }
-            }
-        }
-
         private void button_load_Click(object sender, EventArgs e)
         {
             // Node to load
@@ -156,7 +67,9 @@ namespace DrutNETSample
             if (_node != null)
                 richTextBox1.Text = _node["body"].ToString();
         }
-
+        /// <summary>
+        /// Save node
+        /// </summary>
         private void button_save_Click(object sender, EventArgs e)
         {
             if (_node != null)
@@ -170,14 +83,22 @@ namespace DrutNETSample
             else
                 DrutNETBase.sendLogEvent("No node was loaded, load a node first", "My Sample", Enums.MessageType.Error);
         }
-
+        /// <summary>
+        /// Update HTML preview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             webBrowser1.DocumentText = richTextBox1.Text;
         }
-
+        /// <summary>
+        /// Upload selected file
+        /// </summary>
         private void button_upload_Click(object sender, EventArgs e)
         {
+            DrutNETBase.OnCurlDataProgress += new DrutNETBase.CurlDataProgressDel(DrutNETBase_OnCurlDataProgress);
+            progressBar1.Value = 0;
             int fid;
             if ((fid = _curlCon.UploadFile(textBox1.Text)) == -1)
                 DrutNETBase_OnUpdateLog("Unable to upload file", "Drutnet Sample", Enums.MessageType.Error, false);
@@ -193,7 +114,11 @@ namespace DrutNETSample
 
             }
         }
-
+        /// <summary>
+        /// Browse file to upload.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_browse_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
@@ -205,7 +130,6 @@ namespace DrutNETSample
             // Create a settings object to define connection settings.
             ServicesSettings settings = new ServicesSettings();
             settings.DrupalURL = textBox_url.Text; // 
-            settings.CleanURL = checkBox_clean_URL.Checked; //true;
             settings.UseSessionID = checkBox_sessionID.Checked;//false;
 
             /*settings.UseKeys = true;//Not Implemented yet
@@ -223,17 +147,11 @@ namespace DrutNETSample
             else
                 tabControl1.Enabled = false;
         }
-
         private void button_logout_Click(object sender, EventArgs e)
         {
             _serviceCon.Logout();
             _curlCon.Logout();
             tabControl1.Enabled = false;
-        }
-
-        private void richTextBox_messages_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

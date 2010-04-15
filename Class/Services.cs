@@ -99,7 +99,7 @@ namespace DrutNET
     /// </summary>
     public class ServicesSettings
     {
-        bool _cleanURL = true;
+        bool _cleanURL = false;
         public bool CleanURL
         {
             get { return _cleanURL; }
@@ -288,10 +288,11 @@ namespace DrutNET
                 return;
             }
             else
+            {
                 // index is one bigger than existing array, we need to add one object manually
+                List<object> objectList = new List<object>();
                 if ((node[fileFieldName] as object[]).Length == fileIndex)
                 {
-                    List<object> objectList = new List<object>();
                     foreach (object ob in (node[fileFieldName] as object[]))
                         objectList.Add(ob);
                     objectList.Add(new object());
@@ -299,7 +300,13 @@ namespace DrutNET
                     // Add index list required for multiple files.
                     filenode.Add("list", (fileIndex + 1).ToString());
                 }
-            (node[fileFieldName] as object[])[fileIndex] = filenode;
+                else
+                {
+                    objectList.Add(new object());
+                    node[fileFieldName] = objectList.ToArray();
+                }
+                (node[fileFieldName] as object[])[fileIndex] = filenode;
+            }
         }
         /// <summary>
         /// Add an already upload file to cck file field, also saving node
@@ -311,8 +318,13 @@ namespace DrutNET
         public void AttachFileToNode(string fileFieldName, int fid, int fileIndex, int nid)
         {
             XmlRpcStruct node = this.NodeGet(nid);
-            AttachFileToNode(fileFieldName, fid, fileIndex, node);
-            this.NodeSave(node);
+            if (node != null)
+            {
+                AttachFileToNode(fileFieldName, fid, fileIndex, node);
+                this.NodeSave(node);
+            }
+            else
+                errorMessage("Unable to load node " + nid.ToString());
         }
 
         /// <summary>
@@ -615,7 +627,7 @@ namespace DrutNET
                 else
                     xmlrpcServer = "services/xmlrpc";
 
-                drupalServiceSystem.Url = _settings.DrupalURL + xmlrpcServer +"?XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=126589808359313";
+                drupalServiceSystem.Url = _settings.DrupalURL + xmlrpcServer;// +"?XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=126589808359313";
                 Drupal cnct = drupalServiceSystem.Connect();
                 DrupalCon lgn ;
                 // SesionID pref

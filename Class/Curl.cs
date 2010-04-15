@@ -8,6 +8,13 @@ using System.IO;
 
 namespace DrutNET
 {
+    public struct ProgressDataStruct
+    {
+        public double dlNow;
+        public double dlTotal;
+        public double ulNow;
+        public double ulTotal;
+    }
     /// <summary>
     /// enable to connect to drupal using cURL -- Single Tone --
     /// </summary>
@@ -25,7 +32,7 @@ namespace DrutNET
         LibCurl.Easy.WriteFunction wf;
         string _serverURL;
         bool _verbose = true;
-       
+        ProgressDataStruct _dataProg = new ProgressDataStruct();
         /// <summary>
         /// Constructor, init curl service.
         /// </summary>
@@ -49,11 +56,17 @@ namespace DrutNET
             
             wf = new LibCurl.Easy.WriteFunction(OnWriteData);
         }
-        public Int32 OnProgress(Object extraData, Double dlTotal,
+
+
+        private Int32 OnProgress(Object extraData, Double dlTotal,
         Double dlNow, Double ulTotal, Double ulNow)
-        { //TODO: replace with struct
-            double[] data = { dlNow, dlTotal, ulNow, ulTotal };
-            CurlDataProgress(data);
+        { 
+            //double[] data = { dlNow, dlTotal, ulNow, ulTotal };
+            _dataProg.dlTotal = dlTotal;
+            _dataProg.dlNow = dlNow;
+            _dataProg.ulNow = ulNow;
+            _dataProg.ulTotal = ulTotal;
+            CurlDataProgress(_dataProg);
             return 0; // standard return from PROGRESSFUNCTION
         }
         public bool DownloadFile(string httpPath, string savePath)

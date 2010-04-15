@@ -18,7 +18,7 @@ namespace DrutNET
     {
         //Log Event -----------------------------------------
         public delegate void UpdateLog(string str, string mSender, Enums.MessageType mType,bool verbose);
-        public delegate void CurlDataProgressDel(object info);
+        public delegate void CurlDataProgressDel(ProgressDataStruct info);
         //Statics
         static public event UpdateLog OnUpdateLog;
         static public event CurlDataProgressDel OnCurlDataProgress;
@@ -28,7 +28,7 @@ namespace DrutNET
         {
             System.Diagnostics.Process.Start(url);
         }
-        static public void CurlDataProgress(object info)
+        static public void CurlDataProgress(ProgressDataStruct info)
         {
             if (OnCurlDataProgress != null)
             {
