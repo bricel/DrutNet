@@ -2,5 +2,7 @@ DrutNetAPI/bin/Debug
 DrutNetAPI/obj
 DrutNetBase/obj
 DrutNetBase/obj/Debug
+.settings/
+.buildpath
 bin
 obj
