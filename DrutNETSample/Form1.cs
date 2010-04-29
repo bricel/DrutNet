@@ -63,9 +63,12 @@ namespace DrutNETSample
         private void button_load_Click(object sender, EventArgs e)
         {
             // Node to load
-            _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
-            if (_node != null)
-                richTextBox1.Text = _node["body"].ToString();
+            if (_serviceCon != null)
+            {
+                _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
+                if (_node != null)
+                    richTextBox1.Text = _node["body"].ToString();
+            }
         }
         /// <summary>
         /// Save node
@@ -81,7 +84,7 @@ namespace DrutNETSample
                 _serviceCon.NodeSave(_node);
             }
             else
-                DrutNETBase.sendLogEvent("No node was loaded, load a node first", "My Sample", Enums.MessageType.Error);
+                DrutNETBase.sendLogEvent("No node was loaded, load a node first \n", "My Sample", Enums.MessageType.Error);
         }
         /// <summary>
         /// Update HTML preview
@@ -101,7 +104,7 @@ namespace DrutNETSample
             progressBar1.Value = 0;
             int fid;
             if ((fid = _curlCon.UploadFile(textBox1.Text)) == -1)
-                DrutNETBase_OnUpdateLog("Unable to upload file", "Drutnet Sample", Enums.MessageType.Error, false);
+                DrutNETBase_OnUpdateLog("Unable to upload file \n", "Drutnet Sample", Enums.MessageType.Error, false);
             else
             {
                 // Add a file to the node
@@ -130,8 +133,8 @@ namespace DrutNETSample
             // Create a settings object to define connection settings.
             ServicesSettings settings = new ServicesSettings();
             settings.DrupalURL = textBox_url.Text; // 
-            settings.UseSessionID = checkBox_sessionID.Checked;//false;
-
+            settings.UseSessionID = checkBox_sessionID.Checked;
+            
             /*settings.UseKeys = true;//Not Implemented yet
             //settings.Key = "03cfd62180a67dcbcb1be9a7f78dc726";
             settings.DomainName = "localhost";*/
@@ -141,17 +144,24 @@ namespace DrutNETSample
             // Login to drupal
             _curlCon = new Curl(settings.DrupalURL);
 
-            if ((_curlCon.Login(textBox_userName.Text, textBox_password.Text)) && 
-                (_serviceCon.Login(textBox_userName.Text, textBox_password.Text)))
-                tabControl1.Enabled = true;
-            else
-                tabControl1.Enabled = false;
+           
+               if (_serviceCon.Login(textBox_userName.Text, textBox_password.Text))
+                   DrutNETBase.sendLogEvent("Login to services successful \n", "Sample", Enums.MessageType.Info);
         }
         private void button_logout_Click(object sender, EventArgs e)
         {
             _serviceCon.Logout();
+        }
+
+        private void button_login_curl_Click(object sender, EventArgs e)
+        {
+             if (_curlCon.Login(textBox_userName.Text, textBox_password.Text))
+                 DrutNETBase.sendLogEvent("Login to curl successful \n","Sample",Enums.MessageType.Info);
+        }
+
+        private void button_logout_curl_Click(object sender, EventArgs e)
+        {
             _curlCon.Logout();
-            tabControl1.Enabled = false;
         }
     }
 }
