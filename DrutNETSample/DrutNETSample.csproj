@@ -97,4 +97,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) $(ProjectDir)\..\Dlls</PostBuildEvent>
+  </PropertyGroup>
 </Project>
