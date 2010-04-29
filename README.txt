@@ -1,7 +1,5 @@
 
 Folders :
-
-Creating a Client with C#
 /Class - Source code of API classes.
 /DrutNETSample - A sample API client.
 /Dlls - All libraries dependent.
@@ -9,6 +7,7 @@ Creating a Client with C#
 /Properties - Project properties
 /Drupal Modules - Drupal modules (see Sample Installation instructions for more info)
 
+Creating a client with C#:
 
 Dependencies : all libraries required as dependencies are located in folder /Dlls	
 
@@ -26,7 +25,7 @@ Dependencies : all libraries required as dependencies are located in folder /Dll
 	
 
 
-Sample Installation instructions
+Sample installation instructions:
 
 1. Place the 2 modules under '/Drupal Module' in you 'sites/all/modules'.
 	- Drupal Example - The module is a features module to test the system with the DrutNETSample
