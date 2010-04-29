@@ -7,6 +7,7 @@ Creating a Client with C#
 /Dlls - All libraries dependent.
 /Forms - Include a windows form for user login.
 /Properties - Project properties
+/Drupal Modules - Drupal modules (see Sample Installation instructions for more info)
 
 
 Dependencies : all libraries required as dependencies are located in folder /Dlls	
@@ -19,7 +20,7 @@ Dependencies : all libraries required as dependencies are located in folder /Dll
 	
 - To Upload files using the API the the Class CURL Services, here is a brief overview of the function :
 	Curl.Login - Login to Drupal with CURL
-	Curl.UploadFile - Upload a file to a CCK file/image field (require the fileform module provide in the '/Drupal Module' folder)
+	Curl.UploadFile - Upload a file to a CCK file/image field (require the file_form module provide in the '/Drupal Module' folder)
 	
 - Permissions - Make sure to grand permissions to all services modules that you wish to use.
 	
@@ -29,8 +30,8 @@ Sample Installation instructions
 
 1. Place the 2 modules under '/Drupal Module' in you 'sites/all/modules'.
 	- Drupal Example - The module is a features module to test the system with the DrutNETSample
-	- fileform - this Module is required only for file upload with CURL
-2. Download the moddules :  Services, Features, CCK ,VIEW.
+	- file_form - this Module is required only for file upload with CURL
+2. Download the modules :  Services, Features, CCK ,VIEW.
 3. Enable all the modules above
 
 
