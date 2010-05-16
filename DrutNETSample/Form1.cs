@@ -103,7 +103,7 @@ namespace DrutNETSample
             DrutNETBase.OnCurlDataProgress += new DrutNETBase.CurlDataProgressDel(DrutNETBase_OnCurlDataProgress);
             progressBar1.Value = 0;
             int fid;
-            if ((fid = _curlCon.UploadFile(textBox1.Text)) == -1)
+            if ((fid = _curlCon.FileUpload(textBox1.Text)) == -1)
                 DrutNETBase_OnUpdateLog("Unable to upload file \n", "Drutnet Sample", Enums.MessageType.Error, false);
             else
             {

@@ -17,7 +17,7 @@ Dependencies : all libraries required as dependencies are located in folder /Dll
 	Service.UserGet - Load a user
 	Service.NodeSave - Save a node
 	
-- To Upload files using the API the the Class CURL Services, here is a brief overview of the function :
+- To Upload files using the API use the Class CURL , here is a brief overview of the function :
 	Curl.Login - Login to Drupal with CURL
 	Curl.UploadFile - Upload a file to a CCK file/image field (require the file_form module provide in the '/Drupal Module' folder)
 	
@@ -28,7 +28,7 @@ Dependencies : all libraries required as dependencies are located in folder /Dll
 Sample installation instructions:
 
 1. Place the 2 modules under '/Drupal Module' in you 'sites/all/modules'.
-	- Drupal Example - The module is a features module to test the system with the DrutNETSample
+	- drutnet_sample- The module is a features module to test the system with the DrutNETSample
 	- file_form - this Module is required only for file upload with CURL
 2. Download the modules :  Services, Features, CCK ,VIEW.
 3. Enable all the modules above

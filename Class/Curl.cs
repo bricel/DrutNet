@@ -116,9 +116,9 @@ namespace DrutNET
         /// </summary>
         /// <param name="localPath">Local file location</param>
         /// <returns></returns>
-        public int UploadFile(string localPath)
+        public int FileUpload(string localPath)
         {
-           return UploadFile(localPath,"");
+            return FileUpload(localPath, "");
         }
         /// <summary>
         /// Upload a file to Drupal using the form-file module and CURL 
@@ -126,7 +126,7 @@ namespace DrutNET
         /// <param name="localPath">Local file location</param>
         /// <param name="serverDirectory">Save to a specific directory in drupal</param>
         /// <returns> File ID or -1 if failed to upload</returns>
-        public int UploadFile(string localPath, string serverDirectory)
+        public int FileUpload(string localPath, string serverDirectory)
         {
             // Use file form module
            
