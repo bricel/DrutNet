@@ -1,4 +1,3 @@
-
 Folders :
 /Class - Source code of API classes.
 /DrutNETSample - A sample API client.
@@ -16,8 +15,10 @@ Dependencies : all libraries required as dependencies are located in folder /Dll
 	Service.NodeGet - Load a Node
 	Service.UserGet - Load a user
 	Service.NodeSave - Save a node
+        Service.FileUpload - Upload a file and attach to a node
+
 	
-- To Upload files using the API use the Class CURL , here is a brief overview of the function :
+- To Upload files using CURL, here is a brief overview of the function :
 	Curl.Login - Login to Drupal with CURL
 	Curl.UploadFile - Upload a file to a CCK file/image field (require the file_form module provide in the '/Drupal Module' folder)
 	
