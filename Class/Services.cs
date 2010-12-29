@@ -341,11 +341,19 @@ namespace DrutNET
                         filenode.Add("list", (fileIndex + 1).ToString());
                     }
                     else
-                    {
-                        filenode.Add("list", (fileIndex + 1).ToString());
-                        //objectList.Add(new object());
-                        // node[fileFieldName] = objectList.ToArray();
-                    }
+                        // Case a file was removed form the node, we need to reformat the object
+                        if (((node[fileFieldName] as object[]).Length == 1) &&
+                            ((node[fileFieldName] as object[])[0] is string))
+                        {
+                            objectList.Add(new object());
+                            node[fileFieldName] = objectList.ToArray();
+                            filenode.Add("list", (fileIndex + 1).ToString());
+                        }
+                        else
+                        {
+                            filenode.Add("list", (fileIndex + 1).ToString());
+                        }
+
                     (node[fileFieldName] as object[])[fileIndex] = filenode;
                     return true;
                 }
