@@ -31,19 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\CookComputing.XmlRpcV2.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="LibCurlNet, Version=1.3.0.0, Culture=neutral, PublicKeyToken=dfa5e73bd1f79635, processorArchitecture=MSIL" />
-    <Reference Include="LumenWorks.Framework.IO, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\LumenWorks.Framework.IO.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -105,6 +92,20 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="External_lib\cURL.net\src\LibCurlNet.csproj">
+      <Project>{AEF8DC8B-814F-4C03-B048-55EE0F093496}</Project>
+      <Name>LibCurlNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="External_lib\SharpZipLib\ICSharpCode.SharpZLib.csproj">
+      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
+      <Name>ICSharpCode.SharpZLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="External_lib\XML-RPC.net\src\xmlrpc.csproj">
+      <Project>{1B4B0A58-0AFB-4090-91DD-18912CC7DE65}</Project>
+      <Name>xmlrpc</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Class\Properties\" />

@@ -1,0 +1,329 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/documents/!svn/ver/1303/BriceDev/Gizra/XML-RPC.net/src
+END
+XmlRpcClientFormatterSink.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcClientFormatterSink.cs
+END
+XmlRpcHttpRequest.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcHttpRequest.cs
+END
+XmlRpcServerProtocol.cs
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcServerProtocol.cs
+END
+XmlRpcInt.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcInt.cs
+END
+XmlRpcEndAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcEndAttribute.cs
+END
+XmlRpcDateTime.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcDateTime.cs
+END
+XmlRpcListenerRequest.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcListenerRequest.cs
+END
+XmlRpcException.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcException.cs
+END
+XmlRpcResponse.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcResponse.cs
+END
+GuidEx.cs
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/GuidEx.cs
+END
+XmlRpcClientFormatterSinkProvider.cs
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcClientFormatterSinkProvider.cs
+END
+XmlRpcMethodAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcMethodAttribute.cs
+END
+XmlRpcParameterAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcParameterAttribute.cs
+END
+XmlRpcListenerService.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcListenerService.cs
+END
+XmlRpcBeginAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcBeginAttribute.cs
+END
+XmlRpcSerializer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcSerializer.cs
+END
+XmlRpcDouble.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcDouble.cs
+END
+xmlrpc.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/documents/!svn/ver/1616/BriceDev/Gizra/XML-RPC.net/src/xmlrpc.csproj
+END
+XmlRpcProxyGen.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/documents/!svn/ver/1303/BriceDev/Gizra/XML-RPC.net/src/XmlRpcProxyGen.cs
+END
+XmlRpcAsyncResult.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcAsyncResult.cs
+END
+XmlRpcServiceInfo.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcServiceInfo.cs
+END
+XmlRpcResponseEventArgs.cs
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcResponseEventArgs.cs
+END
+XmlRpcLogger.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcLogger.cs
+END
+XmlRpcServerFormatterSink.cs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcServerFormatterSink.cs
+END
+XmlRpcStruct.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcStruct.cs
+END
+XmlRpcUrlAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/documents/!svn/ver/1303/BriceDev/Gizra/XML-RPC.net/src/XmlRpcUrlAttribute.cs
+END
+util.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/util.cs
+END
+XmlRpcHttpServerProtocol.cs
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcHttpServerProtocol.cs
+END
+XmlRpcRequest.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcRequest.cs
+END
+IXmlRpcProxy.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/IXmlRpcProxy.cs
+END
+Tracer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/Tracer.cs
+END
+XmlRpcFaultException.cs
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcFaultException.cs
+END
+XmlRpcServerFormatterSinkProvider.cs
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcServerFormatterSinkProvider.cs
+END
+XmlRpcMemberAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcMemberAttribute.cs
+END
+XmlRpcMethodInfo.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcMethodInfo.cs
+END
+XmlRpcParameterInfo.cs
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcParameterInfo.cs
+END
+XmlRpcHttpResponse.cs
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcHttpResponse.cs
+END
+XmlRpcClientProtocol.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/documents/!svn/ver/1303/BriceDev/Gizra/XML-RPC.net/src/XmlRpcClientProtocol.cs
+END
+XmlRpcReturnValueAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcReturnValueAttribute.cs
+END
+XmlRpcService.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcService.cs
+END
+XmlRpcDocWriter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcDocWriter.cs
+END
+XmlRpcListenerResponse.cs
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcListenerResponse.cs
+END
+AssemblyInfo.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/documents/!svn/ver/1198/BriceDev/Gizra/XML-RPC.net/src/AssemblyInfo.cs
+END
+XmlRpcProxyCodeGen.cs
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/documents/!svn/ver/1303/BriceDev/Gizra/XML-RPC.net/src/XmlRpcProxyCodeGen.cs
+END
+XmlRpcRequestEventArgs.cs
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcRequestEventArgs.cs
+END
+XmlRpcMissingMappingAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcMissingMappingAttribute.cs
+END
+IHttpRequestHandler.cs
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/IHttpRequestHandler.cs
+END
+IHttpRequest.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/IHttpRequest.cs
+END
+XmlRpcNonStandard.cs
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcNonStandard.cs
+END
+XmlRpcBoolean.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcBoolean.cs
+END
+IHttpResponse.cs
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/IHttpResponse.cs
+END
+RequestResponseLogger.cs
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/RequestResponseLogger.cs
+END
+XmlRpcServiceAttribute.cs
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/documents/!svn/ver/189/BriceDev/Gizra/XML-RPC.net/src/XmlRpcServiceAttribute.cs
+END
+XMLRPC_Diagram.cd
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/documents/!svn/ver/1616/BriceDev/Gizra/XML-RPC.net/src/XMLRPC_Diagram.cd
+END
