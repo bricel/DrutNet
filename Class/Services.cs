@@ -798,7 +798,7 @@ namespace DrutNET
                     if (_settings.UseKeys)
                     {
                         string hash = "";// GetHMAC("", _settings.Key);
-                        string timestamp="";// = GetUnixTimestamp();
+                        string timestamp = "";// = GetUnixTimestamp();
                         string nonce = GetNonce(10);
                         lgn = drupalServiceSystem.Login(ref hash, _settings.DomainName, ref timestamp, nonce, cnct.sessid, user, password);
                     }
@@ -807,7 +807,10 @@ namespace DrutNET
 
                 }
                 else
+                {
                     lgn = drupalServiceSystem.Login(user, password);
+                }
+                // Check that login was succesfull by comparing username returned.
                 if (lgn.user.name == _username)
                 {
                     _sessionID = lgn.sessid;

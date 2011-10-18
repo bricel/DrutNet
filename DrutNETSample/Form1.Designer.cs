@@ -61,6 +61,8 @@
             this.checkBox_sessionID = new System.Windows.Forms.CheckBox();
             this.button_login_services = new System.Windows.Forms.Button();
             this.button_logout_services = new System.Windows.Forms.Button();
+            this.textBox_endpoint = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -109,10 +111,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(1, 71);
+            this.tabControl1.Location = new System.Drawing.Point(5, 102);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(707, 330);
+            this.tabControl1.Size = new System.Drawing.Size(703, 332);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
@@ -127,7 +129,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(699, 304);
+            this.tabPage1.Size = new System.Drawing.Size(695, 306);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Node load/save";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -136,7 +138,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 158);
+            this.label2.Location = new System.Drawing.Point(9, 160);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 7;
@@ -146,10 +148,10 @@
             // 
             this.webBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser1.Location = new System.Drawing.Point(6, 174);
+            this.webBrowser1.Location = new System.Drawing.Point(6, 176);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(685, 119);
+            this.webBrowser1.Size = new System.Drawing.Size(681, 119);
             this.webBrowser1.TabIndex = 5;
             // 
             // richTextBox1
@@ -159,7 +161,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.Location = new System.Drawing.Point(6, 53);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(686, 102);
+            this.richTextBox1.Size = new System.Drawing.Size(682, 104);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -178,7 +180,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(699, 344);
+            this.tabPage2.Size = new System.Drawing.Size(695, 306);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File upload";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -228,7 +230,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(67, 38);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(572, 20);
+            this.textBox1.Size = new System.Drawing.Size(568, 20);
             this.textBox1.TabIndex = 2;
             // 
             // label3
@@ -253,7 +255,7 @@
             // button_browse
             // 
             this.button_browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_browse.Location = new System.Drawing.Point(644, 36);
+            this.button_browse.Location = new System.Drawing.Point(640, 36);
             this.button_browse.Name = "button_browse";
             this.button_browse.Size = new System.Drawing.Size(37, 23);
             this.button_browse.TabIndex = 0;
@@ -265,7 +267,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 417);
+            this.label1.Location = new System.Drawing.Point(2, 437);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 7;
@@ -278,9 +280,9 @@
             // button_logout_curl
             // 
             this.button_logout_curl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_logout_curl.Location = new System.Drawing.Point(574, 58);
+            this.button_logout_curl.Location = new System.Drawing.Point(605, 58);
             this.button_logout_curl.Name = "button_logout_curl";
-            this.button_logout_curl.Size = new System.Drawing.Size(126, 22);
+            this.button_logout_curl.Size = new System.Drawing.Size(92, 22);
             this.button_logout_curl.TabIndex = 8;
             this.button_logout_curl.Text = "Logout CURL";
             this.button_logout_curl.UseVisualStyleBackColor = true;
@@ -289,9 +291,9 @@
             // button_login_curl
             // 
             this.button_login_curl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_login_curl.Location = new System.Drawing.Point(442, 58);
+            this.button_login_curl.Location = new System.Drawing.Point(605, 30);
             this.button_login_curl.Name = "button_login_curl";
-            this.button_login_curl.Size = new System.Drawing.Size(126, 22);
+            this.button_login_curl.Size = new System.Drawing.Size(92, 22);
             this.button_login_curl.TabIndex = 6;
             this.button_login_curl.Text = "Login to CURL";
             this.button_login_curl.UseVisualStyleBackColor = true;
@@ -300,9 +302,9 @@
             // richTextBox_messages
             // 
             this.richTextBox_messages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.richTextBox_messages.Location = new System.Drawing.Point(0, 436);
+            this.richTextBox_messages.Location = new System.Drawing.Point(0, 453);
             this.richTextBox_messages.Name = "richTextBox_messages";
-            this.richTextBox_messages.Size = new System.Drawing.Size(709, 160);
+            this.richTextBox_messages.Size = new System.Drawing.Size(709, 143);
             this.richTextBox_messages.TabIndex = 8;
             this.richTextBox_messages.Text = "";
             // 
@@ -310,14 +312,14 @@
             // 
             this.textBox_userName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.textBox_userName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.RecentlyUsedList;
-            this.textBox_userName.Location = new System.Drawing.Point(77, 6);
+            this.textBox_userName.Location = new System.Drawing.Point(78, 32);
             this.textBox_userName.Name = "textBox_userName";
             this.textBox_userName.Size = new System.Drawing.Size(99, 20);
             this.textBox_userName.TabIndex = 1;
             // 
             // textBox_password
             // 
-            this.textBox_password.Location = new System.Drawing.Point(77, 35);
+            this.textBox_password.Location = new System.Drawing.Point(78, 61);
             this.textBox_password.Name = "textBox_password";
             this.textBox_password.PasswordChar = '*';
             this.textBox_password.Size = new System.Drawing.Size(99, 20);
@@ -326,7 +328,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(2, 9);
+            this.label5.Location = new System.Drawing.Point(3, 35);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 13);
             this.label5.TabIndex = 1;
@@ -335,7 +337,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(2, 35);
+            this.label6.Location = new System.Drawing.Point(3, 61);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 13);
             this.label6.TabIndex = 1;
@@ -347,15 +349,15 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_url.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.textBox_url.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.AllUrl;
-            this.textBox_url.Location = new System.Drawing.Point(252, 6);
+            this.textBox_url.Location = new System.Drawing.Point(78, 6);
             this.textBox_url.Name = "textBox_url";
-            this.textBox_url.Size = new System.Drawing.Size(445, 20);
+            this.textBox_url.Size = new System.Drawing.Size(619, 20);
             this.textBox_url.TabIndex = 3;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(177, 9);
+            this.label7.Location = new System.Drawing.Point(3, 6);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 13);
             this.label7.TabIndex = 1;
@@ -364,7 +366,7 @@
             // checkBox_sessionID
             // 
             this.checkBox_sessionID.AutoSize = true;
-            this.checkBox_sessionID.Location = new System.Drawing.Point(180, 35);
+            this.checkBox_sessionID.Location = new System.Drawing.Point(500, 86);
             this.checkBox_sessionID.Name = "checkBox_sessionID";
             this.checkBox_sessionID.Size = new System.Drawing.Size(99, 17);
             this.checkBox_sessionID.TabIndex = 4;
@@ -374,9 +376,9 @@
             // button_login_services
             // 
             this.button_login_services.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_login_services.Location = new System.Drawing.Point(442, 30);
+            this.button_login_services.Location = new System.Drawing.Point(499, 58);
             this.button_login_services.Name = "button_login_services";
-            this.button_login_services.Size = new System.Drawing.Size(126, 22);
+            this.button_login_services.Size = new System.Drawing.Size(100, 22);
             this.button_login_services.TabIndex = 5;
             this.button_login_services.Text = "Login to Services";
             this.button_login_services.UseVisualStyleBackColor = true;
@@ -385,19 +387,36 @@
             // button_logout_services
             // 
             this.button_logout_services.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_logout_services.Location = new System.Drawing.Point(574, 30);
+            this.button_logout_services.Location = new System.Drawing.Point(499, 30);
             this.button_logout_services.Name = "button_logout_services";
-            this.button_logout_services.Size = new System.Drawing.Size(126, 22);
+            this.button_logout_services.Size = new System.Drawing.Size(100, 22);
             this.button_logout_services.TabIndex = 7;
             this.button_logout_services.Text = "Logout Services";
             this.button_logout_services.UseVisualStyleBackColor = true;
             this.button_logout_services.Click += new System.EventHandler(this.button_logout_Click);
+            // 
+            // textBox_endpoint
+            // 
+            this.textBox_endpoint.Location = new System.Drawing.Point(253, 32);
+            this.textBox_endpoint.Name = "textBox_endpoint";
+            this.textBox_endpoint.Size = new System.Drawing.Size(100, 20);
+            this.textBox_endpoint.TabIndex = 11;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(195, 35);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "End point";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(709, 596);
+            this.Controls.Add(this.textBox_endpoint);
             this.Controls.Add(this.button_login_services);
             this.Controls.Add(this.button_login_curl);
             this.Controls.Add(this.button_logout_services);
@@ -410,11 +429,13 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox_url);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox_userName);
             this.MinimumSize = new System.Drawing.Size(725, 583);
             this.Name = "Form1";
-            this.Text = "DrutNet API sample";
+            this.Text = "DrutNet API sample for drupal7";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -460,6 +481,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button_login_services;
         private System.Windows.Forms.Button button_logout_services;
+        private System.Windows.Forms.TextBox textBox_endpoint;
+        private System.Windows.Forms.Label label9;
     }
 }
 
