@@ -49,16 +49,16 @@ namespace DrutNET
         bool Logout();
 
 
-        [XmlRpcMethod("user.get")]
+        [XmlRpcMethod("user.retrieve")]
         XmlRpcStruct UserGet(string sessid, int uid);
-        [XmlRpcMethod("user.get")]
+        [XmlRpcMethod("user.retrieve")]
         XmlRpcStruct UserGet( int uid);
 
-        [XmlRpcMethod("node.get")]
+        [XmlRpcMethod("node.retrieve")]
         XmlRpcStruct NodeGet(ref string hash,string domain_name,ref string timestamp,string nonce, string sessid, int nid, object fields);
-        [XmlRpcMethod("node.get")]
+        [XmlRpcMethod("node.retrieve")]
         XmlRpcStruct NodeGet(string sessid, int nid, object fields);
-        [XmlRpcMethod("node.get")]
+        [XmlRpcMethod("node.retrieve")]
         XmlRpcStruct NodeGet(int nid, object fields);
 
         [XmlRpcMethod("node.save")]
@@ -66,10 +66,10 @@ namespace DrutNET
         [XmlRpcMethod("node.save")]
         string NodeSave(object fields);
 
-        [XmlRpcMethod("views.get")]
+        [XmlRpcMethod("views.retrieve")]
         XmlRpcStruct[] ViewsGet(string sessid, string view_name,string display_id,object arrayfields,
                 object arrayargs, int intoffset, int intlimit);
-        [XmlRpcMethod("views.get")]
+        [XmlRpcMethod("views.retrieve")]
         XmlRpcStruct[] ViewsGet(string view_name, string display_id, object arrayfields,
                 object arrayargs, int intoffset, int intlimit);
        
@@ -78,9 +78,9 @@ namespace DrutNET
         [XmlRpcMethod("file.save")]
         string FileSave(object file);
 
-        [XmlRpcMethod("file.get")]
+        [XmlRpcMethod("file.retrieve")]
         XmlRpcStruct FileGet(string sessid, int fid);
-        [XmlRpcMethod("file.get")]
+        [XmlRpcMethod("file.retrieve")]
         XmlRpcStruct FileGet(int fid);
 
 
@@ -115,6 +115,16 @@ namespace DrutNET
         {
             get { return _drupalURL; }
             set { _drupalURL = value; }
+        }
+
+        string _endPoint = "";
+        /// <summary>
+        /// Path to endpoint.
+        /// </summary>
+        public string EndPoint
+        {
+            get { return _endPoint; }
+            set { _endPoint = value; }
         }
 
         bool _useSessionID = false;
@@ -771,12 +781,12 @@ namespace DrutNET
                 _username = user;
                 _password = password;
                 drupalServiceSystem = XmlRpcProxyGen.Create<IServiceSystem>();
-                 string xmlrpcServer;
+                string xmlrpcServer;
                 // Clean URL pref
                 if (!_settings.CleanURL)
-                     xmlrpcServer =  "?q=services/xmlrpc";
+                     xmlrpcServer = "?q=" + _settings.EndPoint;
                 else
-                    xmlrpcServer = "services/xmlrpc";
+                    xmlrpcServer = "/" +_settings.EndPoint;
 
                 drupalServiceSystem.Url = _settings.DrupalURL + xmlrpcServer + debugURL;
                 Drupal cnct = drupalServiceSystem.Connect();
@@ -788,7 +798,7 @@ namespace DrutNET
                     if (_settings.UseKeys)
                     {
                         string hash = "";// GetHMAC("", _settings.Key);
-                        string timestamp="";// = GetUnixTimestamp();
+                        string timestamp = "";// = GetUnixTimestamp();
                         string nonce = GetNonce(10);
                         lgn = drupalServiceSystem.Login(ref hash, _settings.DomainName, ref timestamp, nonce, cnct.sessid, user, password);
                     }
@@ -797,7 +807,10 @@ namespace DrutNET
 
                 }
                 else
+                {
                     lgn = drupalServiceSystem.Login(user, password);
+                }
+                // Check that login was succesfull by comparing username returned.
                 if (lgn.user.name == _username)
                 {
                     _sessionID = lgn.sessid;

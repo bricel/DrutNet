@@ -4,10 +4,16 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DrutNET;
 using CookComputing.XmlRpc;
+using System.Collections;
+
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Web;
+
 namespace DrutNETSample
 {
     public partial class Form1 : Form
@@ -20,12 +26,15 @@ namespace DrutNETSample
             InitializeComponent();
             // This handle all message throw by the system.
             DrutNETBase.OnUpdateLog += new DrutNETBase.UpdateLog(DrutNETBase_OnUpdateLog);
-            /*textBox_userName.Text = "admin";
+            textBox_userName.Text = "admin";
             textBox_password.Text = "1234";
-            textBox_url.Text = "http://localhost/drupal-6.16/";*/
-            textBox_fieldName.Text = "field_file";
+            textBox_url.Text = "http://10.0.0.8/drupal7";
+            textBox_endpoint.Text = "test";
+
+
+
         }
-        
+
         bool _started = false;
         /// <summary>
         /// Progress upload of file with CURL 
@@ -67,7 +76,11 @@ namespace DrutNETSample
             {
                 _node = _serviceCon.NodeGet(Convert.ToInt32(textBox_nodeID.Text));
                 if (_node != null)
+                {
+                    XmlRpcStruct body = _node["body"] as XmlRpcStruct;
+                    //body["und"] as XmlRpcStruct
                     richTextBox1.Text = _node["body"].ToString();
+                }
             }
         }
         /// <summary>
@@ -134,6 +147,8 @@ namespace DrutNETSample
             ServicesSettings settings = new ServicesSettings();
             settings.DrupalURL = textBox_url.Text; // 
             settings.UseSessionID = checkBox_sessionID.Checked;
+            settings.EndPoint = textBox_endpoint.Text;
+            settings.CleanURL = true;
             
             /*settings.UseKeys = true;//Not Implemented yet
             //settings.Key = "03cfd62180a67dcbcb1be9a7f78dc726";
@@ -141,8 +156,7 @@ namespace DrutNETSample
 
             // Create a connection object
             _serviceCon = new Services(settings);
-            // Login to drupal
-            _curlCon = new Curl(settings.DrupalURL);
+            
 
            
                if (_serviceCon.Login(textBox_userName.Text, textBox_password.Text))
@@ -155,6 +169,12 @@ namespace DrutNETSample
 
         private void button_login_curl_Click(object sender, EventArgs e)
         {
+            ServicesSettings settings = new ServicesSettings();
+            settings.DrupalURL = textBox_url.Text; // 
+            settings.UseSessionID = checkBox_sessionID.Checked;
+            // Login to drupal
+            _curlCon = new Curl(settings.DrupalURL);
+
              if (_curlCon.Login(textBox_userName.Text, textBox_password.Text))
                  DrutNETBase.sendLogEvent("Login to curl successful \n","Sample",Enums.MessageType.Info);
         }
@@ -162,6 +182,11 @@ namespace DrutNETSample
         private void button_logout_curl_Click(object sender, EventArgs e)
         {
             _curlCon.Logout();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
