@@ -59,7 +59,7 @@ namespace DrutNET
         public User(int userID, Services serviceCon)
         {
             _servicesCon = serviceCon;
-            _userNode = _servicesCon.UserGet(userID);
+            _userNode = _servicesCon.UserRetrieve(userID);
             if (userID != 0)//anonimous
                 loadUserFields(_userNode);
         }
@@ -74,7 +74,7 @@ namespace DrutNET
         /// <returns></returns>
         public bool LoadUser()
         {
-            _userNode = _servicesCon.UserGet();
+            _userNode = _servicesCon.UserRetrieve();
             return loadUserFields(_userNode);
         }
         private bool loadUserFields(XmlRpcStruct getUserNode)

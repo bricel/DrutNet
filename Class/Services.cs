@@ -39,8 +39,6 @@ namespace DrutNET
         [XmlRpcMethod("user.login")]
         DrupalCon Login(ref string hash, string domain_name, ref string timestamp, string nonce, string sessid, string username, string password);
         [XmlRpcMethod("user.login")]
-        DrupalCon Login(string sessid, string username, string password);
-        [XmlRpcMethod("user.login")]
         DrupalCon Login( string username, string password);
 
         [XmlRpcMethod("user.logout")]
@@ -50,47 +48,33 @@ namespace DrutNET
 
 
         [XmlRpcMethod("user.retrieve")]
-        XmlRpcStruct UserGet(string sessid, int uid);
-        [XmlRpcMethod("user.retrieve")]
-        XmlRpcStruct UserGet( int uid);
+        XmlRpcStruct UserRetrieve( int uid);
 
         [XmlRpcMethod("node.retrieve")]
-        XmlRpcStruct NodeGet(ref string hash,string domain_name,ref string timestamp,string nonce, string sessid, int nid, object fields);
+        XmlRpcStruct NodeRetrieve(ref string hash,string domain_name,ref string timestamp,string nonce, string sessid, int nid, object fields);
         [XmlRpcMethod("node.retrieve")]
-        XmlRpcStruct NodeGet(string sessid, int nid, object fields);
-        [XmlRpcMethod("node.retrieve")]
-        XmlRpcStruct NodeGet(int nid, object fields);
+        XmlRpcStruct NodeRetrieve(int nid);
 
-        [XmlRpcMethod("node.save")]
-        string NodeSave(string sessid, object fields);
-        [XmlRpcMethod("node.save")]
-        string NodeSave(object fields);
+        [XmlRpcMethod("node.create")]
+        XmlRpcStruct NodeCreate(object fields);
 
-        [XmlRpcMethod("views.retrieve")]
-        XmlRpcStruct[] ViewsGet(string sessid, string view_name,string display_id,object arrayfields,
-                object arrayargs, int intoffset, int intlimit);
+        [XmlRpcMethod("node.update")]
+        XmlRpcStruct NodeUpdate(int nid, object fields);
+
         [XmlRpcMethod("views.retrieve")]
         XmlRpcStruct[] ViewsGet(string view_name, string display_id, object arrayfields,
                 object arrayargs, int intoffset, int intlimit);
        
-        [XmlRpcMethod("file.save")]
-        string FileSave(string sessid, object file);
-        [XmlRpcMethod("file.save")]
-        string FileSave(object file);
+        [XmlRpcMethod("file.create")]
+        XmlRpcStruct FileCreate(object file);
 
         [XmlRpcMethod("file.retrieve")]
-        XmlRpcStruct FileGet(string sessid, int fid);
-        [XmlRpcMethod("file.retrieve")]
-        XmlRpcStruct FileGet(int fid);
+        XmlRpcStruct FileRetrieve(int fid, bool includeContent, bool getImageStylePath);
 
 
-        [XmlRpcMethod("taxonomy.getTree")]
-        XmlRpcStruct[] TaxonomyGetTree(string sessid, int vid);
         [XmlRpcMethod("taxonomy.getTree")]
         XmlRpcStruct[] TaxonomyGetTree( int vid);
 
-        [XmlRpcMethod("og_vocab.getVocabs")]
-        object OGgetVocab(string sessid, int ogID);
         [XmlRpcMethod("og_vocab.getVocabs")]
         object OGgetVocab( int ogID);
 
@@ -125,16 +109,6 @@ namespace DrutNET
         {
             get { return _endPoint; }
             set { _endPoint = value; }
-        }
-
-        bool _useSessionID = false;
-        /// <summary>
-        /// If session ID feature is enabled in services module
-        /// </summary>
-        public bool UseSessionID
-        {
-            get { return _useSessionID; }
-            set { _useSessionID = value; }
         }
 
         bool _useKeys = false;
@@ -176,7 +150,7 @@ namespace DrutNET
     }
     //----------------------------------------------------------------------------------------------------------
     /// <summary>
-    /// enable to connect to drupal services using XML RPC 
+    /// Enable to connect to drupal services using XML RPC 
     /// </summary>
     public class Services : DrutNETBase, IConnection
     {
@@ -247,10 +221,7 @@ namespace DrutNET
             try
             {
                 object vocabs;
-                if (_settings.UseSessionID)
-                    vocabs = drupalServiceSystem.OGgetVocab(_sessionID, ogID);
-                else
-                    vocabs = drupalServiceSystem.OGgetVocab(ogID);
+                vocabs = drupalServiceSystem.OGgetVocab(ogID);
 
                 if (vocabs is XmlRpcStruct)
                     return (vocabs as XmlRpcStruct);
@@ -267,10 +238,7 @@ namespace DrutNET
 
             try
             {
-                if (_settings.UseSessionID)
-                    return drupalServiceSystem.TaxonomyGetTree(_sessionID, vid);
-                else
-                    return drupalServiceSystem.TaxonomyGetTree(vid);
+                return drupalServiceSystem.TaxonomyGetTree(vid);
             }
             catch (Exception ex)
             {
@@ -279,51 +247,145 @@ namespace DrutNET
             }
         }
         
+        #region File
         /// <summary>
         /// Get file structure information
         /// </summary>
         /// <param name="fid">file id</param>
+        /// <param name="includeContent">Whether to include base64 file content</param>
+        /// <param name="getImageStylePath">Whether to include the image style file path</param>
         /// <returns>File object structure</returns>
-        public XmlRpcStruct FileGet(int fid)
+        public XmlRpcStruct FileRetrieve(int fid, bool includeContent, bool getImageStylePath)
         {
             try
             {
-                if (_settings.UseSessionID)
-                {
-                    // Use of key together with SID.
-                    if (_settings.UseKeys)
-                    {
-                        /*string hash = GetHMAC("", _settings.Key);
-                        string timestamp = GetUnixTimestamp();
-                        string nonce = GetNonce(10);
-                        return drupalServiceSystem.NodeGet(ref hash, _settings.DomainName, ref timestamp, nonce, _sessionID, nid, ob);
-                        */
-                        throw new NotImplementedException("Private key not implemented yet");
-                        //return null;
-                    }
-                    else
-                        return drupalServiceSystem.FileGet(_sessionID, fid);
-
-                }
-                else
-                    return drupalServiceSystem.FileGet(fid);
+                return drupalServiceSystem.FileRetrieve(fid, includeContent, getImageStylePath);
             }
             catch (Exception ex)
             {
-                return handleExeption(ex, "File Get");
+                return handleExeption(ex, "File Retrieve");
             }
         }
-      /// <summary>
-        /// Add an already upload file to cck file field, without saving the node
-      /// </summary>
-      /// <param name="fileFieldName">CCK field name</param>
-      /// <param name="fid">File ID to attach</param>
-      /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
-      /// <param name="node">Node to attach file to (alresdy load with node load)</param>
-        public bool AttachFileToNode(string fileFieldName, int fid, int fileIndex, XmlRpcStruct node)
+      
+        
+        #region User
+        public XmlRpcStruct UserRetrieve(int nid)
         {
-            XmlRpcStruct filenode = this.FileGet(fid);
-            if (filenode == null)
+            
+                try
+                {
+                    //get user 
+                    return drupalServiceSystem.UserRetrieve( nid);
+
+                }
+                catch (Exception ex)
+                {
+                    return handleExeption(ex, "User Get");
+                }
+        }
+        /// <summary>
+        /// Get logged in user information
+        /// </summary>
+        /// <returns></returns>
+        public XmlRpcStruct UserRetrieve()
+        {
+            try
+            {
+                int userID = Convert.ToInt32(this._uID);
+                //get user 
+                return drupalServiceSystem.UserRetrieve( userID);
+
+
+            }
+            catch (Exception ex)
+            {
+                return handleExeption(ex, "User Get");
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Create a drupal file structure
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private XmlRpcStruct buildFileStruct(string filePath)
+        {
+            // Encode file to base64
+            FileStream fs = new FileStream(filePath,FileMode.Open,FileAccess.Read);
+            byte[] filebytes = new byte[fs.Length];
+            fs.Read(filebytes, 0, Convert.ToInt32(fs.Length));
+            string encodedFile = Convert.ToBase64String(filebytes, Base64FormattingOptions.InsertLineBreaks);
+            System.IO.FileInfo fi = new System.IO.FileInfo(filePath);
+
+            CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
+
+            fileStruct.Add("file", encodedFile);
+            fileStruct.Add("filename", fi.Name);
+            fileStruct.Add("target_uri", fi.Name);
+            // TODO: Check for duplaicate files.
+            fileStruct.Add("filepath", "public://" + fi.Name);
+            fileStruct.Add("filesize", fi.Length.ToString());
+            fileStruct.Add("timestamp", (DateTime.UtcNow - new DateTime(1970,1,1,0,0,0)).TotalSeconds);
+            fileStruct.Add("uid", this.UserID);
+
+            //object[] fileObjArray = new object[1];
+            //fileObjArray[0] = fileStructValue;
+
+            //CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
+            //fileStruct.Add("und", fileObjArray);
+
+
+            return fileStruct;
+        }
+        /// <summary>
+        /// Create file structure
+        /// </summary>
+        /// <param name="fid">file name</param>
+        /// <returns>File ID</returns>
+        public XmlRpcStruct FileCreate(string filePath)
+        {
+            try
+            {
+                 return drupalServiceSystem.FileCreate(buildFileStruct(filePath));
+            }
+            catch (Exception ex)
+            {
+                 handleExeptionStr(ex, "File Save");
+                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Upload and attach a file to an existing NODE.
+        /// </summary>
+        /// <param name="filePath">Local path to file</param>
+        /// <param name="fieldName">CCK field name of the file field in the node</param>
+        /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
+        /// <param name="nodeID">Node ID to attache file to</param>
+        /// <param name="serverDirectory">Server directory path e.g: sites/default/files/ </param>
+        /// <returns></returns>
+        public bool FileUpload(string filePath,string fieldName,int fileIndex,int nodeID)
+        {
+            XmlRpcStruct file = FileCreate(filePath);
+            if (file != null)
+            {
+                this.AttachFileToNode(fieldName, file, fileIndex, nodeID);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Add an already upload file to cck file field, without saving the node
+        /// </summary>
+        /// <param name="fileFieldName">CCK field name</param>
+        /// <param name="fid">File ID to attach</param>
+        /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
+        /// <param name="node">Node to attach file to (alresdy load with node load)</param>
+        public bool AttachFileToNode(string fileFieldName, XmlRpcStruct file, int fileIndex, XmlRpcStruct node)
+        {
+            if (file == null)
             {
                 return false;
             }
@@ -348,7 +410,7 @@ namespace DrutNET
                         objectList.Add(new object());
                         node[fileFieldName] = objectList.ToArray();
                         // Add index list required for multiple files.
-                        filenode.Add("list", (fileIndex + 1).ToString());
+                        file.Add("list", (fileIndex + 1).ToString());
                     }
                     else
                         // Case a file was removed form the node, we need to reformat the object
@@ -357,14 +419,14 @@ namespace DrutNET
                         {
                             objectList.Add(new object());
                             node[fileFieldName] = objectList.ToArray();
-                            filenode.Add("list", (fileIndex + 1).ToString());
+                            file.Add("list", (fileIndex + 1).ToString());
                         }
                         else
                         {
-                            filenode.Add("list", (fileIndex + 1).ToString());
+                            file.Add("list", (fileIndex + 1).ToString());
                         }
 
-                    (node[fileFieldName] as object[])[fileIndex] = filenode;
+                    (node[fileFieldName] as object[])[fileIndex] = file;
                     return true;
                 }
             }
@@ -376,19 +438,52 @@ namespace DrutNET
         /// <param name="fid">File ID to attach</param>
         /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
         /// <param name="node">Node ID attach file to</param>
-        public bool AttachFileToNode(string fileFieldName, int fid, int fileIndex, int nid)
+        public bool AttachFileToNode(string fileFieldName, XmlRpcStruct file, int fileIndex, int nid)
         {
-            XmlRpcStruct node = this.NodeGet(nid);
+            XmlRpcStruct node = this.NodeRetrieve(nid);
             if (node != null)
             {
-                AttachFileToNode(fileFieldName, fid, fileIndex, node);
-                if (this.NodeSave(node) != 0)
+                AttachFileToNode(fileFieldName, file, fileIndex, node);
+                if (this.NodeSave(node) != null)
                     return true;
             }
             else
                 handleExeption(new Exception("Unable to load node " + nid.ToString()), "AttachFileToNode");
-                //errorMessage("Unable to load node " + nid.ToString());
+          
             return false;
+        }
+        #endregion
+
+        #region Node
+        /// <summary>
+        /// Create at Update a node, if node->nid is set, will use update, otherwise will use create.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public XmlRpcStruct NodeSave(XmlRpcStruct node)
+        {
+            try
+            {
+                XmlRpcStruct res;
+                // Create a node.
+                if (node["nid"] == null)
+                {
+                    res = drupalServiceSystem.NodeCreate(node);
+                }
+                // Update an existing node.
+                else
+                {
+                    int nid = Convert.ToInt32(node["nid"]);
+                    res = drupalServiceSystem.NodeUpdate(nid, node);
+                }
+
+                return res;
+            }
+            catch (Exception ex)
+            {
+                handleExeption(ex, "Node Save");
+                return null;
+            }
         }
 
         /// <summary>
@@ -396,194 +491,27 @@ namespace DrutNET
         /// </summary>
         /// <param name="nid">Node ID</param>
         /// <returns>Node structure</returns>
-        public XmlRpcStruct NodeGet(int nid)
+        public XmlRpcStruct NodeRetrieve(int nid)
         {
             try
             {
-                // Dummy object to send.
-                object ob = new object();
-                if (_settings.UseSessionID)
-                {
-                    // Use of key together with SID.
-                    if (_settings.UseKeys)
-                    {
-                        string hash = GetHMAC("",_settings.Key);
-                        string timestamp = GetUnixTimestamp();
-                        string nonce = GetNonce(10);
-                        return drupalServiceSystem.NodeGet(ref hash, _settings.DomainName, ref timestamp, nonce, _sessionID, nid,ob);
-
-                    }
-                    else
-                        return drupalServiceSystem.NodeGet(_sessionID, nid, ob);
-
-                }
-                else
-                    return drupalServiceSystem.NodeGet(nid, ob);
+                return drupalServiceSystem.NodeRetrieve(nid);
             }
             catch (Exception ex)
             {
                 return handleExeption(ex, "Node Get");
             }
         }
-        public XmlRpcStruct NodeGet(int nid, string[] fields)
-        {
-            try
-            {
-                if (_settings.UseSessionID)
-                    return drupalServiceSystem.NodeGet(_sessionID, nid, fields);
-                else
-                    return drupalServiceSystem.NodeGet(nid, fields);
 
-            }
-            catch (Exception ex)
-            {
-                return handleExeption(ex, "Node Get");
-            }
-        }
-        
-        public XmlRpcStruct UserGet(int nid)
-        {
-            
-                try
-                {
-                    //get user 
-                    if (_settings.UseSessionID)
-                    return drupalServiceSystem.UserGet(_sessionID, nid);
-                    else
-                        return drupalServiceSystem.UserGet( nid);
+        #endregion
 
-                }
-                catch (Exception ex)
-                {
-                    return handleExeption(ex, "User Get");
-                }
-        }
+        #region Views
         /// <summary>
-        /// Get logged in user information
+        /// Views resources - not updated in Drupal 7 yet.
         /// </summary>
+        /// <param name="viewName"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
-        public XmlRpcStruct UserGet()
-        {
-            try
-            {
-                int userID = Convert.ToInt32(this._uID);
-                //get user 
-                if (_settings.UseSessionID)
-                    return drupalServiceSystem.UserGet(_sessionID, userID);
-                else
-                    return drupalServiceSystem.UserGet( userID);
-
-
-            }
-            catch (Exception ex)
-            {
-                return handleExeption(ex, "User Get");
-            }
-        }
-        /// <summary>
-        /// Create a drupal file structure
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
-        private XmlRpcStruct buildFileStruct(string filePath,string serverPath)
-        {
-            // Encode file to base64
-            FileStream fs = new FileStream(filePath,FileMode.Open,FileAccess.Read);
-            byte[] filebytes = new byte[fs.Length];
-            fs.Read(filebytes, 0, Convert.ToInt32(fs.Length));
-            string encodedFile = Convert.ToBase64String(filebytes, Base64FormattingOptions.InsertLineBreaks);
-            System.IO.FileInfo fi = new System.IO.FileInfo(filePath);
-
-            CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
-            fileStruct.Add("file", encodedFile);
-            fileStruct.Add("filename", fi.Name);
-            fileStruct.Add("filepath", serverPath + fi.Name);
-            fileStruct.Add("filesize",fi.Length.ToString());
-            fileStruct.Add("timestamp",GetUnixTimestamp());
-            fileStruct.Add("uid", this.UserID);//Form Login
-
-            return fileStruct;
-        }
-        /// <summary>
-        /// Save file structure
-        /// </summary>
-        /// <param name="fid">file name</param>
-        /// <returns>File ID</returns>
-        public string FileSave(string filePath,string serverPath)
-        {
-            try
-            {
-                if (_settings.UseSessionID)
-                {
-                    // Use of key together with SID.
-                    if (_settings.UseKeys)
-                    {
-                        /*string hash = GetHMAC("", _settings.Key);
-                        string timestamp = GetUnixTimestamp();
-                        string nonce = GetNonce(10);
-                        return drupalServiceSystem.NodeGet(ref hash, _settings.DomainName, ref timestamp, nonce, _sessionID, nid, ob);
-                        */
-                        throw new NotImplementedException("Private key not implemented yet");
-                        //return null;
-                    }
-                    else
-                        return drupalServiceSystem.FileSave(_sessionID, buildFileStruct(filePath, serverPath));
-
-                }
-                else
-                    return drupalServiceSystem.FileSave(buildFileStruct(filePath, serverPath));
-            }
-            catch (Exception ex)
-            {
-                return handleExeptionStr(ex, "File Save");
-            }
-        }
-        public bool FileUpload(string filePath,string fieldName,int fileIndex,int nodeID)
-        {
-            return FileUpload(filePath, fieldName, fileIndex, nodeID, @"sites/default/files/");
-        }
-        //
-        //</param>
-        //</param>
-
-        /// <summary>
-        /// Upload and attach a file to an existing NODE.
-        /// </summary>
-        /// <param name="filePath">Local path to file</param>
-        /// <param name="fieldName">CCK field name of the file field in the node</param>
-        /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
-        /// <param name="nodeID">Node ID to attache file to</param>
-        /// <param name="serverDirectory">Server directory path e.g: sites/default/files/ </param>
-        /// <returns></returns>
-        public bool FileUpload(string filePath,string fieldName,int fileIndex,int nodeID, string serverDirectory)
-        {
-            string fid = FileSave(filePath, serverDirectory);
-            if (fid != "")
-            {
-                int file_id = Convert.ToInt32(fid);
-                this.AttachFileToNode(fieldName, file_id, fileIndex, nodeID);
-                return true;
-            }
-            return false;
-        }
-        public int NodeSave(XmlRpcStruct node)
-        {
-            try
-            {
-                string res;
-                if (_settings.UseSessionID)
-                    res = drupalServiceSystem.NodeSave(_sessionID, node);
-                else
-                    res = drupalServiceSystem.NodeSave(node);
-
-                return Convert.ToInt32(res);
-            }
-            catch (Exception ex)
-            {
-                handleExeption(ex, "Node Save");
-                return 0;
-            }
-        }
         public XmlRpcStruct[] ViewsGet(string viewName, string[] args)
         {
             return this.ViewsGet(viewName, 0, args);
@@ -599,10 +527,7 @@ namespace DrutNET
             try
             {
                 XmlRpcStruct o1 = new XmlRpcStruct();
-                if (_settings.UseSessionID)
-                    return drupalServiceSystem.ViewsGet(_sessionID, viewName, "default", o1, args, 0, limit);
-                else
-                    return drupalServiceSystem.ViewsGet(viewName, "default", o1, args, 0, limit);
+                return drupalServiceSystem.ViewsGet(viewName, "default", o1, args, 0, limit);
             }
             catch (Exception ex)
             {
@@ -611,7 +536,11 @@ namespace DrutNET
                 return null;
             }
         }
+        #endregion
+
         //--------------------------------------------------------------------------------------
+
+        #region parce fields
         public string ParseFieldArray(Enum arrayfieldName,Enum fieldName, XmlRpcStruct parentStruct)
         {
             try
@@ -627,7 +556,6 @@ namespace DrutNET
             }
             catch
             {
-                //errorMessage("Unable to read " + arrayfieldName.ToString());
                 handleExeption(new Exception("Unable to read " + arrayfieldName.ToString()), "ParseFieldArray");
 
                 return "";
@@ -638,14 +566,11 @@ namespace DrutNET
         {
             try
             {
-                //if ((nodeStruct[StringEnum.StrVal(fieldName)] != null))
-                    return (nodeStruct[StringEnum.StrVal(fieldName)].ToString());
+                return (nodeStruct[StringEnum.StrVal(fieldName)].ToString());
             }
             catch (Exception ex)
             {
-                //errorMessage(ex.Message);
                 handleExeption(ex, "ParseField");
-
                 return "";
 
             }
@@ -654,16 +579,12 @@ namespace DrutNET
         {
             try
             {
-                //if ((nodeStruct[StringEnum.StrVal(fieldName)] != null))
                 return (((nodeStruct[StringEnum.StrVal(fieldName)] as object[])
                         [arrayIndex]as XmlRpcStruct)["value"].ToString());
-                //((nodeStruct[StringEnum.StrVal(fieldName)]as object[])[0] as XmlRpcStruct)["value"].ToString()
             }
             catch (Exception ex)
             {
-                //errorMessage(ex.Message);
                 handleExeption(ex, "ParseField");
-
                 return "";
 
             }
@@ -676,82 +597,13 @@ namespace DrutNET
             }
             catch (Exception ex)
             {
-                //errorMessage(ex.Message);
                 handleExeption(ex, "ParseField");
-
                 return "";
-
             }
         }
-        //public XmlRpcStruct FileSave(string sourceFullPath, string targetFolder)
-        //{
-        //    try
-        //    {
-        //        return drupalServiceSystem.FileSave(sessionID, sourceFullPath, targetFolder, 1);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        errorMessage(ex.Message);
-        //        return null;
-        //    }
-        //}
-        //public bool DownloadFile(string httpPath, string savePAth)
-        //{
-        //    try
-        //    {
-        //        WebClient Client = new WebClient();
-        //        Client.DownloadFile(httpPath, savePAth);
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        errorMessage(ex.Message);
-        //        return false;
-        //    }
-        //}
+        #endregion
 
         //----------------------------------------------------------------------------------------------------------
-        // Get the current Unix time stamp.
-        private string GetUnixTimestamp()
-        {
-            TimeSpan ts = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-            return Convert.ToString(Convert.ToUInt64(ts.TotalSeconds));
-        }
-
-        // Similar to the 'user_password' function Drupal uses.
-        private string GetNonce(int length)
-        {
-            string allowedCharacters = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-            StringBuilder password = new StringBuilder();
-            Random rand = new Random();
-
-            for (int i = 0; i < length; i++)
-            {
-                password.Append(allowedCharacters[rand.Next(0, (allowedCharacters.Length - 1))]);
-            }
-            return password.ToString();
-        }
-
-        // Compute the hash value.
-        private string GetHMAC(string message, string key)
-        {
-            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            byte[] messageByte = encoding.GetBytes(message);
-
-            HMACSHA256 hmac = new HMACSHA256(keyByte);
-            byte[] hashMessageByte = hmac.ComputeHash(messageByte);
-
-            string sbinary = String.Empty;
-            for (int i = 0; i < hashMessageByte.Length; i++)
-            {
-                // Converting to hex, but using lowercase 'x' to get lowercase characters
-                sbinary += hashMessageByte[i].ToString("x2");
-            }
-
-            return sbinary;
-        }
 
         #region IConnection Members
 
@@ -791,25 +643,7 @@ namespace DrutNET
                 drupalServiceSystem.Url = _settings.DrupalURL + xmlrpcServer + debugURL;
                 Drupal cnct = drupalServiceSystem.Connect();
                 DrupalCon lgn ;
-                // SesionID pref
-
-                if (_settings.UseSessionID)
-                {
-                    if (_settings.UseKeys)
-                    {
-                        string hash = "";// GetHMAC("", _settings.Key);
-                        string timestamp = "";// = GetUnixTimestamp();
-                        string nonce = GetNonce(10);
-                        lgn = drupalServiceSystem.Login(ref hash, _settings.DomainName, ref timestamp, nonce, cnct.sessid, user, password);
-                    }
-                    else
-                        lgn = drupalServiceSystem.Login(cnct.sessid, user, password);
-
-                }
-                else
-                {
-                    lgn = drupalServiceSystem.Login(user, password);
-                }
+                lgn = drupalServiceSystem.Login(user, password);
                 // Check that login was succesfull by comparing username returned.
                 if (lgn.user.name == _username)
                 {
@@ -835,10 +669,7 @@ namespace DrutNET
         {
             try
             {
-                if (_settings.UseSessionID)
-                    drupalServiceSystem.Logout(_sessionID);
-                else
-                    drupalServiceSystem.Logout();
+                 drupalServiceSystem.Logout();
                 _isLoggedIn = false;
                 return true;
             }
