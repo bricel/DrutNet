@@ -391,10 +391,20 @@ namespace DrutNET
             }
             else
             {
-                if (node[fileFieldName] == null)
-                    node[fileFieldName] = new object[1];
+                // Create 
+                if (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]) == null)
+                {
+
+                    object[] fileObjArray = new object[1];
+                    fileObjArray[0] = file;
+                    CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
+                    fileStruct.Add("und", fileObjArray);
+
+                    node[fileFieldName] = fileStruct;
+                }
+
                 // Index is not within range of lenght + 1
-                if ((node[fileFieldName] as object[]).Length < fileIndex)
+                if (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]).Length < fileIndex)
                 {
                     handleExeption(new IndexOutOfRangeException(), "Attach file to Node");
                     return false;
@@ -403,22 +413,22 @@ namespace DrutNET
                 {
                     // index is one bigger than existing array, we need to add one object manually
                     List<object> objectList = new List<object>();
-                    if ((node[fileFieldName] as object[]).Length == fileIndex)
+                    if (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]).Length == fileIndex)
                     {
-                        foreach (object ob in (node[fileFieldName] as object[]))
-                            objectList.Add(ob);
+                        foreach (object ob in ((node[fileFieldName] as XmlRpcStruct)["und"] as object[]))
+                        objectList.Add(ob);
                         objectList.Add(new object());
-                        node[fileFieldName] = objectList.ToArray();
+                        ((node[fileFieldName] as XmlRpcStruct)["und"]) = objectList.ToArray();
                         // Add index list required for multiple files.
                         file.Add("list", (fileIndex + 1).ToString());
                     }
                     else
-                        // Case a file was removed form the node, we need to reformat the object
-                        if (((node[fileFieldName] as object[]).Length == 1) &&
-                            ((node[fileFieldName] as object[])[0] is string))
+                        // Case a file was removed from the node, we need to reformat the object
+                        if (((((node[fileFieldName] as XmlRpcStruct)["und"]) as object[]).Length == 1) &&
+                            ((((node[fileFieldName] as XmlRpcStruct)["und"]) as object[])[0] is string))
                         {
                             objectList.Add(new object());
-                            node[fileFieldName] = objectList.ToArray();
+                            ((node[fileFieldName] as XmlRpcStruct)["und"]) = objectList.ToArray();
                             file.Add("list", (fileIndex + 1).ToString());
                         }
                         else
@@ -426,7 +436,7 @@ namespace DrutNET
                             file.Add("list", (fileIndex + 1).ToString());
                         }
 
-                    (node[fileFieldName] as object[])[fileIndex] = file;
+                    (((node[fileFieldName] as XmlRpcStruct)["und"]) as object[])[fileIndex] = file;
                     return true;
                 }
             }
