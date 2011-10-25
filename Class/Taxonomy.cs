@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SeasideResearch.LibCurlNet;
 using CookComputing.XmlRpc;
 using System.Collections;
 using System.Text.RegularExpressions;

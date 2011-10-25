@@ -49,8 +49,6 @@
             this.button_browse = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button_logout_curl = new System.Windows.Forms.Button();
-            this.button_login_curl = new System.Windows.Forms.Button();
             this.richTextBox_messages = new System.Windows.Forms.RichTextBox();
             this.textBox_userName = new System.Windows.Forms.TextBox();
             this.textBox_password = new System.Windows.Forms.TextBox();
@@ -110,10 +108,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(5, 86);
+            this.tabControl1.Location = new System.Drawing.Point(5, 71);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(703, 348);
+            this.tabControl1.Size = new System.Drawing.Size(703, 363);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
@@ -179,7 +177,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(695, 322);
+            this.tabPage2.Size = new System.Drawing.Size(695, 337);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "File upload";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -276,28 +274,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // button_logout_curl
-            // 
-            this.button_logout_curl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_logout_curl.Location = new System.Drawing.Point(605, 58);
-            this.button_logout_curl.Name = "button_logout_curl";
-            this.button_logout_curl.Size = new System.Drawing.Size(92, 22);
-            this.button_logout_curl.TabIndex = 8;
-            this.button_logout_curl.Text = "Logout CURL";
-            this.button_logout_curl.UseVisualStyleBackColor = true;
-            this.button_logout_curl.Click += new System.EventHandler(this.button_logout_curl_Click);
-            // 
-            // button_login_curl
-            // 
-            this.button_login_curl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_login_curl.Location = new System.Drawing.Point(605, 30);
-            this.button_login_curl.Name = "button_login_curl";
-            this.button_login_curl.Size = new System.Drawing.Size(92, 22);
-            this.button_login_curl.TabIndex = 6;
-            this.button_login_curl.Text = "Login to CURL";
-            this.button_login_curl.UseVisualStyleBackColor = true;
-            this.button_login_curl.Click += new System.EventHandler(this.button_login_curl_Click);
-            // 
             // richTextBox_messages
             // 
             this.richTextBox_messages.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -318,7 +294,7 @@
             // 
             // textBox_password
             // 
-            this.textBox_password.Location = new System.Drawing.Point(78, 61);
+            this.textBox_password.Location = new System.Drawing.Point(281, 35);
             this.textBox_password.Name = "textBox_password";
             this.textBox_password.PasswordChar = '*';
             this.textBox_password.Size = new System.Drawing.Size(99, 20);
@@ -336,7 +312,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 61);
+            this.label6.Location = new System.Drawing.Point(206, 35);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 13);
             this.label6.TabIndex = 1;
@@ -350,7 +326,7 @@
             this.textBox_url.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.AllUrl;
             this.textBox_url.Location = new System.Drawing.Point(78, 6);
             this.textBox_url.Name = "textBox_url";
-            this.textBox_url.Size = new System.Drawing.Size(619, 20);
+            this.textBox_url.Size = new System.Drawing.Size(513, 20);
             this.textBox_url.TabIndex = 3;
             // 
             // label7
@@ -365,7 +341,7 @@
             // button_login_services
             // 
             this.button_login_services.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_login_services.Location = new System.Drawing.Point(500, 30);
+            this.button_login_services.Location = new System.Drawing.Point(597, 4);
             this.button_login_services.Name = "button_login_services";
             this.button_login_services.Size = new System.Drawing.Size(100, 22);
             this.button_login_services.TabIndex = 5;
@@ -376,7 +352,7 @@
             // button_logout_services
             // 
             this.button_logout_services.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_logout_services.Location = new System.Drawing.Point(500, 58);
+            this.button_logout_services.Location = new System.Drawing.Point(597, 32);
             this.button_logout_services.Name = "button_logout_services";
             this.button_logout_services.Size = new System.Drawing.Size(100, 22);
             this.button_logout_services.TabIndex = 7;
@@ -386,7 +362,7 @@
             // 
             // textBox_endpoint
             // 
-            this.textBox_endpoint.Location = new System.Drawing.Point(253, 32);
+            this.textBox_endpoint.Location = new System.Drawing.Point(490, 34);
             this.textBox_endpoint.Name = "textBox_endpoint";
             this.textBox_endpoint.Size = new System.Drawing.Size(100, 20);
             this.textBox_endpoint.TabIndex = 11;
@@ -394,7 +370,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(195, 35);
+            this.label9.Location = new System.Drawing.Point(432, 37);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(52, 13);
             this.label9.TabIndex = 1;
@@ -407,9 +383,7 @@
             this.ClientSize = new System.Drawing.Size(709, 596);
             this.Controls.Add(this.textBox_endpoint);
             this.Controls.Add(this.button_login_services);
-            this.Controls.Add(this.button_login_curl);
             this.Controls.Add(this.button_logout_services);
-            this.Controls.Add(this.button_logout_curl);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.richTextBox_messages);
             this.Controls.Add(this.label1);
@@ -423,7 +397,6 @@
             this.MinimumSize = new System.Drawing.Size(725, 583);
             this.Name = "Form1";
             this.Text = "DrutNet API sample for drupal7";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -449,8 +422,6 @@
         private System.Windows.Forms.Button button_browse;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button button_upload;
-        private System.Windows.Forms.Button button_logout_curl;
-        private System.Windows.Forms.Button button_login_curl;
         private System.Windows.Forms.RichTextBox richTextBox_messages;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.WebBrowser webBrowser1;

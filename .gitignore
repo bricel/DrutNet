@@ -6,3 +6,5 @@ DrutNetBase/obj/Debug
 .buildpath
 bin
 obj
+*.dll
+*.exe

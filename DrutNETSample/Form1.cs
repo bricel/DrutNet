@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using DrutNET;
 using CookComputing.XmlRpc;
 using System.Collections;
-
 using System.IO;
 using System.Net;
 using System.Text;
@@ -20,7 +19,6 @@ namespace DrutNETSample
     {
         XmlRpcStruct _node;
         Services _serviceCon;
-        Curl _curlCon;
         public Form1()
         {
             InitializeComponent();
@@ -29,31 +27,9 @@ namespace DrutNETSample
             textBox_userName.Text = "admin";
             textBox_password.Text = "1234";
             textBox_url.Text = "http://10.0.0.8/drupal7";
-            textBox_endpoint.Text = "test?XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=13193846290211";
+            textBox_endpoint.Text = "test";//?XDEBUG_SESSION_START=ECLIPSE_DBGP&KEY=13193846290211";
         }
 
-        bool _started = false;
-        /// <summary>
-        /// Progress upload of file with CURL 
-        /// </summary>
-        /// <param name="info"></param>
-        void DrutNETBase_OnCurlDataProgress(ProgressDataStruct info)
-        {
-            if (info.ulTotal > 0)
-            {
-                progressBar1.Maximum = Convert.ToInt32(info.ulTotal);
-                _started = true;
-            }
-            if (_started)
-            {
-                progressBar1.Value = Convert.ToInt32(info.ulNow);
-                if ((info.ulTotal == info.ulNow))
-                {
-                    _started = false;
-                    DrutNETBase.OnCurlDataProgress -= new DrutNETBase.CurlDataProgressDel(DrutNETBase_OnCurlDataProgress);
-                }
-            }
-        }
         /// <summary>
         /// Log event message handeling
         /// </summary>
@@ -118,24 +94,6 @@ namespace DrutNETSample
             {
                 DrutNETBase_OnUpdateLog("File uploaded successfully", "Drutnet Sample", Enums.MessageType.Info, false);
             }
-            /*
-            // -------------------------------------------------------  //
-            DrutNETBase.OnCurlDataProgress += new DrutNETBase.CurlDataProgressDel(DrutNETBase_OnCurlDataProgress);
-            progressBar1.Value = 0;
-            int fid;
-            if ((fid = _curlCon.FileUpload(textBox_filename.Text)) == -1)
-                DrutNETBase_OnUpdateLog("Unable to upload file \n", "Drutnet Sample", Enums.MessageType.Error, false);
-            else
-            {
-                // Add a file to the node
-                if (textBox_fileNode.Text!="")
-                {
-                    int nid =  Convert.ToInt32(textBox_fileNode.Text);
-                    _serviceCon.AttachFileToNode(textBox_fieldName.Text, fid, 0,nid);
-                }
-                DrutNETBase_OnUpdateLog("File uploaded successfully to FID :" + fid + "\n", "Drutnet Sample", Enums.MessageType.Info, false);
-
-            }*/
         }
         /// <summary>
         /// Browse file to upload.
@@ -156,10 +114,6 @@ namespace DrutNETSample
             settings.EndPoint = textBox_endpoint.Text;
             settings.CleanURL = true;
             
-            /*settings.UseKeys = true;//Not Implemented yet
-            //settings.Key = "03cfd62180a67dcbcb1be9a7f78dc726";
-            settings.DomainName = "localhost";*/
-
             // Create a connection object
             _serviceCon = new Services(settings);
             
@@ -171,27 +125,6 @@ namespace DrutNETSample
         private void button_logout_Click(object sender, EventArgs e)
         {
             _serviceCon.Logout();
-        }
-
-        private void button_login_curl_Click(object sender, EventArgs e)
-        {
-            ServicesSettings settings = new ServicesSettings();
-            settings.DrupalURL = textBox_url.Text; // 
-            // Login to drupal
-            _curlCon = new Curl(settings.DrupalURL);
-
-             if (_curlCon.Login(textBox_userName.Text, textBox_password.Text))
-                 DrutNETBase.sendLogEvent("Login to curl successful \n","Sample",Enums.MessageType.Info);
-        }
-
-        private void button_logout_curl_Click(object sender, EventArgs e)
-        {
-            _curlCon.Logout();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

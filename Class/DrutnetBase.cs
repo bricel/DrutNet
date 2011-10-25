@@ -18,22 +18,13 @@ namespace DrutNET
     {
         //Log Event -----------------------------------------
         public delegate void UpdateLog(string str, string mSender, Enums.MessageType mType,bool verbose);
-        public delegate void CurlDataProgressDel(ProgressDataStruct info);
         //Statics
         static public event UpdateLog OnUpdateLog;
-        static public event CurlDataProgressDel OnCurlDataProgress;
 
         #region general methods
         static public void OpenWebPage(string url)
         {
             System.Diagnostics.Process.Start(url);
-        }
-        static public void CurlDataProgress(ProgressDataStruct info)
-        {
-            if (OnCurlDataProgress != null)
-            {
-                OnCurlDataProgress(info);
-            }
         }
         #endregion
 
@@ -338,7 +329,6 @@ namespace DrutNET
         }
         ///-----------------------------------------------------------------------------------------------------------
         #endregion
-
 
         #region file and folder methods
         /// <summary>

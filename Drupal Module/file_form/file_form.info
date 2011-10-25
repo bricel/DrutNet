@@ -1,4 +1,0 @@
-; $Id$
-name = File form
-description = "Upload files via a simple form."
-core = 6.x

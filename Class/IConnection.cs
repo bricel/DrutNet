@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SeasideResearch.LibCurlNet;
 using CookComputing.XmlRpc;
 using System.Collections;
 using System.Text.RegularExpressions;
@@ -15,7 +14,7 @@ namespace DrutNET
 
         bool Login(string username, string password);
         /// <summary>
-        /// retry to login with las username and password used
+        /// Retry to login with las username and password used
         /// </summary>
         /// <returns></returns>
         bool ReLogin();
@@ -23,7 +22,6 @@ namespace DrutNET
         string Username { get; }
         bool IsLoggedIn { get; }
         string ServerURL { get; }
-       // Services ServicesCon { get; }
 
     }
 }

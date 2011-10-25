@@ -17,29 +17,21 @@
   <Class Name="DrutNET.DrutNETBase" Collapsed="true">
     <Position X="6.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AANgAAAiAAAEQAAABAABAAUAQCSCIADJMAFAAAAREAA=</HashCode>
+      <HashCode>AANgAAAiAAAEQAAABAABAAUAQCSCIADJIAFAAAAREAA=</HashCode>
       <FileName>Class\DrutnetBase.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="DrutNET.Curl" Collapsed="true">
-    <Position X="9.5" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QiQAiAEAAIUBAAgAgyAAAFIAAEAEAQACAlISAAAIQMA=</HashCode>
-      <FileName>Class\Curl.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="DrutNET.ServicesSettings" Collapsed="true">
     <Position X="1.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAACAAAAAQAAACAIAAIAAAAAAACCAgAAAhQAAA=</HashCode>
+      <HashCode>AAAAAQAACAAAQAQAAACAAAAIAAAAIAACAAgAAAhQAAA=</HashCode>
       <FileName>Class\Services.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DrutNET.Services" Collapsed="true">
     <Position X="4" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IgSAACFIABAAKAAAgUBEAAoAAAgQAQACgAISAAMACAE=</HashCode>
+      <HashCode>AwQAACHAIAAAKAAAgWAUAAqAABgQAQACgAISAAEACIE=</HashCode>
       <FileName>Class\Services.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -82,7 +74,7 @@
   <Interface Name="DrutNET.IServiceSystem" Collapsed="true">
     <Position X="3" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IACAAABIAAAACAQAAAAAAIIAAAAQAAAAAAAQAAAAAAE=</HashCode>
+      <HashCode>AAAAAABAIAAADAAAACAQAIIAAAAAAAAAoAAQAAAAAAE=</HashCode>
       <FileName>Class\Services.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -61,8 +61,6 @@
     <Compile Include="Class\StringEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Class\IConnection.cs" />
-    <Compile Include="Class\Curl.cs" />
-    <Compile Include="Class\Field.cs" />
     <Compile Include="Class\OrganicGroup.cs" />
     <Compile Include="Class\Services.cs" />
     <Compile Include="Forms\LoginForm.cs">
@@ -94,10 +92,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="External_lib\cURL.net\src\LibCurlNet.csproj">
-      <Project>{AEF8DC8B-814F-4C03-B048-55EE0F093496}</Project>
-      <Name>LibCurlNet</Name>
-    </ProjectReference>
     <ProjectReference Include="External_lib\SharpZipLib\ICSharpCode.SharpZLib.csproj">
       <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
       <Name>ICSharpCode.SharpZLib</Name>
