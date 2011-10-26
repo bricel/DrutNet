@@ -12,7 +12,7 @@ namespace DrutNET
 {
 
     /// <summary>
-    /// represent a user role
+    /// represent a user role - not ported to d7 yet.
     /// </summary>
     public class Role
     {
@@ -79,8 +79,6 @@ namespace DrutNET
 
                     _uid = Convert.ToInt32(getUserNode[StringEnum.StrVal(Enums.UserHTMLField.UserID)]);
                     this._name = getUserNode[StringEnum.StrVal(Enums.UserHTMLField.AuthorName)].ToString();
-
-                    //setUserOrganicGroup(getUserNode);
 
                     // Load permission roles of the user
                     XmlRpcStruct rolesStruct = (getUserNode[StringEnum.StrVal(Enums.UserHTMLField.Roles)] as XmlRpcStruct);

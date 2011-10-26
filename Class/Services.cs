@@ -51,8 +51,6 @@ namespace DrutNET
         XmlRpcStruct UserRetrieve( int uid);
 
         [XmlRpcMethod("node.retrieve")]
-        XmlRpcStruct NodeRetrieve(ref string hash,string domain_name,ref string timestamp,string nonce, string sessid, int nid, object fields);
-        [XmlRpcMethod("node.retrieve")]
         XmlRpcStruct NodeRetrieve(int nid);
 
         [XmlRpcMethod("node.create")]
@@ -62,7 +60,13 @@ namespace DrutNET
         XmlRpcStruct NodeUpdate(int nid, object fields);
 
         [XmlRpcMethod("views.retrieve")]
-        XmlRpcStruct[] ViewsRetrieve(string viewName, string displayID, Array args, int offset, int limit, bool themeResult);
+        XmlRpcStruct ViewsRetrieve(string viewName, string displayID, object[] args, int offset, int limit, bool themeResult);
+
+        [XmlRpcMethod("views.retrieve")]
+        XmlRpcStruct ViewsRetrieve(string viewName);
+
+        [XmlRpcMethod("groups.retrieve")]
+        XmlRpcStruct[] GroupsRetrieve(string uid);
        
         [XmlRpcMethod("file.create")]
         XmlRpcStruct FileCreate(object file);
@@ -72,7 +76,7 @@ namespace DrutNET
 
 
         [XmlRpcMethod("taxonomy.getTree")]
-        XmlRpcStruct[] TaxonomyGetTree( int vid);
+        XmlRpcStruct[] TaxonomyGetTree(int vid);
 
 
     }
@@ -503,15 +507,43 @@ namespace DrutNET
 
         #endregion
 
+        /// <summary>
+        /// Get all group of a user.
+        /// </summary>
+        /// <param name="viewName">The view name</param>
+        /// <returns></returns>
+        public XmlRpcStruct[] GroupsRetrieve(string uid)
+        {
+            try
+            {
+                return drupalServiceSystem.GroupsRetrieve(uid);
+            }
+            catch (Exception ex)
+            {
+                _errorCode = 0;
+                handleExeption(ex, "Groups Retrieve");
+                return null;
+            }
+        }
+
         #region Views
         /// <summary>
         /// Get the default view.
         /// </summary>
         /// <param name="viewName">The view name</param>
         /// <returns></returns>
-        public XmlRpcStruct[] ViewsRetrieve(string viewName)
+        public XmlRpcStruct ViewsRetrieve(string viewName)
         {
-            return this.ViewsRetrieve(viewName, "default", null, 0, 10, false);
+            try
+            {
+                return drupalServiceSystem.ViewsRetrieve(viewName);
+            }
+            catch (Exception ex)
+            {
+                _errorCode = 0;
+                handleExeption(ex, "Views Retrieve");
+                return null;
+            }
         }
       
         /// <summary>
@@ -524,17 +556,16 @@ namespace DrutNET
         /// <param name="limit">A limit integer for paging</param>
         /// <param name="themeResult">There to return the raw data results or style the results</param>
         /// <returns></returns>
-        public XmlRpcStruct[] ViewsRetrieve(string viewName, string displayID, ArrayList args, int offset, int limit, bool themeResult )
+        public XmlRpcStruct ViewsRetrieve(string viewName, string displayID, ArrayList args, int offset, int limit, bool themeResult )
         {
             try
             {
-                XmlRpcStruct o1 = new XmlRpcStruct();
                 return drupalServiceSystem.ViewsRetrieve(viewName, displayID, args.ToArray(), offset, limit, themeResult);
             }
             catch (Exception ex)
             {
                 _errorCode = 0;
-                handleExeption(ex, "View Get");
+                handleExeption(ex, "Views Retrieve");
                 return null;
             }
         }
@@ -617,6 +648,11 @@ namespace DrutNET
         {
             get { return _username; }
         }
+        string _email;
+        public string Email
+        {
+            get { return _email; }
+        }
         bool _isLoggedIn = false;
         public bool IsLoggedIn
         {
@@ -651,6 +687,8 @@ namespace DrutNET
                 {
                     _sessionID = lgn.sessid;
                     _uID = lgn.user.uid; //returned from login
+                    _username = lgn.user.name;
+                    _email = lgn.user.mail;
                     _isLoggedIn = true;
                 }
                 else
