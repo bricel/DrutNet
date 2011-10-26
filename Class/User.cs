@@ -32,12 +32,6 @@ namespace DrutNET
         XmlRpcStruct _userNode;
         string _name = "Anonymous";
         List<Role> roles = new List<Role>();
-        List<OrganicGroup> _organicGroups = new List<OrganicGroup>();
-        public List<OrganicGroup> OrganicGroups { get { return _organicGroups; } }
-        public OrganicGroup FindOrganicGroup(int id)
-        {
-            return _organicGroups.Find(delegate(OrganicGroup og) { return og.ID == id; });
-        }
         int _uid;
         Services _servicesCon;
         ServicesSettings _settings;
@@ -119,45 +113,7 @@ namespace DrutNET
             }
             return false;
         }
-        private bool setUserOrganicGroup(XmlRpcStruct xmlStruc)
-        {
-            try
-            {
-                this.OrganicGroups.Clear();
-                XmlRpcStruct groups = (xmlStruc[StringEnum.StrVal(Enums.HTMLField.Group)] as XmlRpcStruct);
-                if (groups != null)
-                {
-                    foreach (XmlRpcStruct values in groups.Values)
-                    {
-                        try
-                        {
-                            bool isAdmin = false;
-                            if (values["is_admin"].ToString() == "1")
-                                isAdmin = true;
-                            int og_id = Convert.ToInt32(values["nid"]);
-                            OrganicGroup group;
-
-                            group = new OrganicGroup(og_id, values["title"].ToString(), isAdmin,_servicesCon);
-                            group.LoadVocabulary();
-
-                            this.OrganicGroups.Add(group);
-                        }
-                        catch (Exception ex)
-                        {
-                            sendLogEvent("Cant find vocabulary: " + ex.Message, "User", Enums.MessageType.Error);
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                sendLogEvent("Can't parse organic group: " + e.Message, "User", Enums.MessageType.Error);
-                return false;
-            }
-        }
-
+      
         #region IConnection Members
 
         public bool Login(string username, string password)

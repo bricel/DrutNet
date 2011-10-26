@@ -46,7 +46,6 @@ namespace DrutNETSample
             // Node to load
             if (_serviceCon != null)
             {
-                XmlRpcStruct file = _serviceCon.FileRetrieve(12, true, false);
                 _node = _serviceCon.NodeRetrieve(Convert.ToInt32(textBox_nodeID.Text));
                 if (_node != null)
                 {

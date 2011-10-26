@@ -62,8 +62,7 @@ namespace DrutNET
         XmlRpcStruct NodeUpdate(int nid, object fields);
 
         [XmlRpcMethod("views.retrieve")]
-        XmlRpcStruct[] ViewsGet(string view_name, string display_id, object arrayfields,
-                object arrayargs, int intoffset, int intlimit);
+        XmlRpcStruct[] ViewsRetrieve(string viewName, string displayID, Array args, int offset, int limit, bool themeResult);
        
         [XmlRpcMethod("file.create")]
         XmlRpcStruct FileCreate(object file);
@@ -75,8 +74,6 @@ namespace DrutNET
         [XmlRpcMethod("taxonomy.getTree")]
         XmlRpcStruct[] TaxonomyGetTree( int vid);
 
-        [XmlRpcMethod("og_vocab.getVocabs")]
-        object OGgetVocab( int ogID);
 
     }
     /// <summary>
@@ -208,31 +205,19 @@ namespace DrutNET
             return "";
         }
         
-        //<summary>
-         //User ID of the logged-in user
-         //</summary>
+        ///<summary>
+        /// User ID of the logged-in user.
+        ///</summary>
         public string UserID
         {
             get { return _uID; }
         }
        
-        public XmlRpcStruct OGgetVocab(int ogID)
-        {
-            try
-            {
-                object vocabs;
-                vocabs = drupalServiceSystem.OGgetVocab(ogID);
-
-                if (vocabs is XmlRpcStruct)
-                    return (vocabs as XmlRpcStruct);
-                else
-                    return null;
-            }
-            catch (Exception ex)
-            {
-                return handleExeption(ex,"OG Get Vocabulary");
-            }
-        }
+        /// <summary>
+        /// Not test in D7 yet.
+        /// </summary>
+        /// <param name="vid"></param>
+        /// <returns></returns>
         public XmlRpcStruct[] TaxonomyGetTree(int vid)
         {
 
@@ -391,27 +376,30 @@ namespace DrutNET
             }
             else
             {
-                // Create 
-                if (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]) == null)
-                {
-
-                    object[] fileObjArray = new object[1];
-                    fileObjArray[0] = file;
-                    CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
-                    fileStruct.Add("und", fileObjArray);
-
-                    node[fileFieldName] = fileStruct;
-                }
-
-                // Index is not within range of lenght + 1
-                if (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]).Length < fileIndex)
+                // First file in node field
+                if ((node[fileFieldName] == null) ||
+                   (!(node[fileFieldName] is XmlRpcStruct)) ||
+                   (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]) == null))
+                        {
+                            // Create a new file object structure.
+                            object[] fileObjArray = new object[1];
+                            fileObjArray[0] = file;
+                            CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
+                            fileStruct.Add("und", fileObjArray);
+                            // Save file to node.
+                            node[fileFieldName] = fileStruct;
+                            return true;
+                        }
+                // Index is not within range of lenght + 1, throgh error
+                else if (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]).Length < fileIndex)
                 {
                     handleExeption(new IndexOutOfRangeException(), "Attach file to Node");
                     return false;
                 }
+                // Add a new file (when there are already existing one) or overwirete an existing file.
                 else
                 {
-                    // index is one bigger than existing array, we need to add one object manually
+                    // index is one bigger than existing array, we need to add one object manualy.
                     List<object> objectList = new List<object>();
                     if (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]).Length == fileIndex)
                     {
@@ -420,7 +408,7 @@ namespace DrutNET
                         objectList.Add(new object());
                         ((node[fileFieldName] as XmlRpcStruct)["und"]) = objectList.ToArray();
                         // Add index list required for multiple files.
-                        file.Add("list", (fileIndex + 1).ToString());
+                       // file.Add("list", (fileIndex + 1).ToString());
                     }
                     else
                         // Case a file was removed from the node, we need to reformat the object
@@ -429,13 +417,13 @@ namespace DrutNET
                         {
                             objectList.Add(new object());
                             ((node[fileFieldName] as XmlRpcStruct)["und"]) = objectList.ToArray();
-                            file.Add("list", (fileIndex + 1).ToString());
+                            //file.Add("list", (fileIndex + 1).ToString());
                         }
                         else
                         {
-                            file.Add("list", (fileIndex + 1).ToString());
+                            //file.Add("list", (fileIndex + 1).ToString());
                         }
-
+                    // Add file struct to field.
                     (((node[fileFieldName] as XmlRpcStruct)["und"]) as object[])[fileIndex] = file;
                     return true;
                 }
@@ -517,27 +505,31 @@ namespace DrutNET
 
         #region Views
         /// <summary>
-        /// Views resources - not updated in Drupal 7 yet.
+        /// Get the default view.
         /// </summary>
-        /// <param name="viewName"></param>
-        /// <param name="args"></param>
+        /// <param name="viewName">The view name</param>
         /// <returns></returns>
-        public XmlRpcStruct[] ViewsGet(string viewName, string[] args)
+        public XmlRpcStruct[] ViewsRetrieve(string viewName)
         {
-            return this.ViewsGet(viewName, 0, args);
+            return this.ViewsRetrieve(viewName, "default", null, 0, 10, false);
         }
-        public XmlRpcStruct[] ViewsGet(string viewName, int limit)
-        {
-            XmlRpcStruct arrayArgs = new XmlRpcStruct();
-          //  string[] arrayArgs=null;// = new string[]();
-            return this.ViewsGet(viewName, limit, arrayArgs);
-        }
-        public XmlRpcStruct[] ViewsGet(string viewName, int limit, object args)
+      
+        /// <summary>
+        /// Retrieve a view
+        /// </summary>
+        /// <param name="viewName">The views name</param>
+        /// <param name="displayID">The display name</param>
+        /// <param name="args">A list of argument to pass to the view</param>
+        /// <param name="offset">An ofset integer for paging</param>
+        /// <param name="limit">A limit integer for paging</param>
+        /// <param name="themeResult">There to return the raw data results or style the results</param>
+        /// <returns></returns>
+        public XmlRpcStruct[] ViewsRetrieve(string viewName, string displayID, ArrayList args, int offset, int limit, bool themeResult )
         {
             try
             {
                 XmlRpcStruct o1 = new XmlRpcStruct();
-                return drupalServiceSystem.ViewsGet(viewName, "default", o1, args, 0, limit);
+                return drupalServiceSystem.ViewsRetrieve(viewName, displayID, args.ToArray(), offset, limit, themeResult);
             }
             catch (Exception ex)
             {
