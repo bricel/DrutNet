@@ -731,7 +731,7 @@ namespace DrutNET
         {
             try
             {
-                 drupalServiceSystem.Logout();
+                bool res = drupalServiceSystem.Logout();
                 _isLoggedIn = false;
                 return true;
             }
