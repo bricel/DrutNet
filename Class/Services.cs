@@ -66,7 +66,10 @@ namespace DrutNET
         XmlRpcStruct ViewsRetrieve(string viewName);
 
         [XmlRpcMethod("groups.retrieve")]
-        XmlRpcStruct[] GroupsRetrieve(string uid);
+        XmlRpcStruct[] GroupsRetrieve(int uid);
+
+        [XmlRpcMethod("groups.update")]
+        XmlRpcStruct GroupsUpdate(int nid, int gid);
        
         [XmlRpcMethod("file.create")]
         XmlRpcStruct FileCreate(object file);
@@ -159,7 +162,7 @@ namespace DrutNET
        
         IServiceSystem drupalServiceSystem;
         string _sessionID=" ";
-        string _uID;
+        int _uID;
         int _errorCode = 0;
         string _errorMsg = "";
         /// <summary>
@@ -212,7 +215,7 @@ namespace DrutNET
         ///<summary>
         /// User ID of the logged-in user.
         ///</summary>
-        public string UserID
+        public int UserID
         {
             get { return _uID; }
         }
@@ -512,11 +515,30 @@ namespace DrutNET
         /// </summary>
         /// <param name="viewName">The view name</param>
         /// <returns></returns>
-        public XmlRpcStruct[] GroupsRetrieve(string uid)
+        public XmlRpcStruct[] GroupsRetrieve(int uid)
         {
             try
             {
                 return drupalServiceSystem.GroupsRetrieve(uid);
+            }
+            catch (Exception ex)
+            {
+                _errorCode = 0;
+                handleExeption(ex, "Groups Retrieve");
+                return null;
+            }
+        }
+        /// <summary>
+        /// Connect a node to a group.
+        /// </summary>
+        /// <param name="nid"></param>
+        /// <param name="gid"></param>
+        /// <returns></returns>
+        public XmlRpcStruct GroupsUpdate(int nid, int gid)
+        {
+            try
+            {
+                return drupalServiceSystem.GroupsUpdate(nid, gid);
             }
             catch (Exception ex)
             {
@@ -686,7 +708,7 @@ namespace DrutNET
                 if (lgn.user.name == _username)
                 {
                     _sessionID = lgn.sessid;
-                    _uID = lgn.user.uid; //returned from login
+                    _uID = Convert.ToInt32(lgn.user.uid); //returned from login
                     _username = lgn.user.name;
                     _email = lgn.user.mail;
                     _isLoggedIn = true;
