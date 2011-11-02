@@ -118,7 +118,7 @@ namespace DrutNETSample
             
 
            
-               if (_serviceCon.Login(textBox_userName.Text, textBox_password.Text))
+            if (_serviceCon.Login(textBox_userName.Text, textBox_password.Text))
                    DrutNETBase.sendLogEvent("Login to services successful \n", "Sample", Enums.MessageType.Info);
         }
         private void button_logout_Click(object sender, EventArgs e)

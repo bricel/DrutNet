@@ -65,18 +65,11 @@ namespace DrutNET
         [XmlRpcMethod("views.retrieve")]
         XmlRpcStruct ViewsRetrieve(string viewName);
 
-        [XmlRpcMethod("groups.retrieve")]
-        XmlRpcStruct[] GroupsRetrieve(int uid);
-
-        [XmlRpcMethod("groups.update")]
-        XmlRpcStruct GroupsUpdate(int nid, int gid);
-       
         [XmlRpcMethod("file.create")]
         XmlRpcStruct FileCreate(object file);
 
         [XmlRpcMethod("file.retrieve")]
         XmlRpcStruct FileRetrieve(int fid, bool includeContent, bool getImageStylePath);
-
 
         [XmlRpcMethod("taxonomy.getTree")]
         XmlRpcStruct[] TaxonomyGetTree(int vid);
@@ -93,6 +86,12 @@ namespace DrutNET
         {
             get { return _cleanURL; }
             set { _cleanURL = value; }
+        }
+        string _debugURL;
+        public string DebugURL
+        {
+            get { return _debugURL; }
+            set { _debugURL = value; }
         }
 
         string _drupalURL="";
@@ -114,6 +113,19 @@ namespace DrutNET
             get { return _endPoint; }
             set { _endPoint = value; }
         }
+
+        public string XmlRpcServer
+        {
+            get
+            {    // Clean URL pref
+                if (!CleanURL)
+                    return "?q=" + EndPoint;
+                else
+                    return "/" + EndPoint;
+            }
+        }
+
+             
 
         bool _useKeys = false;
         /// <summary>
@@ -160,7 +172,7 @@ namespace DrutNET
     {
         //privates                                                      
        
-        IServiceSystem drupalServiceSystem;
+        protected IServiceSystem drupalServiceSystem;
         string _sessionID=" ";
         int _uID;
         int _errorCode = 0;
@@ -170,24 +182,44 @@ namespace DrutNET
         /// </summary>
         public int ErrorCode { get { return _errorCode; } }
         public string ErrorMessage { get { return _errorMsg; } }
-        ServicesSettings _settings;
+        protected ServicesSettings _settings;
+
+        ///<summary>
+        /// The full path for the service end point.
+        ///</summary>
+        public string ServiceUrl
+        {
+            get 
+            {
+                if (_settings != null)
+                    return _settings.DrupalURL + _settings.XmlRpcServer + _settings.DebugURL;
+                else
+                    return "";
+            }
+        }
         /// <summary>
         /// Single Tone constructor
         /// </summary>
         public Services(ServicesSettings settings)
         {
             _settings = settings;
+            drupalServiceSystem = XmlRpcProxyGen.Create<IServiceSystem>();
+            drupalServiceSystem.Url = ServiceUrl;
+        }
+        public Services()
+        {
+          
         }
        
-        private void errorMessage(string msg)
+        protected void errorMessage(string msg)
         {
             sendLogEvent(msg, "Services", Enums.MessageType.Error);
         }
-        private XmlRpcStruct handleExeption(Exception ex)
+        protected XmlRpcStruct handleExeption(Exception ex)
         {
             return handleExeption(ex, "");
         }
-        private XmlRpcStruct handleExeption(Exception ex,string functionName)
+        protected XmlRpcStruct handleExeption(Exception ex, string functionName)
         {
             if (ex is XmlRpcFaultException)
             {
@@ -201,7 +233,7 @@ namespace DrutNET
             errorMessage(functionName + " - " + ex.Message + "\n");
             return null;
         }
-        private string handleExeptionStr(Exception ex, string functionName)
+        protected string handleExeptionStr(Exception ex, string functionName)
         {
             if (ex is XmlRpcFaultException)
             {
@@ -321,13 +353,6 @@ namespace DrutNET
             fileStruct.Add("timestamp", (DateTime.UtcNow - new DateTime(1970,1,1,0,0,0)).TotalSeconds);
             fileStruct.Add("uid", this.UserID);
 
-            //object[] fileObjArray = new object[1];
-            //fileObjArray[0] = fileStructValue;
-
-            //CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
-            //fileStruct.Add("und", fileObjArray);
-
-
             return fileStruct;
         }
         /// <summary>
@@ -389,11 +414,8 @@ namespace DrutNET
                    (((node[fileFieldName] as XmlRpcStruct)["und"] as object[]) == null))
                         {
                             // Create a new file object structure.
-                            object[] fileObjArray = new object[1];
-                            fileObjArray[0] = file;
-                            CookComputing.XmlRpc.XmlRpcStruct fileStruct = new CookComputing.XmlRpc.XmlRpcStruct();
-                            fileStruct.Add("und", fileObjArray);
                             // Save file to node.
+                            XmlRpcStruct fileStruct = GetFieldStuct(file, "", "lang");
                             node[fileFieldName] = fileStruct;
                             return true;
                         }
@@ -510,44 +532,7 @@ namespace DrutNET
 
         #endregion
 
-        /// <summary>
-        /// Get all group of a user.
-        /// </summary>
-        /// <param name="viewName">The view name</param>
-        /// <returns></returns>
-        public XmlRpcStruct[] GroupsRetrieve(int uid)
-        {
-            try
-            {
-                return drupalServiceSystem.GroupsRetrieve(uid);
-            }
-            catch (Exception ex)
-            {
-                _errorCode = 0;
-                handleExeption(ex, "Groups Retrieve");
-                return null;
-            }
-        }
-        /// <summary>
-        /// Connect a node to a group.
-        /// </summary>
-        /// <param name="nid"></param>
-        /// <param name="gid"></param>
-        /// <returns></returns>
-        public XmlRpcStruct GroupsUpdate(int nid, int gid)
-        {
-            try
-            {
-                return drupalServiceSystem.GroupsUpdate(nid, gid);
-            }
-            catch (Exception ex)
-            {
-                _errorCode = 0;
-                handleExeption(ex, "Groups Retrieve");
-                return null;
-            }
-        }
-
+        
         #region Views
         /// <summary>
         /// Get the default view.
@@ -592,6 +577,26 @@ namespace DrutNET
             }
         }
         #endregion
+
+
+        static public XmlRpcStruct GetFieldStuct(object value, string valueField, string lang)
+        {
+            object[] ObjArray = new object[1];
+            if (valueField == "")
+                ObjArray[0] = value;
+            else
+            {
+                object[] ObjArrayValue = new object[1];
+                ObjArrayValue[0] = value;
+                XmlRpcStruct valueStruct = new XmlRpcStruct();
+
+                valueStruct.Add(valueField, ObjArrayValue);
+                ObjArray[0] = valueStruct;
+            }
+            CookComputing.XmlRpc.XmlRpcStruct fieldStruct = new CookComputing.XmlRpc.XmlRpcStruct();
+            fieldStruct.Add(lang, ObjArray);
+            return fieldStruct;
+        }
 
         //--------------------------------------------------------------------------------------
 
@@ -682,25 +687,14 @@ namespace DrutNET
         }
         string _username;
         string _password;
+       
         public bool Login(string user, string password)
-        {
-            return Login(user, password, "");
-        }
-        public bool Login(string user, string password, string debugURL)
         {
             try
             {
                 _username = user;
                 _password = password;
-                drupalServiceSystem = XmlRpcProxyGen.Create<IServiceSystem>();
-                string xmlrpcServer;
-                // Clean URL pref
-                if (!_settings.CleanURL)
-                     xmlrpcServer = "?q=" + _settings.EndPoint;
-                else
-                    xmlrpcServer = "/" +_settings.EndPoint;
-
-                drupalServiceSystem.Url = _settings.DrupalURL + xmlrpcServer + debugURL;
+               
                 Drupal cnct = drupalServiceSystem.Connect();
                 DrupalCon lgn ;
                 lgn = drupalServiceSystem.Login(user, password);
