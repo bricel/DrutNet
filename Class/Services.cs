@@ -333,7 +333,7 @@ namespace DrutNET
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        private XmlRpcStruct buildFileStruct(string filePath)
+        private XmlRpcStruct buildFileStruct(string filePath, bool privateFolder)
         {
             // Encode file to base64
             FileStream fs = new FileStream(filePath,FileMode.Open,FileAccess.Read);
@@ -348,7 +348,10 @@ namespace DrutNET
             fileStruct.Add("filename", fi.Name);
             fileStruct.Add("target_uri", fi.Name);
             // TODO: Check for duplaicate files.
-            fileStruct.Add("filepath", "public://" + fi.Name);
+            string prefix = "public";
+            if (privateFolder)
+                prefix = "private";
+            fileStruct.Add("filepath", prefix + "://" + fi.Name);
             fileStruct.Add("filesize", fi.Length.ToString());
             fileStruct.Add("timestamp", (DateTime.UtcNow - new DateTime(1970,1,1,0,0,0)).TotalSeconds);
             fileStruct.Add("uid", this.UserID);
@@ -362,9 +365,19 @@ namespace DrutNET
         /// <returns>File ID</returns>
         public XmlRpcStruct FileCreate(string filePath)
         {
+            return FileCreate(filePath, false);
+        }
+        /// <summary>
+        /// Create file structure
+        /// </summary>
+        /// <param name="fid">file name</param>
+        /// <param name="privateFolder">Save to private folder</param>
+        /// <returns>File ID</returns>
+        public XmlRpcStruct FileCreate(string filePath, bool privateFolder)
+        {
             try
             {
-                 return drupalServiceSystem.FileCreate(buildFileStruct(filePath));
+                return drupalServiceSystem.FileCreate(buildFileStruct(filePath, privateFolder));
             }
             catch (Exception ex)
             {
