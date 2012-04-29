@@ -332,8 +332,9 @@ namespace DrutNET
         /// Create a drupal file structure
         /// </summary>
         /// <param name="filePath"></param>
+        /// <param name="saveToFolderPath">Example : 'public://aaa/xxxx/</param>
         /// <returns></returns>
-        private XmlRpcStruct buildFileStruct(string filePath, bool privateFolder)
+        private XmlRpcStruct buildFileStruct(string filePath, string saveToFolderPath)
         {
             // Encode file to base64
             FileStream fs = new FileStream(filePath,FileMode.Open,FileAccess.Read);
@@ -348,10 +349,7 @@ namespace DrutNET
             fileStruct.Add("filename", fi.Name);
             fileStruct.Add("target_uri", fi.Name);
             // TODO: Check for duplaicate files.
-            string prefix = "public";
-            if (privateFolder)
-                prefix = "private";
-            fileStruct.Add("filepath", prefix + "://" + fi.Name);
+            fileStruct.Add("filepath", saveToFolderPath + '/' + fi.Name);
             fileStruct.Add("filesize", fi.Length.ToString());
             fileStruct.Add("timestamp", (DateTime.UtcNow - new DateTime(1970,1,1,0,0,0)).TotalSeconds);
             fileStruct.Add("uid", this.UserID);
@@ -361,23 +359,23 @@ namespace DrutNET
         /// <summary>
         /// Create file structure
         /// </summary>
-        /// <param name="fid">file name</param>
+        /// <param name="filePath">file to uplaod</param>
         /// <returns>File ID</returns>
         public XmlRpcStruct FileCreate(string filePath)
         {
-            return FileCreate(filePath, false);
+            return FileCreate(filePath, "public://");
         }
         /// <summary>
         /// Create file structure
         /// </summary>
         /// <param name="fid">file name</param>
-        /// <param name="privateFolder">Save to private folder</param>
+        /// <param name="folderPath">Save file to folder, example : 'public://xxx/sss' or 'private://' </param>
         /// <returns>File ID</returns>
-        public XmlRpcStruct FileCreate(string filePath, bool privateFolder)
+        public XmlRpcStruct FileCreate(string filePath, string folderPath)
         {
             try
             {
-                return drupalServiceSystem.FileCreate(buildFileStruct(filePath, privateFolder));
+                return drupalServiceSystem.FileCreate(buildFileStruct(filePath, folderPath));
             }
             catch (Exception ex)
             {
