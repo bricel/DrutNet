@@ -88,6 +88,9 @@ namespace DrutNET
             set { _cleanURL = value; }
         }
         string _debugURL;
+        /// <summary>
+        /// Add an extra parameter to the URL for xdebug or similar. example: ?XEDBUG_SESSION_START=xxxxx...
+        /// </summary>
         public string DebugURL
         {
             get { return _debugURL; }
@@ -96,7 +99,8 @@ namespace DrutNET
 
         string _drupalURL="";
         /// <summary>
-        /// URL to the drupal site
+        /// URL to the drupal site. example. http://mydomain.com/
+        /// Must include http:// and trailling '/'
         /// </summary>
         public string DrupalURL
         {
@@ -106,7 +110,7 @@ namespace DrutNET
 
         string _endPoint = "";
         /// <summary>
-        /// Path to endpoint.
+        /// Path to drupal services endpoint.
         /// </summary>
         public string EndPoint
         {
@@ -124,45 +128,6 @@ namespace DrutNET
                     return "/" + EndPoint;
             }
         }
-
-             
-
-        bool _useKeys = false;
-        /// <summary>
-        /// Specifies is provate key is required
-        /// </summary>
-        public bool UseKeys
-        {
-            get { return _useKeys; }
-            set 
-            {
-                if (value == true)
-                    throw new Exception("The private key feature is not supported yet");
-                //_useKeys = value; 
-            }
-        }
-
-        string _key = "";
-        /// <summary>
-        /// Private Key, this is acquired from services module settings
-        /// </summary>
-        public string Key 
-        {
-            get { return _key; }
-            set { _key = value; }
-        }
-        string _domainName = "";
-        /// <summary>
-        /// Domain restriction used for the private key
-        /// </summary>
-        public string DomainName
-        {
-            get { return _domainName; }
-            set { _domainName = value; }
-        }
-
-
-
     }
     //----------------------------------------------------------------------------------------------------------
     /// <summary>
@@ -385,21 +350,21 @@ namespace DrutNET
         }
 
         /// <summary>
-        /// Upload and attach a file to an existing NODE.
+        /// Upload and attach a file to an existing NODE. Require node retrieve and node save services.
         /// </summary>
         /// <param name="filePath">Local path to file</param>
         /// <param name="fieldName">CCK field name of the file field in the node</param>
         /// <param name="fileIndex">file index in case of multiple file field, for single file use 0</param>
         /// <param name="nodeID">Node ID to attache file to</param>
         /// <param name="serverDirectory">Server directory path e.g: sites/default/files/ </param>
-        /// <returns></returns>
-        public bool FileUpload(string filePath,string fieldName,int fileIndex,int nodeID)
+        /// <param name="folderPath">Save file to folder, example : 'public://xxx/sss' or 'private://' </param>
+        /// <returns>Boolean result</returns>
+        public bool FileUpload(string filePath, string fieldName, int fileIndex, int nodeID, string folderPath)
         {
-            XmlRpcStruct file = FileCreate(filePath);
+            XmlRpcStruct file = FileCreate(filePath, folderPath);
             if (file != null)
             {
-                this.AttachFileToNode(fieldName, file, fileIndex, nodeID);
-                return true;
+                return this.AttachFileToNode(fieldName, file, fileIndex, nodeID);
             }
             return false;
         }
@@ -494,10 +459,11 @@ namespace DrutNET
 
         #region Node
         /// <summary>
-        /// Create at Update a node, if node->nid is set, will use update, otherwise will use create.
+        /// Create or Update a node, if node->nid is set, will use update, otherwise will use create.
+        /// Uses Update or create service resource accordingly.
         /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
+        /// <param name="node">The XMLrpc node structure.</param>
+        /// <returns>Xmlrpc struct with responce.</returns>
         public XmlRpcStruct NodeSave(XmlRpcStruct node)
         {
             try
@@ -528,7 +494,7 @@ namespace DrutNET
         /// Return node structure
         /// </summary>
         /// <param name="nid">Node ID</param>
-        /// <returns>Node structure</returns>
+        /// <returns>Xmlrpc Node structure</returns>
         public XmlRpcStruct NodeRetrieve(int nid)
         {
             try
